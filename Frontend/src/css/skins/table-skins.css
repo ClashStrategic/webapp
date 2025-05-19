@@ -1,0 +1,23 @@
+.cs-table--light {
+    background: var(--cs-color-LightGrey);
+    border: solid 1.5px var(--cs-color-DeepBlue);
+}
+
+.cs-table--light tr,
+.cs-table--light td,
+.cs-table--light th {
+    color: var(--cs-color-DeepBlue);
+    border: 1px solid var(--cs-color-DeepBlue);
+}
+
+.cs-table--dark {
+    background: var(--cs-color-DeepBlue);
+    border: solid 1.5px var(--cs-color-LightGrey);
+}
+
+.cs-table--dark tr,
+.cs-table--dark td,
+.cs-table--dark th {
+    color: var(--cs-color-LightGrey);
+    border: 1px solid var(--cs-color-LightGrey);
+}

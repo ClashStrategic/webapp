@@ -1,0 +1,74 @@
+/* cs-analysis object */
+.cs-analysis {
+    width: 100%;
+}
+
+.cs-analysis__section {
+    margin: 2rem 0.75rem;
+    padding: 0.75rem;
+}
+
+.cs-analysis__sub-section {
+    margin: 1rem 0.25rem;
+    padding: 0.25rem;
+}
+
+.cs-analysis__section--small {
+    margin: 0.5rem;
+    padding: 0.25rem;
+}
+
+.cs-analysis__section--small h3 {
+    font-size: var(--fs-xx-medium);
+    margin: 0.5rem auto;
+}
+
+.cs-analysis__section--small span,
+.cs-analysis__section--small p {
+    font-size: var(--fs-small);
+}
+
+/* cs-analysis-sinergy-cards object */
+
+.cs-analysis-sinergy-cards {
+    display: flex;
+}
+
+.cs-analysis-sinergy-cards__card {
+    display: flex;
+    width: 50%;
+    align-items: center;
+}
+
+.cs-analysis-sinergy-cards__img_aumento {
+    align-self: center;
+    width: 20%;
+    margin: 15% auto;
+}
+
+.cs-analysis-sinergy-cards__card .cs-card {
+    width: 50%;
+}
+
+.cs-analysis-sinergy-cards__toltip {
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    font-size: var(--fs-medium);
+}
+
+.cs-analysis-sinergy-cards__cards {
+    width: 60%;
+    align-content: center;
+    margin: auto;
+}
+
+.cs-analysis-sinergy-cards__cards .card__not-found {
+    width: 80%;
+}
+
+.cs-analysis-sinergy-cards__cards div {
+    display: flex;
+    align-self: center;
+    height: 100%;
+}

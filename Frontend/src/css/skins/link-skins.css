@@ -1,0 +1,11 @@
+.cs-link:hover {
+    filter: brightness(115%);
+}
+
+.cs-link--default {
+    color: var(--cs-color-GoldenYellow);
+}
+
+.cs-link--dark {
+    color: var(--cs-color-DeepBlue);
+}

@@ -1,0 +1,40 @@
+.cs-tooltip-image {
+    border-radius: 50%;
+    width: 1em;
+    height: 1em;
+    cursor: pointer;
+    filter: invert(100%) sepia(6%) saturate(11%) hue-rotate(182deg) brightness(105%) contrast(90%);
+}
+
+.cs-tooltip-image:hover {
+    filter: invert(100%) sepia(6%) saturate(11%) hue-rotate(182deg) brightness(75%) contrast(90%);
+    cursor: pointer;
+}
+
+.cs-tooltip__message {
+    color: var(--cs-color-DeepBlue);
+    font-size: var(--fs-x-small);
+    width: 100%;
+    line-height: 1rem;
+}
+
+#cs-tooltip-box {
+    position: absolute;
+    display: flex;
+    padding: 0.25em;
+    background: var(--cs-color-LightGrey);
+    z-index: 101;
+    box-shadow: 1px 1px 5px var(--cs-color-DeepBlue);
+    text-shadow: none;
+    width: 8em;
+}
+
+#cs-tooltip-box:after {
+    content: "";
+    position: absolute;
+    top: 98.75%;
+    left: 50%;
+    border-width: 0.5rem;
+    border-style: solid;
+    border-color: var(--cs-color-LightGrey) transparent transparent transparent;
+}

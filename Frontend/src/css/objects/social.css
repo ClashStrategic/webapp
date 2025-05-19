@@ -1,0 +1,24 @@
+#div_redes_sociales {
+    text-align: center;
+    margin-top: 1em;
+    padding: 0.5em;
+}
+
+#div_redes_sociales a {
+    text-decoration: none;
+    margin: 0.5em;
+}
+
+#div_redes_sociales a:hover {
+    text-decoration: underline;
+}
+
+.img_red {
+    margin-left: 1.5em;
+    width: 1.75em;
+    height: 1.75em;
+}
+
+.img_red:hover {
+    transform: scale(1.2);
+}

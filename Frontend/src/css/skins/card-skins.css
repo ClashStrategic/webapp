@@ -1,0 +1,32 @@
+.cs-card__info:hover,
+.cs-card__use-remove:hover {
+    transform: scale(1.05);
+    filter: brightness(115%);
+}
+
+.card--selected-move {
+    outline: 3px solid var(--cs-color-GoldenYellow);
+    box-shadow: 0 0 15px var(--cs-color-GoldenYellow);
+    opacity: 0.8;
+    transform: scale(1.03);
+}
+
+.card--show-opt {
+    background: var(--cs-color-IntenseOrange);
+    border: 1px solid var(--cs-color-DeepBlue);
+    z-index: 10;
+    padding: 0.25em;
+    width: 105%;
+}
+
+.card--is-interactive {
+    cursor: pointer;
+}
+
+.card--is-interactive:hover {
+    box-shadow: 0 0 5px var(--cs-color-GoldenYellow);
+}
+
+.card--is-interactive:hover .cs-card__image {
+    transform: scale(1.025);
+}

@@ -1,0 +1,10 @@
+.alert {
+    position: relative;
+    width: 90%;
+    margin: 1rem auto;
+    padding: 1rem;
+}
+
+.alert__message {
+    text-align: center;
+}

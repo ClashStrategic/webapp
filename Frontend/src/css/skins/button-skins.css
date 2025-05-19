@@ -1,0 +1,30 @@
+.cs-btn-icon:hover,
+.cs-btn:hover {
+    filter: brightness(115%);
+    transform: scale(1.01);
+}
+
+.cs-btn--primary {
+    background-color: var(--cs-color-GoldenYellow);
+    color: var(--cs-color-DeepBlue);
+}
+
+.cs-btn--secondary {
+    background-color: var(--cs-color-VibrantTurquoise);
+    color: var(--cs-color-DeepBlue);
+}
+
+.cs-btn--tertiary {
+    background-color: var(--cs-color-LightGrey);
+    color: var(--cs-color-DeepBlue);
+}
+
+.cs-btn--cancel {
+    background-color: var(--cs-color-IntenseOrange);
+    color: var(--cs-color-DeepBlue);
+}
+
+.cs-btn--disabled {
+    opacity: 0.5;
+    cursor: default;
+}

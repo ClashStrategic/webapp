@@ -1,0 +1,23 @@
+.cs-list {
+    list-style-type: disc;
+}
+
+.cs-list--small {
+    padding: 0.125rem;
+    margin: 0.25rem auto;
+}
+
+.cs-list--small li {
+    padding: 0.125rem;
+    font-size: var(--fs-x-small);
+}
+
+.cs-list--medium li {
+    padding: 0.25rem;
+    font-size: var(--fs-medium);
+}
+
+.cs-list--large li {
+    padding: 0.5rem;
+    font-size: var(--fs-large);
+}

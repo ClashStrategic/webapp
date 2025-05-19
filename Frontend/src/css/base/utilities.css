@@ -1,0 +1,339 @@
+/* colors */
+.cs-color-DeepBlue {
+    color: var(--cs-color-DeepBlue);
+}
+
+.cs-color-VibrantTurquoise {
+    color: var(--cs-color-VibrantTurquoise);
+}
+
+.cs-color-GoldenYellow {
+    color: var(--cs-color-GoldenYellow);
+}
+
+.cs-color-LightGrey {
+    color: var(--cs-color-LightGrey);
+}
+
+.cs-color-IntenseOrange {
+    color: var(--cs-color-IntenseOrange);
+}
+
+.cs-color-SoftLimeGreen {
+    color: var(--cs-color-SoftLimeGreen);
+}
+
+/* Metals Colors */
+
+.color-diamond {
+    color: var(--Diamond);
+}
+
+.color-brown {
+    color: var(--Brown);
+}
+
+.color-silver {
+    color: var(--Silver);
+}
+
+.color-elixir {
+    color: var(--elixir);
+}
+
+/* Text Alignment */
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.align-content-center {
+    align-content: center;
+}
+
+/* background */
+.bg-transparent {
+    background: transparent;
+}
+
+/* Margins */
+.m-a {
+    margin: auto;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.m-0-25 {
+    margin: 0.25rem;
+}
+
+.m-1 {
+    margin: 0.5rem;
+}
+
+.m-2 {
+    margin: 1rem;
+}
+
+.mt-1 {
+    margin-top: 0.5rem;
+}
+
+.mb-2 {
+    margin-bottom: 1rem;
+}
+
+/* Padding */
+.p-0 {
+    padding: 0;
+}
+
+.p-1 {
+    padding: 0.5rem;
+}
+
+.p-2 {
+    padding: 1rem;
+}
+
+.pt-1 {
+    padding-top: 0.5rem;
+}
+
+.pb-2 {
+    padding-bottom: 1rem;
+}
+
+/* Display */
+.hidden {
+    display: none !important;
+}
+
+.block {
+    display: block;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.inline {
+    display: inline;
+}
+
+.flex {
+    display: flex;
+}
+
+.inline-flex {
+    display: inline-flex;
+}
+
+/* Flexbox */
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.justify-content-around {
+    justify-content: space-around;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.align-items-start {
+    align-items: flex-start;
+}
+
+.align-items-end {
+    align-items: flex-end;
+}
+
+/* Position */
+.position-absolute {
+    position: absolute;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.position-fixed {
+    position: fixed;
+}
+
+.position-sticky {
+    position: sticky;
+}
+
+/* Z-index */
+.z-index--1 {
+    z-index: -1;
+}
+
+.z-index-0 {
+    z-index: 0;
+}
+
+.z-index-1 {
+    z-index: 1;
+}
+
+.z-index-10 {
+    z-index: 10;
+}
+
+.z-index-25 {
+    z-index: 25;
+}
+
+.z-index-50 {
+    z-index: 50;
+}
+
+.z-index-75 {
+    z-index: 75;
+}
+
+.z-index-100 {
+    z-index: 100;
+}
+
+/* width y height */
+
+.w-25 {
+    width: 25%;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+.w-75 {
+    width: 75%;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.h-25 {
+    height: 25%;
+}
+
+.h-50 {
+    height: 50%;
+}
+
+.h-auto {
+    height: auto;
+}
+
+/* Font Size */
+.font-size-1 {
+    font-size: 0.75rem;
+}
+
+.font-size-2 {
+    font-size: 1rem;
+}
+
+.font-size-3 {
+    font-size: 1.25rem;
+}
+
+.font-size-4 {
+    font-size: 1.5rem;
+}
+
+/* No Animation */
+.no-animation * {
+    transition: none !important;
+    animation: none !important;
+}
+
+/* float */
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+/* Border */
+.b-0 {
+    border: none;
+}
+
+.b-1 {
+    border: 1px solid var(--cs-color-DeepBlue);
+}
+
+.b-2 {
+    border: 2px solid var(--cs-color-DeepBlue);
+}
+
+.border-top {
+    border-top: 1px solid var(--cs-color-DeepBlue);
+}
+
+.border-right {
+    border-right: 1px solid var(--cs-color-DeepBlue);
+}
+
+.border-bottom {
+    border-bottom: 1px solid var(--cs-color-DeepBlue);
+}
+
+.border-left {
+    border-left: 1px solid var(--cs-color-DeepBlue);
+}
+
+.border-radius-1 {
+    border-radius: 0.25rem;
+}
+
+.border-radius-2 {
+    border-radius: 0.5rem;
+}
+
+.border-radius-3 {
+    border-radius: 0.75rem;
+}
+
+.border-radius-circle {
+    border-radius: 50%;
+}

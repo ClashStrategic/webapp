@@ -1,0 +1,16 @@
+.cs-product--default {
+    background: var(--color-dark-neutral-25);
+    border: solid 1px var(--cs-color-DeepBlue);
+}
+
+.cs-product-container--primary {
+    background: var(--cs-color-VibrantTurquoise);
+}
+
+.cs-product__title--default {
+    color: var(--cs-color-GoldenYellow);
+}
+
+.cs-product__title--dark {
+    color: var(--cs-color-DeepBlue);
+}

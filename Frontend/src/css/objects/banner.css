@@ -1,0 +1,72 @@
+#div_banner_anuncios img {
+    position: relative;
+    border: 0.5px solid var(--cs-color-DeepBlue);
+    width: 100%;
+}
+
+.perfil_visual .img_banner {
+    width: var(--width-img-banner-pervis);
+    height: 6.5em;
+}
+
+#div_banner_perfil {
+    margin-top: 0.75em;
+    display: flex;
+}
+
+.banner_perfil {
+    background: transparent;
+    display: flex;
+}
+
+.img_banner {
+    width: var(--width-img-banner);
+    height: 90px;
+}
+
+.img_cam_banner {
+    cursor: pointer;
+    width: calc(var(--width-img-banner) - 3.75em);
+    height: 4em;
+    margin: 0.75em;
+}
+
+.img_cam_banner_active {
+    filter: brightness(125%);
+    transform: scale(1.08);
+    border: 0.25em solid var(--cs-color-DeepBlue);
+}
+
+#div_banner_anuncios {
+    background: transparent;
+    width: 100%;
+    margin: 0 auto;
+    height: auto;
+}
+
+.div_ban_anu {
+    position: relative;
+    margin: 0 0.25em;
+    align-items: center;
+}
+
+.div_ban_anu div {
+    position: absolute;
+    text-align: center;
+    right: 0%;
+    top: 60%;
+    transform: translate(0%, -60%);
+    margin: 0%;
+    width: 70%;
+}
+
+.div_ban_anu p {
+    font-size: calc(var(--fs-medium) + 0.10em);
+    margin: 0;
+}
+
+#btn_ban_act {
+    border: solid 1.5px var(--cs-color-DeepBlue);
+    padding: 0.25em;
+    border: 1.5px solid var(--cs-color-DeepBlue);
+}

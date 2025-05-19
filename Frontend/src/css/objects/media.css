@@ -1,0 +1,30 @@
+.cs-media {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.25rem;
+}
+
+.cs-media__figure {
+    flex-shrink: 0;
+}
+
+.cs-media__figure img {
+    line-height: 1;
+}
+
+.cs-media__body {
+    min-width: 0;
+}
+
+#img_equi {
+    display: flex;
+    margin: -1.5em auto;
+    width: 60%;
+}
+
+#img_mision,
+#img_vision {
+    display: flex;
+    margin: auto;
+    width: 50%;
+}

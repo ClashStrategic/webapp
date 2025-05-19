@@ -1,0 +1,21 @@
+.line_diamond {
+    position: fixed;
+    display: flex;
+    width: calc(var(--width-body) + var(--mas-width-line-diamont));
+    z-index: -1;
+    top: -0.75em;
+}
+
+.line {
+    width: 16.66%;
+}
+
+.diamond {
+    width: 71%;
+    aspect-ratio: 1;
+    background: var(--background-body-diamond);
+    transform: rotate(45deg);
+    box-shadow: 0.6px 0.6px 2px var(--cs-color-DeepBlue);
+    margin-top: 29%;
+    border-radius: 0%;
+}

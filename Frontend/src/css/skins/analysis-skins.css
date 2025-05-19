@@ -1,0 +1,15 @@
+.cs-analysis--default {
+    background: var(--cs-color-DeepBlue);
+}
+
+.cs-analysis--default h2 {
+    color: var(--cs-color-GoldenYellow);
+}
+
+.cs-analysis__section--default {
+    border: 1px solid var(--cs-color-LightGrey);
+}
+
+.cs-analysis__section--default h3 {
+    color: var(--cs-color-GoldenYellow);
+}

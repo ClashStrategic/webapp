@@ -1,0 +1,40 @@
+.cs-grid {
+    display: grid;
+    gap: 0.25rem;
+}
+
+/* skins object */
+
+.cs-grid--2-cols {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.cs-grid--3-cols {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.cs-grid--4-cols {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.cs-grid--responsive {
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 600px) {
+    .cs-grid--responsive {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 900px) {
+    .cs-grid--responsive {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .cs-grid--responsive {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

@@ -1,0 +1,12 @@
+.cs-deck--default {
+    background: var(--cs-color-DeepBlue);
+    border: solid 1.5px var(--cs-color-LightGrey);
+}
+
+.cs-deck__slot--default {
+    border: 1px solid var(--cs-color-LightGrey);
+}
+
+.cs-deck__slot--evo {
+    background: var(--dark-elixir);
+}

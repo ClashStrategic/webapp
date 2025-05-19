@@ -1,0 +1,22 @@
+.cs-deck {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 95%;
+    margin: 0.75rem auto;
+    padding: 1rem 0.25rem;
+}
+
+.cs-deck__slot {
+    position: relative;
+    width: 25%;
+    aspect-ratio: 9/11;
+}
+
+.cs-deck__slot .cs-card {
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    transform: translate(-50%);
+    opacity: 1 !important;
+}

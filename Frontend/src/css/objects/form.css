@@ -1,0 +1,54 @@
+.frm {
+    text-align: center;
+    padding: 0.75em 0.5em;
+    margin: 0.5em auto;
+    width: 90%;
+}
+
+.frm--primary {
+    background-color: var(--cs-color-DeepBlue);
+    color: var(--cs-color-LightGrey);
+    box-shadow: 1.5px 1.5px 5px var(--cs-color-LightGrey);
+    border: solid 1px var(--cs-color-LightGrey);
+}
+
+.frm--secondary {
+    background-color: var(--cs-color-VibrantTurquoise);
+    color: var(--cs-color-DeepBlue);
+    box-shadow: 2px 2px 5px var(--cs-color-DeepBlue);
+}
+
+.frm--tertiary {
+    background-color: var(--cs-color-GoldenYellow);
+    color: var(--cs-color-DeepBlue);
+    box-shadow: 2px 2px 5px var(--cs-color-DeepBlue);
+}
+
+.frm [type="submit"] {
+    background: var(--cs-color-GoldenYellow);
+}
+
+.frm button:not([type="submit"]) {
+    color: var(--cs-color-DeepBlue);
+    padding: 0.25rem;
+}
+
+.frm select {
+    color: var(--cs-color-DeepBlue);
+    padding: 0.25em;
+}
+
+.frm option {
+    color: var(--cs-color-DeepBlue);
+    text-align: center;
+}
+
+.select {
+    color: var(--cs-color-DeepBlue);
+    padding: 0.25em;
+}
+
+.select option {
+    color: var(--cs-color-DeepBlue);
+    text-align: center;
+}

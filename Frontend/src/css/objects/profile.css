@@ -1,0 +1,444 @@
+.div_perfil {
+    border: solid 1.5px var(--cs-color-DeepBlue);
+    margin-top: 0.75em;
+    width: var(--width-img-banner);
+    padding-bottom: 0.01em;
+}
+
+.div_inf_per {
+    border: solid 1.5px var(--cs-color-DeepBlue);
+    padding: 5px;
+    text-align: center;
+}
+
+.p_nom_perfil {
+    position: relative;
+    padding-left: 0.3em;
+    font-size: 1.2rem;
+    margin: 0%;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+#img_logo_verificado {
+    position: absolute;
+    top: -5px;
+    width: 20px;
+    height: 20px;
+}
+
+.avatar_perfil {
+    margin-left: 2%;
+    width: 4.3em;
+    height: 4.3em;
+    margin: auto;
+    margin-top: 0.7em;
+    margin-left: -15em;
+    z-index: 10;
+}
+
+#img_cam_ban {
+    width: 2.25em;
+    height: 3.5em;
+}
+
+.perfil {
+    align-items: center;
+}
+
+.perfil_visual .div_perfil {
+    background: transparent;
+    pointer-events: none;
+    width: var(--width-img-banner-pervis);
+}
+
+.perfil_visual .avatar_perfil {
+    position: absolute;
+    width: 5.3em;
+    height: 5.3em;
+    margin: auto;
+    margin-left: 1.2em;
+    margin-top: 0.65em;
+    z-index: 10;
+}
+
+.perfil_visual .p_nom_perfil {
+    font-size: 1.6em;
+    text-align: center;
+}
+
+#changePhoto {
+    background: transparent;
+    position: absolute;
+    margin: auto;
+    top: 4em;
+    right: 1em;
+}
+
+#changePhoto:hover,
+#changeBanner:hover {
+    transform: scale(1.1);
+}
+
+#img_ava_preview {
+    width: 10em;
+    height: 10em;
+}
+
+#frm_camfot #cam_ava {
+    font-size: var(--fs-small);
+}
+
+#changeBanner {
+    background: transparent;
+    position: absolute;
+    margin: auto;
+    top: 7em;
+    right: 1em;
+}
+
+.div_barrasup_perfil {
+    background: var(--cs-color-GoldenYellow);
+    position: fixed;
+    height: 2.5em;
+    width: calc(var(--width-section) - 10%);
+    z-index: 20;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.div_barrasup_perfil h3 {
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.btn_x_perfil {
+    background: var(--cs-color-IntenseOrange) !important;
+    color: var(--cs-color-DeepBlue);
+    position: absolute;
+    width: 1.7em;
+    height: 1.7em;
+    margin: auto;
+    top: 0%;
+    bottom: 0%;
+    right: 1.5%;
+    box-shadow: 1px 1px 2px var(--cs-color-DeepBlue);
+}
+
+.div_toggle {
+    background: var(--cs-color-DeepBlue) fixed;
+    scroll-behavior: smooth;
+    position: fixed;
+    display: none;
+    margin: auto;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    padding: 0.5em;
+    box-shadow: 0px 0px 3px var(--cs-color-DeepBlue);
+    border: 2px solid var(--cs-color-LightGrey);
+    width: calc(var(--width-section) - 7.5%);
+    height: 85%;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+#btn_menu_perfil {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+#btn_menu_perfil:hover {
+    transform: scale(0.96);
+}
+
+#btn_ver_pub_usu {
+    display: block;
+    margin: auto;
+}
+
+#div_infjug {
+    border: solid 1.5px var(--cs-color-DeepBlue);
+    padding: 5px;
+    text-align: center;
+}
+
+.div_cofres {
+    display: inline-block;
+    margin: auto;
+}
+
+.img_cofres {
+    width: 3.5em;
+    height: 3.5em;
+    margin-left: 0.25em;
+}
+
+.span_index_cofres {
+    position: relative;
+    top: -1em;
+    left: -1em;
+    font-size: var(--fs-x-small);
+}
+
+.img_infjug {
+    width: 2em;
+    height: 2em;
+}
+
+.img_ava_edp {
+    width: 120px;
+    height: 120px;
+}
+
+.div_dat_usu {
+    border: solid 1.5px var(--cs-color-DeepBlue);
+    padding: 5px;
+    margin-top: 15px;
+    padding-top: 1px;
+    padding-bottom: 10px;
+}
+
+.div_frm_compdat {
+    border: solid 1.5px var(--cs-color-DeepBlue);
+    padding: 5px;
+    margin-top: 15px;
+    padding-top: 1px;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+#text_inf {
+    width: 90%;
+    height: 6em;
+}
+
+.div_perfilusu {
+    background-color: var(--cs-color-LightGrey);
+}
+
+#div_menu_contenido_perfil {
+    width: 100%;
+}
+
+.div_cabusu {
+    display: flex;
+    margin: 15px;
+    padding-top: 15px;
+}
+
+.avatar_infusu {
+    height: 95px;
+    width: 95px;
+    display: inline;
+    margin: 15px;
+}
+
+.a_nom_infusu {
+    font-size: 18px;
+    letter-spacing: 0.5px;
+    font-weight: 900;
+    color: var(--cs-color-VibrantTurquoise);
+    display: inline;
+}
+
+#div_infusu {
+    border: solid 1.5px var(--cs-color-DeepBlue);
+    padding: 1em;
+    position: relative;
+    padding-bottom: 1px;
+    margin-bottom: 1em;
+}
+
+#div_infusu::before {
+    content: "Descripción:";
+    position: absolute;
+    top: 0.7em;
+    left: 1em;
+    font-size: 0.6rem;
+    color: var(--cs-color-LightGrey);
+    margin: 0%;
+    padding: 0%;
+}
+
+#div_inf_usu {
+    float: right;
+    margin-right: 0px;
+}
+
+#div_img_alert_noty {
+    position: absolute;
+    background: var(--cs-color-VibrantTurquoise);
+    top: -0.5em;
+    right: 0%;
+    filter: brightness(125%);
+    padding: 0.05em;
+}
+
+#div_dat_usu {
+    position: fixed;
+    background: var(--cs-color-DeepBlue);
+    padding: 0.75em 0;
+    border: 1px solid var(--cs-color-LightGrey);
+    width: var(--width-body);
+    height: 1em;
+    z-index: 90;
+    top: 0;
+}
+
+#btn_nom_usu {
+    position: absolute;
+    background: transparent;
+    border: none;
+    font-size: var(--fs-medium);
+    left: 0.75em;
+    top: 50%;
+    transform: translate(0%, -50%);
+    color: var(--cs-color-LightGrey);
+}
+
+#div_coin_gema {
+    position: absolute;
+    height: 1em;
+    top: 50%;
+    right: 0.75em;
+    display: flex;
+    justify-items: center;
+    transform: translate(0%, -50%);
+}
+
+#div_coins,
+#div_gems {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5em;
+}
+
+#btn_mas_moneda,
+#btn_mas_gema {
+    background: var(--cs-color-VibrantTurquoise);
+    display: flex;
+    margin-right: 0.25em;
+    height: 100%;
+    align-items: center;
+    align-content: center;
+}
+
+#div_munu_in_cartas {
+    position: absolute;
+    right: 0em;
+    top: 1rem;
+}
+
+#div_munu_in_cartas #menu_opciones {
+    top: 0.25rem;
+    right: 4em;
+    z-index: 80;
+}
+
+#div_opciones {
+    padding: 0.25em;
+}
+
+.div_logo {
+    display: flex;
+    align-items: center;
+    margin: 0.8em;
+    padding-top: 0.5em;
+    z-index: 10;
+}
+
+.div_logo p {
+    display: inline-block;
+    top: 50%;
+}
+
+.logo {
+    margin: auto;
+    height: 5em;
+}
+
+#btn_menu_enc_pub {
+    cursor: pointer;
+    padding: 0.75em;
+    border: 1px solid var(--cs-color-DeepBlue);
+}
+
+#menu_opciones {
+    background: var(--cs-color-LightGrey);
+    box-shadow: 0 0 5px var(--cs-color-DeepBlue);
+    display: none;
+    position: absolute;
+    margin-left: -11em;
+    top: -0.5em;
+    width: 12em;
+    margin-top: 12px;
+    z-index: 50;
+}
+
+#menu_opciones::before {
+    content: "";
+    position: absolute;
+    top: 0.5em;
+    right: -20px;
+    border: 10px solid transparent;
+    border-left: 10px solid var(--cs-color-LightGrey);
+}
+
+#menu_opciones::after {
+    content: "";
+    position: absolute;
+    top: 0.5em;
+    right: -22px;
+    border-width: 11px;
+    border-style: solid;
+    border-color: transparent transparent transparent var(--cs-color-DeepBlue);
+    z-index: -1;
+}
+
+#menu_opciones button {
+    margin: 0.5em;
+    width: 91%;
+}
+
+#div_idiomas {
+    position: absolute;
+    right: 10%;
+    top: 1em;
+    padding: 5px;
+    border: 0.08em solid #1d8beb;
+}
+
+#btn_idiomas {
+    background: transparent;
+    display: flex;
+    margin: 0%;
+    padding: 0%;
+}
+
+#div_content_idiomas {
+    display: none;
+    position: absolute;
+    margin-left: -12.8em;
+    padding: 10px;
+    top: -1em;
+    width: 10em;
+    border: 0.08em solid var(--cs-color-DeepBlue);
+    margin-top: 15px;
+    box-shadow: 1.5px 1.5px 3px #222222;
+    text-align: center;
+}
+
+#div_content_idiomas::before {
+    content: "";
+    position: absolute;
+    top: 0.3em;
+    right: -20px;
+    border: 10px solid transparent;
+    border-left: 10px solid var(--cs-color-DeepBlue);
+}

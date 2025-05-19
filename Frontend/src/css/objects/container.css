@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: var(--width-container);
+    margin: 1rem auto 0;
+}
+
+.main {
+    flex: 1;
+    width: var(--width-main);
+}
+
+.section {
+    width: var(--width-section);
+    margin: 0 auto;
+    margin-top: 2em;
+}

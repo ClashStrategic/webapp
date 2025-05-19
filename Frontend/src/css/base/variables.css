@@ -1,0 +1,95 @@
+/****************************** tamaño 0px - 500px ********************************/
+@media (max-width: 501px) {
+    :root {
+        --width-body: 100%;
+        --mas-width-line-diamont: 4.5%;
+        --width-back-cube-pre: 4em;
+        --width-img-banner: 15.5em;
+        --width-img-banner-pervis: 17.5em;
+        --width-img-emote-enviar: 6.5em;
+        --height-img-emote-enviar: 5.5em;
+        --height-caja-chat: 75vh;
+        --width-main: 100%;
+        --width-section: 100%;
+    }
+}
+
+/****************************** tamaño 501px - 800px ********************************/
+@media (min-width: 501px) and (max-width: 801px) {
+    :root {
+        --width-body: 500px;
+        --mas-width-line-diamont: 1.5%;
+        --width-back-cube-pre: 5em;
+        --width-img-banner: 15.5em;
+        --width-img-banner-pervis: 17.5em;
+        --width-img-emote-enviar: 6.5em;
+        --height-img-emote-enviar: 5.5em;
+        --height-caja-chat: 75vh;
+        --width-main: 100%;
+        --width-section: 100%;
+    }
+}
+
+/****************************** tamaño 800px - ... ********************************/
+@media (min-width: 801px) {
+    :root {
+        --width-body: 100%;
+        --mas-width-line-diamont: 1.5%;
+        --width-back-cube-pre: 6.5em;
+        --width-img-banner: 16em;
+        --width-img-banner-pervis: 17em;
+        --width-img-emote-enviar: 7em;
+        --height-img-emote-enviar: 6em;
+        --height-caja-chat: 70vh;
+        --width-main: 75%;
+        --width-section: 40%;
+    }
+
+    .main {
+        display: flex;
+        margin: 0 auto;
+    }
+}
+
+/*############################### Estilos Para todos los tamaños ###############################*/
+:root {
+    --width-container: 100%;
+    --width-text-publi: 100%;
+    --width-header-footer: 100%;
+
+    /* Tamaño para las textos */
+    /* escala -0.125 */
+    --fs-xxx-small: 0.5rem;
+    --fs-xx-small: 0.625rem;
+    --fs-x-small: 0.75rem;
+    --fs-small: 0.875rem;
+    /* medium */
+    --fs-medium: 1rem;
+    --fs-x-medium: 1.125rem;
+    --fs-xx-medium: 1.25rem;
+    --fs-xxx-medium: 1.375rem;
+    /* escala +0.25 */
+    --fs-large: 1.5rem;
+    --fs-x-large: 1.625rem;
+    --fs-xx-large: 1.75rem;
+    --fs-xxx-large: 1.875rem;
+
+    /* colors */
+    --cs-color-DeepBlue: #1B263B;
+    --cs-color-VibrantTurquoise: #36CFC9;
+    --cs-color-GoldenYellow: #FFC107;
+    --cs-color-LightGrey: #F4F4F4;
+    --cs-color-IntenseOrange: #FF5722;
+    --cs-color-SoftLimeGreen: #A8E6CF;
+
+    /* Colores Neutrales de transparencia */
+    --color-dark-neutral-25: rgba(27, 38, 59, 0.25);
+    --color-light-neutral-25: rgba(244, 244, 244, 0.25);
+
+    /* Colores metales */
+    --Diamond: #b0e0e6;
+    --Silver: #C0C0C0;
+    --Brown: #CD7F32;
+    --elixir: #e12ce4;
+    --dark-elixir: #8c1ca8;
+}

@@ -1,0 +1,14 @@
+.cs-icon--small {
+    width: 0.75rem;
+    height: 0.75rem;
+}
+
+.cs-icon--medium {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.cs-icon--large {
+    width: 2rem;
+    height: 2rem;
+}

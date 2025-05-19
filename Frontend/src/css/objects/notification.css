@@ -1,0 +1,21 @@
+.div_noty {
+    display: inline-block;
+    background: var(--cs-color-LightGrey);
+    text-align: center;
+}
+
+.div_noty .div_noty_img_p {
+    display: flex;
+    align-items: center;
+    border-top: solid 1px var(--cs-color-DeepBlue);
+}
+
+.div_noty .text {
+    width: 100%;
+    margin: 0.25em auto;
+}
+
+.div_noty .cs-color-GoldenYellow {
+    width: 75%;
+    float: left;
+}
