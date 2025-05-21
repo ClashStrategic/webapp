@@ -1,0 +1,30 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Verificar que no estamos en localhost
+    RewriteCond %{REMOTE_ADDR} !^(127\.0\.0\.1|::1)$
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Reescribe las URLs sin extensión a .html solo si el archivo .html existe
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}\.html -f
+    RewriteRule ^(.+?)/?$ $1.html [L]
+
+    # Modo Mantenimiento
+    #RewriteCond %{REQUEST_URI} !^/maintenance\.html$
+    #RewriteCond %{REMOTE_ADDR} !^192\.168\.1\.1$
+    #RewriteRule ^(.*)$ /maintenance.html [R=307,L]
+</IfModule>
+
+### configuracion servidor online
+# Si no es local, usar esta ruta para los errores
+ErrorDocument 404 /error404.html
+ErrorDocument 500 /error500.html
+
+### configuracion servidor local
+# Detectar si estamos en el entorno local (clash-strategic-webapp)
+RewriteCond %{REQUEST_URI} ^/clash-strategic-webapp/
+# Si es local, usar esta ruta para los errores
+ErrorDocument 404 /clash-strategic-webapp/error404.html
+ErrorDocument 500 /clash-strategic-webapp/error500.html

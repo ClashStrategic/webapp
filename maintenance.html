@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mantenimiento en curso</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #1b263b;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        text-align: center;
+        box-sizing: border-box;
+      }
+
+      .container {
+        background-color: #f4f4f4;
+        padding: 30px 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        width: 90%;
+      }
+
+      .cs-color-DeepBlue {
+        color: #1b263b;
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 0.5em;
+      }
+
+      p {
+        font-size: 1.1em;
+        line-height: 1.6;
+        margin-bottom: 1em;
+      }
+
+      .icon-container {
+        margin: 2rem auto;
+      }
+
+      .icon-maintenance {
+        width: 100px;
+        height: 100px;
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 2em;
+        }
+        p {
+          font-size: 1em;
+        }
+        .container {
+          padding: 20px;
+        }
+        .icon-maintenance {
+          width: 80px;
+          height: 80px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="cs-color-DeepBlue">Mantenimiento en curso</h1>
+
+      <div class="icon-container">
+        <svg
+          class="icon-maintenance"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="#003366"
+          width="150px"
+          height="150px"
+        >
+          <path d="M0 0h24v24H0V0z" fill="none" />
+          <path
+            d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6.1V9h2.9l2.4 2.4L12 13.7V18h2.9l2.4 2.4 1.4 1.4c.8.8 2.1.8 2.9 0l1.1-1.1c.8-.7.8-2 .1-2.7zm-10.6-3.1L5.6 9.4c-.4.2-.7.4-1 .7l-2.7-2.7C1.2 7.8.9 8.5.9 9.2c0 1.4.6 2.7 1.5 3.6l8.1 8.1c.9.9 2.2 1.5 3.6 1.5.7 0 1.4-.2 2-.7L13.2 19c.3-.3.5-.6.7-1l-1.8-1.9zM19.5 4.5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+          />
+          <path
+            d="M19.23,15.42l-1.41,1.41l2.36,2.36c0.78,0.78,2.05,0.78,2.83,0l1.41-1.41c0.78-0.78,0.78-2.05,0-2.83 L19.23,15.42z M6,20c-1.66,0-3-1.34-3-3s1.34-3,3-3s3,1.34,3,3S7.66,20,6,20z"
+          />
+        </svg>
+      </div>
+
+      <div style="margin-top: 1rem">
+        <p class="cs-color-DeepBlue">
+          Lo sentimos, nuestro sitio web está actualmente en mantenimiento.
+        </p>
+        <p class="cs-color-DeepBlue">
+          Estamos trabajando para mejorar nuestros servicios y esperamos volver
+          en línea pronto. Por favor, vuelva a intentarlo más tarde.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

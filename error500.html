@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error 500 - Error Interno</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #f8f9fa;
+        color: #333;
+        text-align: center;
+      }
+
+      .container {
+        max-width: 600px;
+      }
+
+      h1 {
+        font-size: 4rem;
+        margin: 0;
+        color: #dc3545;
+      }
+
+      p {
+        font-size: 1.25rem;
+        margin: 20px 0;
+      }
+
+      a {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        color: white;
+        text-decoration: none;
+        background: #007bff;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      a:hover {
+        background: #0056b3;
+      }
+
+      .retry-btn {
+        background: #28a745;
+      }
+
+      .retry-btn:hover {
+        background: #1e7e34;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Error 500</h1>
+      <p>
+        ¡Uy! Algo salió mal en nuestro servidor. Estamos trabajando para
+        solucionarlo.
+      </p>
+      <p>
+        Por favor, inténtalo más tarde o utiliza uno de los enlaces a
+        continuación:
+      </p>
+      <a href="home" class="home-btn">Volver al inicio</a>
+    </div>
+  </body>
+</html>
