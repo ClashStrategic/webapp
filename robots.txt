@@ -1,0 +1,5 @@
+# Permitir a todos los bots
+User-agent: *
+
+# Incluir el sitemap para facilitar el rastreo
+Sitemap: https://www.clashstrategic.great-site.net/sitemap.xml
