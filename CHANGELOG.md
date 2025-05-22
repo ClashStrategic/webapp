@@ -1,3 +1,15 @@
+# [0.4.0](https://github.com/ClashStrategic/webapp/compare/v0.3.0...v0.4.0) (2025-05-22)
+
+
+### Bug Fixes
+
+* **home:** store API base URL in localStorage for fetch ([3eb00a7](https://github.com/ClashStrategic/webapp/commit/3eb00a7e571abea0c8d1d4ba3932fb450e3f877c))
+
+
+### Features
+
+* Configure dynamic API base URL and fetch home content ([3800d67](https://github.com/ClashStrategic/webapp/commit/3800d6716d5364d9d5a1678876da72ae850ba079))
+
 # [0.3.0](https://github.com/ClashStrategic/webapp/compare/v0.2.0...v0.3.0) (2025-05-21)
 
 
