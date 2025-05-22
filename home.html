@@ -1,16 +1,17 @@
 <script>
-  let url_api = "";
-
   if (window.location.hostname === "localhost") {
-    url_api = "http://localhost/clash-strategic-api";
+    localStorage.setItem(
+      "base_url_api",
+      "http://localhost/clash-strategic-api"
+    );
   } else if (window.location.hostname === "clashstrategic.great-site.net") {
-    url_api = "https://clashstrategic.great-site.net";
+    localStorage.setItem(
+      "base_url_api",
+      "https://clashstrategic.great-site.net"
+    );
   }
 
-  //guardar la url_api en cache
-  localStorage.setItem("base_url_api", url_api);
-
-  fetch(url_api + "/home")
+  fetch(localStorage.getItem("base_url_api") + "/home")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
