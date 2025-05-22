@@ -73,6 +73,4 @@ async function initializeApp() {
   }
 }
 
-$(document).ready(function () {
-  initializeApp();
-});
+initializeApp();
