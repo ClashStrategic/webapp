@@ -2,7 +2,7 @@ export default function api(data, type, options, load) {
     console.dir('api(' + data + ', ' + type + ', ' + options + ', ' + load + ')');
     $.ajax({
         type: "POST",
-        url: "./App/Config/Routes.php",
+        url: localStorage.getItem('base_url_api') + "/App/Config/Routes.php",
         data: data,
         dataType: "json",
         beforeSend: function () {

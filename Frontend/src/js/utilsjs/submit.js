@@ -2,7 +2,7 @@ export default function submit(data, typeSuccess, frmSubmit, load) {
     console.dir('submit(' + data + ', ' + typeSuccess + ', ' + frmSubmit + ')');
     if (typeSuccess == 'ins-pub' || typeSuccess == 'ins-ava') {
         $.ajax({
-            url: './App/Config/Routes.phpp',
+            url: localStorage.getItem('base_url_api') + '/App/Config/Routes.phpp',
             type: 'POST',
             data: data,
             dataType: 'json',

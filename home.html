@@ -1,11 +1,35 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Clash Strategic</title>
-  </head>
-  <body>
-    hello word
-  </body>
-</html>
+<script>
+  let url_api = "";
+
+  if (window.location.hostname === "localhost") {
+    url_api = "http://localhost/clash-strategic-api";
+  } else if (window.location.hostname === "clashstrategic.great-site.net") {
+    url_api = "https://clashstrategic.great-site.net";
+  }
+
+  //guardar la url_api en cache
+  localStorage.setItem("base_url_api", url_api);
+
+  fetch(url_api + "/home")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      if (data.state == "success") {
+        document.write(data.data);
+      } else {
+        alert(data.alerts[0]);
+      }
+    })
+    .catch((error) => {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
+      alert("There has been a problem with your fetch operation:" + error);
+    });
+</script>
