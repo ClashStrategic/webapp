@@ -1,3 +1,10 @@
+## [0.4.1](https://github.com/ClashStrategic/webapp/compare/v0.4.0...v0.4.1) (2025-05-23)
+
+
+### Bug Fixes
+
+* **privacy:** add comprehensive privacy policy document ([52a99b1](https://github.com/ClashStrategic/webapp/commit/52a99b1ed7d8f4c7d5fae9d850f1a24069aa0a49))
+
 # [0.4.0](https://github.com/ClashStrategic/webapp/compare/v0.3.0...v0.4.0) (2025-05-22)
 
 
