@@ -103,9 +103,6 @@ export default function api(data, type, options, load) {
                     showDivToggle('loadContent', 'Notificación', res.data.res);
                 },
                 'ins-vis': () => { },
-                'ver-vCS': () => {
-                    res.data.newVersion && Config.actualizarSW(res.data.date, res.data.version);
-                },
                 'get-rl': () => {
                     console.log(res);
                     showDivToggle('loadContent', res.data.inf.title, res.data.inf.content);

@@ -55,9 +55,6 @@ async function initializeApp() {
     User.toggleSounds(Cookie.getCookie('sound_effects'));
     Cookie.setCookiesForSession();
 
-    //Espera la verificacion de una nueva version de la CS
-    await api({ verCSVersion: true }, 'ver-vCS');
-
     // Bienvenida a un nuevo usuario
     (Config.urlParam.get('new_user') && Cookie.getCookie('bienvenida') === 'false') &&
       Boot.showInfBox('¡Bienvenido a Clash Strategic!', 'reyes_bienvenida.webp', Boot.msgInit, 60);
