@@ -4,7 +4,7 @@ export default function initEventClick() {
         User.userInteracted && $('#audio_button')[0].play();
     });
 
-    $(document).on('click', 'button:not([type="submit"]), .img_emote_enviar, #div_sections_content, #capa_contenido, .div_res_men, .span-pag, .card--is-interactive, #btn_menu_perfil, .a_nom_pub, .a_nom_men, #span_acercade, #span_noti, .img_cam_banner, .pub_img, #btn_x_img_full, .cs-tooltip-image, .cs-deck-collection__box-btns-option, .avatar, #div_get_sb, .div_apply_est, .cs-deck__slot', function (e) {
+    $(document).on('click', 'button:not([type="submit"]), .img_emote_enviar, #div_sections_content, #capa_contenido, #div_tog_gen, .div_res_men, .span-pag, .card--is-interactive, #btn_menu_perfil, .a_nom_pub, .a_nom_men, #span_acercade, #span_noti, .img_cam_banner, .pub_img, #btn_x_img_full, .cs-tooltip-image, .cs-deck-collection__box-btns-option, .avatar, #div_get_sb, .div_apply_est, .cs-deck__slot', function (e) {
         // Evitar que el click normal interfiera con el toque largo o doble clic en las cartas del mazo
         if ($(this).closest('.card--is-interactive').parent().hasClass('cs-deck__slot') && Card.isLongPress) {
             // Si fue long press, no hacer nada más en el click normal
@@ -177,6 +177,7 @@ export default function initEventClick() {
         switch ($(this).attr('id')) {
             case 'div_sections_content'://desactiva las interacciones con los mensajes y de otros toggles activos
             case 'capa_contenido': // También se usa para cancelar selección de movimiento
+            case 'div_tog_gen': //toggle general
                 // Oculta respuestas y opciones si el clic no está en elementos específicos
                 if (!$(e.target).is('.div_res, .reply-btn, .reply-text, .img_chat_res')) {
                     $('.MsgChat').removeClass('div_tap_res').find('.div_res').fadeOut(250);
