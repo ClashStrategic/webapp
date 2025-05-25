@@ -1,73 +1,55 @@
-import Cookie from './utilsjs/cookies.js';
+import CookieModule from './utilsjs/cookies.js';
+import BootModule from './config/Boot.js';
+import ConfigModule from './config/Config.js';
+import ChatModule from './models/Chat.js';
+import SectionModule from './models/Section.js';
+import PublicationModule from './models/Publication.js';
+import UserModule from './models/User.js';
+import DeckModule from './models/Deck.js';
+import CardModule from './models/Card.js';
+import StrategyModule from './tools/Strategy.js';
+import apiModule from './utilsjs/api.js';
+import submitModule from './utilsjs/submit.js';
+import clickEventModule from './events/clickEvent.js';
+import otherEventModule from './events/otherEvent.js';
+import submitEventModule from './events/submitEvent.js';
 
-async function initializeApp() {
-  const csVersion = Cookie.getCookie('CSVersion') || "default";
+try {
+  window.Boot = BootModule;
+  window.Config = ConfigModule;
+  window.Chat = ChatModule;
+  window.Section = SectionModule;
+  window.Publication = PublicationModule;
+  window.User = UserModule;
+  window.Deck = DeckModule;
+  window.Card = CardModule;
+  window.Strategy = StrategyModule;
+  window.api = apiModule;
+  window.submit = submitModule;
+  window.Cookie = CookieModule;
 
-  const modulePaths = [
-    './config/Boot.js',
-    './config/Config.js',
-    './models/Chat.js',
-    './models/Section.js',
-    './models/Publication.js',
-    './models/User.js',
-    './models/Deck.js',
-    './models/Card.js',
-    './tools/Strategy.js',
-    './utilsjs/api.js',
-    './utilsjs/submit.js',
-    './events/clickEvent.js',
-    './events/otherEvent.js',
-    './events/submitEvent.js',
-  ];
+  submitEventModule();
+  clickEventModule();
+  otherEventModule();
 
-  try {
-    const modules = await Promise.all(
-      modulePaths.map(path => import(`${path}?v=${csVersion}`))
-    );
+  window.handleCredentialResponse = Config.handleCredentialResponse;
+  window.addSlick = Config.addSlick;
+  window.showDivToggle = Config.showDivToggle;
 
-    const [
-      BootModule, ConfigModule, ChatModule, SectionModule, PublicationModule, UserModule, DeckModule, CardModule, StrategyModule, apiModule,
-      submitModule, clickEventModule, otherEventModule, submitEventModule
-    ] = modules;
+  // Inicialización de la configuración del usuario
+  User.toggleSounds(Cookie.getCookie('sound_effects'));
+  Cookie.setCookiesForSession();
 
-    window.Boot = BootModule.default;
-    window.Config = ConfigModule.default;
-    window.Chat = ChatModule.default;
-    window.Section = SectionModule.default;
-    window.Publication = PublicationModule.default;
-    window.User = UserModule.default;
-    window.Deck = DeckModule.default;
-    window.Card = CardModule.default;
-    window.Strategy = StrategyModule.default;
-    window.api = apiModule.default;
-    window.submit = submitModule.default;
-    window.Cookie = Cookie;
+  // Bienvenida a un nuevo usuario
+  (Config.urlParam.get('new_user') && Cookie.getCookie('bienvenida') === 'false') &&
+    Boot.showInfBox('¡Bienvenido a Clash Strategic!', 'reyes_bienvenida.webp', Boot.msgInit, 60);
 
-    window.handleCredentialResponse = Config.handleCredentialResponse;
-    window.addSlick = Config.addSlick;
-    window.showDivToggle = Config.showDivToggle;
+  // Bienvenida a los usuarios invitados
+  Cookie.getCookie('TypeAcount') == 'invitado' && api({ PreCS: true }, 'show-pre');
 
-    submitEventModule.default();
-    clickEventModule.default();
-    otherEventModule.default();
-
-    // Inicialización de la configuración del usuario
-    User.toggleSounds(Cookie.getCookie('sound_effects'));
-    Cookie.setCookiesForSession();
-
-    // Bienvenida a un nuevo usuario
-    (Config.urlParam.get('new_user') && Cookie.getCookie('bienvenida') === 'false') &&
-      Boot.showInfBox('¡Bienvenido a Clash Strategic!', 'reyes_bienvenida.webp', Boot.msgInit, 60);
-
-    // Bienvenida a los usuarios invitados
-    Cookie.getCookie('TypeAcount') == 'invitado' && api({ PreCS: true }, 'show-pre');
-
-    // Activa seccion de cartas
-    $("#a_menu_cartas").click();
-  } catch (error) {
-    console.error("Error al cargar los módulos:", error);
-    alert("Error al cargar la aplicación. Por favor, recarga la página o intenta más tarde.");
-  }
+  // Activa seccion de cartas
+  $("#a_menu_cartas").click();
+} catch (error) {
+  console.error("Error al cargar los módulos:", error);
+  alert("Error al cargar la aplicación. Por favor, recarga la página o intenta más tarde.");
 }
-
-initializeApp();
