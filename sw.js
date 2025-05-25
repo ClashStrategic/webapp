@@ -28,8 +28,7 @@ function fetchImageUrls() {
     });
 }
 
-// Function to send messages to clients
-function sendMessageToClients(progress, msg) {
+function sendProgressUpdate(progress, msg) {
   self.clients.matchAll().then(clients => {
     clients.forEach(client => {
       client.postMessage({ type: 'progress', progress, msg });
@@ -48,14 +47,14 @@ self.addEventListener('install', event => {
         return cache.addAll(urlsToCache)
           .then(() => {
             console.log('[SW] Archivos base (urlsToCache) cacheados.');
-            sendMessageToClients(75, 'Archivos base listos, descargando imágenes...');
+            sendProgressUpdate(75, 'Archivos base listos, descargando imágenes...');
             return fetchImageUrls();
           })
           .then(imageData => {
             const { files, size } = imageData;
             const imageProgressMsg = `Descargando ${files.length} imágenes (${size?.toFixed(2) || 'desconocido'} MB)`;
             console.log(`[SW] ${imageProgressMsg}`);
-            sendMessageToClients(85, imageProgressMsg);
+            sendProgressUpdate(85, imageProgressMsg);
 
             // Volver a abrir el cache o usar la instancia 'cache' si aún es válida en este scope.
             // Por seguridad, podemos reabrirlo o asegurarnos de que 'cache' sigue siendo el objeto correcto.
@@ -79,11 +78,11 @@ self.addEventListener('install', event => {
       })
       .then(() => {
         console.log('[SW] Recursos cacheados correctamente');
-        sendMessageToClients(100, 'Recursos cacheados correctamente');
+        sendProgressUpdate(100, 'Recursos cacheados correctamente');
       })
       .catch(err => {
         console.error('[SW] Error durante la instalación:', err);
-        sendMessageToClients(0, 'Error al cachear los recursos');
+        sendProgressUpdate(0, 'Error al cachear los recursos');
       })
   );
 });
