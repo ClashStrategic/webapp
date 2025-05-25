@@ -14,9 +14,8 @@ const urlsToCache = [
   'TermsService.html'
 ];
 
-// Function to fetch image URLs from the server
-function fetchImageUrls() {
-  return fetch('list_images.php')
+function getUrlFiles() {
+  return fetch('list_url_files.php')
     .then(response => {
       if (!response.ok) throw new Error(`HTTP error: ${response.status} ${response.statusText}`);
       return response.json();
@@ -48,7 +47,7 @@ self.addEventListener('install', event => {
           .then(() => {
             console.log('[SW] Archivos base (urlsToCache) cacheados.');
             sendProgressUpdate(75, 'Archivos base listos, descargando imágenes...');
-            return fetchImageUrls();
+            return getUrlFiles();
           })
           .then(imageData => {
             const { files, size } = imageData;
@@ -56,21 +55,19 @@ self.addEventListener('install', event => {
             console.log(`[SW] ${imageProgressMsg}`);
             sendProgressUpdate(85, imageProgressMsg);
 
-            // Volver a abrir el cache o usar la instancia 'cache' si aún es válida en este scope.
-            // Por seguridad, podemos reabrirlo o asegurarnos de que 'cache' sigue siendo el objeto correcto.
             return caches.open(CACHE_NAME).then(imageCache => {
               return Promise.all(files.map(url =>
-                fetch(url, { cache: 'no-store' }) // Intentar asegurar una copia fresca de la imagen
+                fetch(url, { cache: 'no-store' })
                   .then(response => {
                     if (!response.ok) {
                       console.warn(`[SW] Fallo al obtener imagen ${url}: ${response.status}`);
-                      return null; // No lanzar error para permitir que otras imágenes se cacheen
+                      return null;
                     }
                     return imageCache.put(url, response.clone());
                   })
                   .catch(err => {
                     console.warn('[SW] No se pudo cachear imagen:', url, err);
-                    return null; // Asegurar que Promise.all no se rechace prematuramente
+                    return null;
                   })
               ));
             });
