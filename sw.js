@@ -14,8 +14,6 @@ const urlsToCache = [
   'TermsService.html'
 ];
 
-let cachedProgress = null;
-
 // Function to fetch image URLs from the server
 function fetchImageUrls() {
   return fetch('list_images.php')
@@ -40,26 +38,44 @@ function sendMessageToClients(progress, msg) {
 }
 
 self.addEventListener('install', event => {
-  console.log('[SW] Instalando...');
+  console.log('[SW] Instalando versión:', VERSION);
   self.skipWaiting();
 
   event.waitUntil(
-    fetchImageUrls()
-      .then(imageData => {
-        const { files, size } = imageData;
-        cachedProgress = { progress: 85, msg: `Descargando ${size?.toFixed(2) || 'desconocido'}mb` };
-        sendMessageToClients(cachedProgress.progress, cachedProgress.msg);
-        console.log(`[SW] Caché de imágenes: ${files.length} archivos`);
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('[SW] Cache abierto:', CACHE_NAME);
+        return cache.addAll(urlsToCache)
+          .then(() => {
+            console.log('[SW] Archivos base (urlsToCache) cacheados.');
+            sendMessageToClients(75, 'Archivos base listos, descargando imágenes...');
+            return fetchImageUrls();
+          })
+          .then(imageData => {
+            const { files, size } = imageData;
+            const imageProgressMsg = `Descargando ${files.length} imágenes (${size?.toFixed(2) || 'desconocido'} MB)`;
+            console.log(`[SW] ${imageProgressMsg}`);
+            sendMessageToClients(85, imageProgressMsg);
 
-        return caches.open(CACHE_NAME).then(cache => {
-          return cache.addAll(urlsToCache).then(() => {
-            return Promise.all(files.map(url =>
-              caches.match(url).then(response =>
-                response || cache.add(url).catch(err => console.warn('[SW] No se pudo cachear:', url, err))
-              )
-            ));
+            // Volver a abrir el cache o usar la instancia 'cache' si aún es válida en este scope.
+            // Por seguridad, podemos reabrirlo o asegurarnos de que 'cache' sigue siendo el objeto correcto.
+            return caches.open(CACHE_NAME).then(imageCache => {
+              return Promise.all(files.map(url =>
+                fetch(url, { cache: 'no-store' }) // Intentar asegurar una copia fresca de la imagen
+                  .then(response => {
+                    if (!response.ok) {
+                      console.warn(`[SW] Fallo al obtener imagen ${url}: ${response.status}`);
+                      return null; // No lanzar error para permitir que otras imágenes se cacheen
+                    }
+                    return imageCache.put(url, response.clone());
+                  })
+                  .catch(err => {
+                    console.warn('[SW] No se pudo cachear imagen:', url, err);
+                    return null; // Asegurar que Promise.all no se rechace prematuramente
+                  })
+              ));
+            });
           });
-        });
       })
       .then(() => {
         console.log('[SW] Recursos cacheados correctamente');
@@ -73,22 +89,31 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
-  console.log('[SW] Activando...');
+  console.log('[SW] Activando versión:', VERSION);
   event.waitUntil(
     caches.keys().then(cacheNames =>
       Promise.all(
         cacheNames
           .filter(name => name !== CACHE_NAME && name.startsWith('clash-strategic-webapp-'))
-          .map(name => caches.delete(name))
+          .map(name => {
+            console.log('[SW] Borrando cache antiguo:', name);
+            return caches.delete(name);
+          })
       )
-    ).then(() => self.clients.claim())
+    ).then(() => {
+      console.log('[SW] Caches antiguos borrados. Reclamando clientes...');
+      return self.clients.claim();
+    }).then(() => {
+      console.log('[SW] Clientes reclamados.');
+      self.clients.matchAll().then(clients => {
+        clients.forEach(client => {
+          client.postMessage({ type: 'ACTIVATED', version: VERSION });
+        });
+      });
+    }).catch(err => {
+      console.error('[SW] Error durante la activación:', err);
+    })
   );
-
-  self.clients.matchAll().then(clients => {
-    clients.forEach(client => {
-      client.postMessage({ type: 'ACTIVATED', version: VERSION });
-    });
-  });
 });
 
 self.addEventListener('fetch', event => {
