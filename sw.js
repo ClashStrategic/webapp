@@ -2,7 +2,16 @@ const VERSION = '0.4.1';
 const CACHE_NAME = `clash-strategic-webapp-${VERSION}`;
 const urlsToCache = [
   'Frontend/src/js/main.js',
-  'Frontend/src/css/main.css'
+  'installsw.js',
+  'Frontend/src/css/main.css',
+  'index.html',
+  'home.html',
+  'error404.html',
+  'error500.html',
+  'maintenance.html',
+  'PrivacyPolicy.html',
+  'RefundPolicy.html',
+  'TermsService.html'
 ];
 
 let cachedProgress = null;
