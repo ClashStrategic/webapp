@@ -1,8 +1,10 @@
 
 function loadCS(progress, msg = 'Cargando Recursos...') {
-    document.getElementById('span_msg_load').textContent = msg;
-    document.getElementById('span_num_por').textContent = progress + '%';
-    document.getElementById('div_porcentage').style.width = progress + '%';
+    if (document.getElementById('span_msg_load') != null) {
+        document.getElementById('span_msg_load').textContent = msg;
+        document.getElementById('span_num_por').textContent = progress + '%';
+        document.getElementById('div_porcentage').style.width = progress + '%';
+    }
 }
 
 if ('serviceWorker' in navigator) {
