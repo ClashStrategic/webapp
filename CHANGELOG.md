@@ -1,3 +1,10 @@
+## [0.4.2](https://github.com/ClashStrategic/webapp/compare/v0.4.1...v0.4.2) (2025-05-23)
+
+
+### Bug Fixes
+
+* **tooltip:** Activate fading by pressing outside the tooltip when it is in the general toggle ([0a1a3ce](https://github.com/ClashStrategic/webapp/commit/0a1a3ce2958f6fc1b1fbaf195f18b98ce0750f39))
+
 ## [0.4.1](https://github.com/ClashStrategic/webapp/compare/v0.4.0...v0.4.1) (2025-05-23)
 
 
