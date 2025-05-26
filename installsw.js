@@ -59,8 +59,10 @@ function setupMessageListener(callbackOnActive = null) {
         }
 
         if (data.type === 'ACTIVATED') {
-            console.log('SW activado (mensaje recibido de versión:', data.version, ')');
+            console.log('SW activado (mensaje recibido de versión:', data.version, 'compilada el:', data.datetime, ')');
             swState.currentVersion = data.version;
+            localStorage.setItem('sw_version', data.version);
+            localStorage.setItem('sw_datetime', data.datetime);
             loadCS(100, 'Service Worker Activado');
 
             if (!swState.isNewVersionInstalling) {
