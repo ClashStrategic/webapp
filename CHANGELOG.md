@@ -1,3 +1,10 @@
+# [0.6.0](https://github.com/ClashStrategic/webapp/compare/v0.5.0...v0.6.0) (2025-05-26)
+
+
+### Features
+
+* **sw:** enhance service worker update handling ([49e2a49](https://github.com/ClashStrategic/webapp/commit/49e2a495c460ded535cfa90ba62be1eb60f618ca))
+
 # [0.5.0](https://github.com/ClashStrategic/webapp/compare/v0.4.3...v0.5.0) (2025-05-26)
 
 
