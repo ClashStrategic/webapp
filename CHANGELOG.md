@@ -1,3 +1,10 @@
+# [0.5.0](https://github.com/ClashStrategic/webapp/compare/v0.4.3...v0.5.0) (2025-05-26)
+
+
+### Features
+
+* **sw:** store service worker (webapp) version and build datetime ([0cbc3a1](https://github.com/ClashStrategic/webapp/commit/0cbc3a14831fdf7c8d52adb188ba65ccdf551a93))
+
 ## [0.4.3](https://github.com/ClashStrategic/webapp/compare/v0.4.2...v0.4.3) (2025-05-26)
 
 
