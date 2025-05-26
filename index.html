@@ -15,7 +15,6 @@
 
   <link rel="icon" type="image/png" sizes="512x512" href="./Frontend/static/media/styles/logo/logo_cs.webp">
 
-  <script src="installsw.js" defer></script>
   <style>
     #img_logo_index {
       position: fixed;
@@ -80,5 +79,11 @@
     <div id="div_porcentage"></div>
   </div>
 </body>
+  <script src="installsw.js"></script>
+  <script>
+      installSW( () => {
+       location.href = "home";
+      });
+  </script>
 
 </html>

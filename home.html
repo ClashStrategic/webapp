@@ -1,36 +1,40 @@
-<script>
-  if (window.location.hostname === "localhost") {
-    localStorage.setItem(
-      "base_url_api",
-      "http://localhost/clash-strategic-api"
-    );
-  } else if (window.location.hostname === "clashstrategic.great-site.net") {
-    localStorage.setItem(
-      "base_url_api",
-      "https://clashstrategic.great-site.net"
-    );
-  }
+<script src="installsw.js"></script>
 
-  fetch(localStorage.getItem("base_url_api") + "/home")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data);
-      if (data.state == "success") {
-        document.write(data.data);
-      } else {
-        alert(data.alerts[0]);
-      }
-    })
-    .catch((error) => {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error
+<script>
+  installSW(() => {
+    if (window.location.hostname === "localhost") {
+      localStorage.setItem(
+        "base_url_api",
+        "http://localhost/clash-strategic-api"
       );
-      alert("There has been a problem with your fetch operation:" + error);
-    });
+    } else if (window.location.hostname === "clashstrategic.great-site.net") {
+      localStorage.setItem(
+        "base_url_api",
+        "https://clashstrategic.great-site.net"
+      );
+    }
+
+    fetch(localStorage.getItem("base_url_api") + "/home")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        if (data.state == "success") {
+          document.write(data.data);
+        } else {
+          alert(data.alerts[0]);
+        }
+      })
+      .catch((error) => {
+        console.error(
+          "There has been a problem with your fetch operation:",
+          error
+        );
+        alert("There has been a problem with your fetch operation:" + error);
+      });
+  });
 </script>
