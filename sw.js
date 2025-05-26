@@ -14,6 +14,11 @@ const urlsToCache = [
   'TermsService.html'
 ];
 
+function addCacheBuster(url) {
+  const separator = url.includes('?') ? '&' : '?';
+  return `${url}${separator}v=${VERSION}&t=${Date.now()}`;
+}
+
 function getUrlFiles() {
   return fetch('list_url_files.php')
     .then(response => {
@@ -40,42 +45,75 @@ self.addEventListener('install', event => {
   self.skipWaiting();
 
   event.waitUntil(
-    caches.open(CACHE_NAME)
+    caches.delete(CACHE_NAME)
+      .then(() => {
+        console.log('[SW] Cache anterior eliminado, creando nuevo cache:', CACHE_NAME);
+        return caches.open(CACHE_NAME);
+      })
       .then(cache => {
         console.log('[SW] Cache abierto:', CACHE_NAME);
-        return cache.addAll(urlsToCache)
+        sendProgressUpdate(25, 'Descargando archivos base...');
+
+        // Cachear archivos base con cache busting
+        const urlsWithCacheBuster = urlsToCache.map(url => addCacheBuster(url));
+        return Promise.all(urlsWithCacheBuster.map((url, index) =>
+          fetch(url, {
+            cache: 'no-cache',
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache'
+            }
+          })
+            .then(response => {
+              if (!response.ok) {
+                console.warn(`[SW] Fallo al obtener archivo base ${urlsToCache[index]}: ${response.status}`);
+                return null;
+              }
+              // Guardar con la URL original (sin cache buster) para que el fetch funcione
+              return cache.put(urlsToCache[index], response.clone());
+            })
+            .catch(err => {
+              console.warn('[SW] No se pudo cachear archivo base:', urlsToCache[index], err);
+              return null;
+            })
+        ))
           .then(() => {
             console.log('[SW] Archivos base cacheados.');
-            sendProgressUpdate(75, 'Archivos base listos, descargando...');
+            sendProgressUpdate(50, 'Archivos base listos, obteniendo lista de archivos...');
             return getUrlFiles();
           })
           .then(imageData => {
             const { files, size } = imageData;
-            const imageProgressMsg = `Descargando ${files.length} Archivos (${size?.toFixed(2) || 'desconocido'} MB)`;
+            const imageProgressMsg = `Descargando ${files.length} archivos adicionales (${size?.toFixed(2) || 'desconocido'} MB)`;
             console.log(`[SW] ${imageProgressMsg}`);
-            sendProgressUpdate(85, imageProgressMsg);
+            sendProgressUpdate(75, imageProgressMsg);
 
-            return caches.open(CACHE_NAME).then(imageCache => {
-              return Promise.all(files.map(url =>
-                fetch(url, { cache: 'no-store' })
-                  .then(response => {
-                    if (!response.ok) {
-                      console.warn(`[SW] Fallo al obtener archivo ${url}: ${response.status}`);
-                      return null;
-                    }
-                    return imageCache.put(url, response.clone());
-                  })
-                  .catch(err => {
-                    console.warn('[SW] No se pudo cachear archivo:', url, err);
+            return Promise.all(files.map(url => {
+              const urlWithCacheBuster = addCacheBuster(url);
+              return fetch(urlWithCacheBuster, {
+                cache: 'no-cache',
+                headers: {
+                  'Cache-Control': 'no-cache, no-store, must-revalidate',
+                  'Pragma': 'no-cache'
+                }
+              })
+                .then(response => {
+                  if (!response.ok) {
+                    console.warn(`[SW] Fallo al obtener archivo ${url}: ${response.status}`);
                     return null;
-                  })
-              ));
-            });
+                  }
+                  return cache.put(url, response.clone());
+                })
+                .catch(err => {
+                  console.warn('[SW] No se pudo cachear archivo:', url, err);
+                  return null;
+                });
+            }));
           });
       })
       .then(() => {
-        console.log('[SW] Recursos cacheados correctamente');
-        sendProgressUpdate(100, 'Recursos cacheados correctamente');
+        console.log('[SW] Todos los recursos cacheados correctamente');
+        sendProgressUpdate(100, 'Todos los recursos cacheados correctamente');
       })
       .catch(err => {
         console.error('[SW] Error durante la instalación:', err);
@@ -87,24 +125,26 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   console.log('[SW] Activando versión:', VERSION);
   event.waitUntil(
-    caches.keys().then(cacheNames =>
-      Promise.all(
+    caches.keys().then(cacheNames => {
+      console.log('[SW] Caches encontrados:', cacheNames);
+      return Promise.all(
         cacheNames
           .filter(name => name !== CACHE_NAME && name.startsWith('clash-strategic-webapp-'))
           .map(name => {
             console.log('[SW] Borrando cache antiguo:', name);
             return caches.delete(name);
           })
-      )
-    ).then(() => {
+      );
+    }).then(() => {
       console.log('[SW] Caches antiguos borrados. Reclamando clientes...');
       return self.clients.claim();
     }).then(() => {
       console.log('[SW] Clientes reclamados.');
-      self.clients.matchAll().then(clients => {
+      return self.clients.matchAll().then(clients => {
         clients.forEach(client => {
           client.postMessage({ type: 'ACTIVATED', version: VERSION });
         });
+        console.log(`[SW] Notificación enviada a ${clients.length} clientes`);
       });
     }).catch(err => {
       console.error('[SW] Error durante la activación:', err);
@@ -115,9 +155,22 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
-      return response || fetch(event.request);
+      if (response) {
+        //console.log('[SW] Sirviendo desde cache:', event.request.url);
+        return response;
+      }
+
+      // console.log('[SW] Obteniendo de la red:', event.request.url);
+      return fetch(event.request).catch(err => {
+        console.error('[SW] Error al obtener de la red:', event.request.url, err);
+        if (event.request.destination === 'document') {
+          return caches.match('/error404.html');
+        }
+        throw err;
+      });
     }).catch(err => {
       console.error('[SW] Error en fetch:', err);
+      throw err;
     })
   );
 });
