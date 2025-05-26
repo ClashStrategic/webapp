@@ -23,7 +23,7 @@ function getUrlFiles() {
     .then(data => {
       if (Array.isArray(data)) return { files: data, size: 0 };
       if (data && typeof data === 'object') return { files: Object.values(data.allFiles), size: data.sizeAll };
-      throw new Error('Respuesta inesperada al obtener imágenes');
+      throw new Error('Respuesta inesperada al obtener archivos');
     });
 }
 
@@ -45,13 +45,13 @@ self.addEventListener('install', event => {
         console.log('[SW] Cache abierto:', CACHE_NAME);
         return cache.addAll(urlsToCache)
           .then(() => {
-            console.log('[SW] Archivos base (urlsToCache) cacheados.');
-            sendProgressUpdate(75, 'Archivos base listos, descargando imágenes...');
+            console.log('[SW] Archivos base cacheados.');
+            sendProgressUpdate(75, 'Archivos base listos, descargando...');
             return getUrlFiles();
           })
           .then(imageData => {
             const { files, size } = imageData;
-            const imageProgressMsg = `Descargando ${files.length} imágenes (${size?.toFixed(2) || 'desconocido'} MB)`;
+            const imageProgressMsg = `Descargando ${files.length} Archivos (${size?.toFixed(2) || 'desconocido'} MB)`;
             console.log(`[SW] ${imageProgressMsg}`);
             sendProgressUpdate(85, imageProgressMsg);
 
@@ -60,13 +60,13 @@ self.addEventListener('install', event => {
                 fetch(url, { cache: 'no-store' })
                   .then(response => {
                     if (!response.ok) {
-                      console.warn(`[SW] Fallo al obtener imagen ${url}: ${response.status}`);
+                      console.warn(`[SW] Fallo al obtener archivo ${url}: ${response.status}`);
                       return null;
                     }
                     return imageCache.put(url, response.clone());
                   })
                   .catch(err => {
-                    console.warn('[SW] No se pudo cachear imagen:', url, err);
+                    console.warn('[SW] No se pudo cachear archivo:', url, err);
                     return null;
                   })
               ));
