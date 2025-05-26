@@ -1,3 +1,11 @@
+## [0.4.3](https://github.com/ClashStrategic/webapp/compare/v0.4.2...v0.4.3) (2025-05-26)
+
+
+### Bug Fixes
+
+* **api:** remove version check from API response handling ([96bac2c](https://github.com/ClashStrategic/webapp/commit/96bac2cb84d6d596c466cbee7cc00f5c09e07ad3))
+* **sw:** update service worker registration and caching logic ([e94c752](https://github.com/ClashStrategic/webapp/commit/e94c7525ef46bbc4dde8c2a70cfed126878bb15b))
+
 ## [0.4.2](https://github.com/ClashStrategic/webapp/compare/v0.4.1...v0.4.2) (2025-05-23)
 
 
