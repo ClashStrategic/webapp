@@ -1,4 +1,5 @@
 const VERSION = '0.4.1';
+const DATETIME = '2024-01-01T00:00:00.000Z';
 const CACHE_NAME = `clash-strategic-webapp-${VERSION}`;
 const urlsToCache = [
   'Frontend/src/js/main.js',
@@ -41,7 +42,7 @@ function sendProgressUpdate(progress, msg) {
 }
 
 self.addEventListener('install', event => {
-  console.log('[SW] Instalando versión:', VERSION);
+  console.log('[SW] Instalando versión:', VERSION, 'compilada el:', DATETIME);
   self.skipWaiting();
 
   event.waitUntil(
@@ -123,7 +124,7 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
-  console.log('[SW] Activando versión:', VERSION);
+  console.log('[SW] Activando versión:', VERSION, 'compilada el:', DATETIME);
   event.waitUntil(
     caches.keys().then(cacheNames => {
       console.log('[SW] Caches encontrados:', cacheNames);
@@ -142,7 +143,7 @@ self.addEventListener('activate', event => {
       console.log('[SW] Clientes reclamados.');
       return self.clients.matchAll().then(clients => {
         clients.forEach(client => {
-          client.postMessage({ type: 'ACTIVATED', version: VERSION });
+          client.postMessage({ type: 'ACTIVATED', version: VERSION, datetime: DATETIME });
         });
         console.log(`[SW] Notificación enviada a ${clients.length} clientes`);
       });
