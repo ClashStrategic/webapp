@@ -12,7 +12,9 @@ let swState = {
     isNewVersionInstalling: false,
     currentVersion: null,
     hasController: false,
-    registrationPromise: null
+    registrationPromise: null,
+    isRealUpdate: false,
+    previousVersion: null
 };
 
 function executeCallbackOnActiveOnce(callback) {
@@ -25,6 +27,14 @@ function executeCallbackOnActiveOnce(callback) {
     }
 }
 
+function showUpdateAlertAndReload() {
+    console.log('Mostrando alerta de actualización y recargando página...');
+    alert('¡Aplicación actualizada! La página se recargará para aplicar los cambios.');
+    setTimeout(() => {
+        window.location.reload();
+    }, 500);
+}
+
 function detectNewVersionInstalling(registration) {
     const hasInstalling = !!registration.installing;
     const hasWaiting = !!registration.waiting;
@@ -33,11 +43,16 @@ function detectNewVersionInstalling(registration) {
     swState.isNewVersionInstalling = (hasInstalling && hasController) || hasWaiting;
     swState.hasController = hasController;
 
+    swState.previousVersion = localStorage.getItem('sw_version');
+    swState.isRealUpdate = hasController && swState.previousVersion && swState.isNewVersionInstalling;
+
     console.log('Detección de nueva versión:', {
         hasInstalling,
         hasWaiting,
         hasController,
-        isNewVersionInstalling: swState.isNewVersionInstalling
+        isNewVersionInstalling: swState.isNewVersionInstalling,
+        previousVersion: swState.previousVersion,
+        isRealUpdate: swState.isRealUpdate
     });
 
     return swState.isNewVersionInstalling;
@@ -60,16 +75,29 @@ function setupMessageListener(callbackOnActive = null) {
 
         if (data.type === 'ACTIVATED') {
             console.log('SW activado (mensaje recibido de versión:', data.version, 'compilada el:', data.datetime, ')');
+
+            const previousVersion = localStorage.getItem('sw_version');
+
+            const isRealUpdate = previousVersion && previousVersion !== data.version && swState.hasController;
+
+            console.log('Análisis de actualización:', {
+                previousVersion,
+                newVersion: data.version,
+                hasController: swState.hasController,
+                isRealUpdate
+            });
+
             swState.currentVersion = data.version;
             localStorage.setItem('sw_version', data.version);
             localStorage.setItem('sw_datetime', data.datetime);
             loadCS(100, 'Service Worker Activado');
 
-            if (!swState.isNewVersionInstalling) {
-                console.log('SW activado - ejecutando callback (no hay nueva versión instalándose)');
-                executeCallbackOnActiveOnce(callbackOnActive);
+            if (isRealUpdate) {
+                console.log('SW activado - actualización real detectada, mostrando alerta y recargando');
+                showUpdateAlertAndReload();
             } else {
-                console.log('SW activado - nueva versión detectada, callback se ejecutará después de la actualización');
+                console.log('SW activado - primera instalación o sin cambios, ejecutando callback');
+                executeCallbackOnActiveOnce(callbackOnActive);
             }
         }
 
@@ -116,7 +144,9 @@ function handleServiceWorkerStates(registration, callbackOnActive) {
                 console.log('SW activado después de instalación');
                 swState.isNewVersionInstalling = false;
 
-                if (isUpdate) {
+                if (isUpdate && swState.isRealUpdate) {
+                    console.log('Actualización real completada - la alerta y recarga se manejarán en el mensaje ACTIVATED');
+                } else if (isUpdate) {
                     console.log('Actualización completada - ejecutando callback');
                     executeCallbackOnActiveOnce(callbackOnActive);
                 }
@@ -149,10 +179,15 @@ function installSW(callbackOnActive = null) {
         return Promise.reject(new Error('Service Worker no soportado'));
     }
 
-    setupMessageListener(callbackOnActive);
-
     const controller = navigator.serviceWorker.controller;
     swState.hasController = !!controller;
+
+    console.log('Estado inicial:', {
+        hasController: swState.hasController,
+        controller: controller ? 'presente' : 'ausente'
+    });
+
+    setupMessageListener(callbackOnActive);
 
     if (!controller) {
         loadCS(25, 'Iniciando Service Worker...');
