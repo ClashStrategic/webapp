@@ -27,9 +27,9 @@ function executeCallbackOnActiveOnce(callback) {
     }
 }
 
-function showUpdateAlertAndReload() {
+function showUpdateAlertAndReload(version) {
     console.log('Mostrando alerta de actualización y recargando página...');
-    alert('¡Aplicación actualizada! La página se recargará para aplicar los cambios.');
+    alert('¡Aplicación actualizada a la versión ' + version + '! La página se recargará para aplicar los cambios.');
     setTimeout(() => {
         window.location.reload();
     }, 500);
@@ -94,7 +94,7 @@ function setupMessageListener(callbackOnActive = null) {
 
             if (isRealUpdate) {
                 console.log('SW activado - actualización real detectada, mostrando alerta y recargando');
-                showUpdateAlertAndReload();
+                showUpdateAlertAndReload(data.version);
             } else {
                 console.log('SW activado - primera instalación o sin cambios, ejecutando callback');
                 executeCallbackOnActiveOnce(callbackOnActive);
