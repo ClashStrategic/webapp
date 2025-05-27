@@ -37,6 +37,7 @@
     />
 
     <!-- Java Script -->
+    <script type="module" src="./Frontend/src/js/main.js"></script>
     <script src="installsw.js"></script>
   </head>
 
@@ -66,10 +67,27 @@
           console.log(data);
           if (data.state == "success") {
             document.body.innerHTML = data.data;
-            const script = document.createElement("script");
-            script.type = "module";
-            script.src = "./Frontend/src/js/main.js";
-            document.head.appendChild(script);
+
+            // Inicialización de la configuración del usuario
+            User.toggleSounds(Cookie.getCookie("sound_effects"));
+            Cookie.setCookiesForSession();
+
+            // Bienvenida a un nuevo usuario
+            Config.urlParam.get("new_user") &&
+              Cookie.getCookie("bienvenida") === "false" &&
+              Boot.showInfBox(
+                "¡Bienvenido a Clash Strategic!",
+                "reyes_bienvenida.webp",
+                Boot.msgInit,
+                60
+              );
+
+            // Bienvenida a los usuarios invitados
+            Cookie.getCookie("TypeAcount") == "invitado" &&
+              api({ PreCS: true }, "show-pre");
+
+            // Activa seccion de cartas
+            $("#a_menu_cartas").click();
           } else {
             alert(data.alerts[0]);
           }

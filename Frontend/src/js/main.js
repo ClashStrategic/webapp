@@ -35,20 +35,6 @@ try {
   window.handleCredentialResponse = Config.handleCredentialResponse;
   window.addSlick = Config.addSlick;
   window.showDivToggle = Config.showDivToggle;
-
-  // Inicialización de la configuración del usuario
-  User.toggleSounds(Cookie.getCookie('sound_effects'));
-  Cookie.setCookiesForSession();
-
-  // Bienvenida a un nuevo usuario
-  (Config.urlParam.get('new_user') && Cookie.getCookie('bienvenida') === 'false') &&
-    Boot.showInfBox('¡Bienvenido a Clash Strategic!', 'reyes_bienvenida.webp', Boot.msgInit, 60);
-
-  // Bienvenida a los usuarios invitados
-  Cookie.getCookie('TypeAcount') == 'invitado' && api({ PreCS: true }, 'show-pre');
-
-  // Activa seccion de cartas
-  $("#a_menu_cartas").click();
 } catch (error) {
   console.error("Error al cargar los módulos:", error);
   alert("Error al cargar la aplicación. Por favor, recarga la página o intenta más tarde.");
