@@ -1,3 +1,10 @@
+## [0.6.2](https://github.com/ClashStrategic/webapp/compare/v0.6.1...v0.6.2) (2025-05-27)
+
+
+### Bug Fixes
+
+* **sw:** include version in update alert message ([1dbd619](https://github.com/ClashStrategic/webapp/commit/1dbd619e86172447948fd44612986cd02217f431))
+
 ## [0.6.1](https://github.com/ClashStrategic/webapp/compare/v0.6.0...v0.6.1) (2025-05-27)
 
 
