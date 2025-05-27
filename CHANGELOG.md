@@ -1,3 +1,10 @@
+## [0.6.1](https://github.com/ClashStrategic/webapp/compare/v0.6.0...v0.6.1) (2025-05-27)
+
+
+### Bug Fixes
+
+* **home:** Integrate the initial HTML with dependencies to avoid errors with scripts ([0d5b304](https://github.com/ClashStrategic/webapp/commit/0d5b30482c7413d9c8fef17b3ccc0d6f3945685a))
+
 # [0.6.0](https://github.com/ClashStrategic/webapp/compare/v0.5.0...v0.6.0) (2025-05-26)
 
 
