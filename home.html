@@ -1,40 +1,86 @@
-<script src="installsw.js"></script>
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Clash Strategic</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<script>
-  installSW(() => {
-    if (window.location.hostname === "localhost") {
-      localStorage.setItem(
-        "base_url_api",
-        "http://localhost/clash-strategic-api"
-      );
-    } else if (window.location.hostname === "clashstrategic.great-site.net") {
-      localStorage.setItem(
-        "base_url_api",
-        "https://clashstrategic.great-site.net"
-      );
-    }
+    <!-- <link rel="manifest" href="./App/Data/manifest.json">
+  <link rel="manifest" href="./App/Data/manifest.webmanifest"> -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="./Frontend/static/media/styles/logo/logo_cs.webp"
+    />
 
-    fetch(localStorage.getItem("base_url_api") + "/home")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        if (data.state == "success") {
-          document.write(data.data);
-        } else {
-          alert(data.alerts[0]);
-        }
-      })
-      .catch((error) => {
-        console.error(
-          "There has been a problem with your fetch operation:",
-          error
+    <!-- ESTILOS CSS -->
+    <link rel="stylesheet" type="text/css" href="./Frontend/src/css/main.css" />
+
+    <!-- Librerias -->
+    <script src="https://app.lemonsqueezy.com/js/lemon.js"></script>
+    <script src="./Frontend/src/js/libraries/js/jquery.min.js"></script>
+    <script src="./Frontend/src/js/libraries/js/htmx.min.js"></script>
+    <script src="./Frontend/src/js/libraries/js/jquery.inview.js"></script>
+    <script src="./Frontend/src/js/libraries/image/pica.min.js"></script>
+    <script src="./Frontend/src/js/libraries/ui/slick-1.8.1/slick/slick.min.js"></script>
+    <script src="./Frontend/src/js/libraries/ui/chart/chart.umd.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./Frontend/src/js/libraries/ui/slick-1.8.1/slick/slick.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./Frontend/src/js/libraries/ui/slick-1.8.1/slick/slick-theme.css"
+    />
+
+    <!-- Java Script -->
+    <script src="installsw.js"></script>
+  </head>
+
+  <body></body>
+  <script>
+    installSW(() => {
+      if (window.location.hostname === "localhost") {
+        localStorage.setItem(
+          "base_url_api",
+          "http://localhost/clash-strategic-api"
         );
-        alert("There has been a problem with your fetch operation:" + error);
-      });
-  });
-</script>
+      } else if (window.location.hostname === "clashstrategic.great-site.net") {
+        localStorage.setItem(
+          "base_url_api",
+          "https://clashstrategic.great-site.net"
+        );
+      }
+
+      fetch(localStorage.getItem("base_url_api") + "/home")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          if (data.state == "success") {
+            document.body.innerHTML = data.data;
+            const script = document.createElement("script");
+            script.type = "module";
+            script.src = "./Frontend/src/js/main.js";
+            document.head.appendChild(script);
+          } else {
+            alert(data.alerts[0]);
+          }
+        })
+        .catch((error) => {
+          console.error(
+            "There has been a problem with your fetch operation:",
+            error
+          );
+          alert("There has been a problem with your fetch operation:" + error);
+        });
+    });
+  </script>
+</html>
