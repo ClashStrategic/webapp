@@ -599,7 +599,7 @@ export default class Deck {
     static handleAnalyzeDeckSubmit(formElement) {
         if ($(".cs-deck__slot").toArray().every(element => $(element).data("lleno") !== 'no')) {
             const analysisType = formElement.find('input[name="type"]').val();
-            const cost = analysisType === 'advanced' ? '5' : '0';
+            const cost = analysisType === 'advanced' ? '3' : '0';
             let msg = `¿Desea Analizar el Mazo de forma ${analysisType}?, costará ${cost} gemas`;
             let analysisEvo;
 
