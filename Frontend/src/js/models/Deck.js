@@ -571,7 +571,7 @@ export default class Deck {
         }
 
         if (confirm("El Mazo se Reemplazará por el Mazo Actual, asegurate que sea el que deseas o que los slots esten Vacios.") &&
-            (level != "basic" ? confirm(`¿Desea gastar ${costGems.level} gemas para crear el mazo?`) : true)) {
+            (level != "basic" ? confirm(`¿Desea gastar ${costGems[level]} gemas para crear el mazo?`) : true)) {
             let formData = formElement.serializeArray().reduce(function (obj, item) {
                 obj[item.name] = item.value;
                 return obj;
