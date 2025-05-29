@@ -1,3 +1,11 @@
+## [0.6.3](https://github.com/ClashStrategic/webapp/compare/v0.6.2...v0.6.3) (2025-05-29)
+
+
+### Bug Fixes
+
+* **Deck:** correct gem cost retrieval in deck creation confirmation ([56a37da](https://github.com/ClashStrategic/webapp/commit/56a37da5119664fb488c50547dd5b15afaa499bd))
+* **Deck:** update gem cost for advanced analysis ([88f81ec](https://github.com/ClashStrategic/webapp/commit/88f81ec0ed1459bd15b1476d624a2ae0aa38da85))
+
 ## [0.6.2](https://github.com/ClashStrategic/webapp/compare/v0.6.1...v0.6.2) (2025-05-27)
 
 
