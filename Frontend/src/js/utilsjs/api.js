@@ -94,11 +94,6 @@ export default function api(data, type, options, load) {
                         alert(res.data.res);
                     }
                 },
-                /*                 'get-com': () => {
-                                    options.prepend(res.data.res);
-                                    scrollToEnd($('.caja-coment'));
-                                    load.data('getcom', 'yes');
-                                }, */
                 'get-not': () => {
                     showDivToggle('loadContent', 'Notificación', res.data.res);
                 },
@@ -117,36 +112,6 @@ export default function api(data, type, options, load) {
                     $('#div_pubusu').html(res.data.html);
                     $('#div_perfilusu').scrollTop(0);
                 },
-                /*                 'pub-all': () => {
-                                    $('#nuevaspublicaciones').html(res.data.html);
-                                    lazyloading();
-                                }, */
-                /*                 'get-men': () => {
-                                    $('#nuevomensaje_load_gif').css({ height: '0em' });
-                                    if (res.data.idchat === Cookie.getCookie('id')) {
-                                        $('#msg').val('');
-                                        $('#nuevomensaje').append(res.data.html);
-                                        scrollToEnd($('#nuevomensaje'));
-                                    } else {
-                                        if (Section.menuSection.menu_stay_selft !== 'cha') {
-                                            Chat.chat_var.new_messages += res.data.num_messages;
-                                            $('#btn_new_message').fadeIn(250);
-                                            $('#span_new_mesasge').text(Chat.chat_var.new_messages);
-                                        } else {
-                                            $('#nuevomensaje').append(res.data.html);
-                                            $('#btn_nuevos_mensajes').fadeIn(250);
-                                            Chat.chat_var.new_messages += res.data.num_messages;
-                                            $('#span_new_messages').text(Chat.chat_var.new_messages);
-                                        }
-                                    }
-                                }, */
-                /*                 'loa-men': () => {
-                                    $('#nuevomensaje_load_gif').css({ height: '0em' });
-                                    $('#nuevomensaje').prepend(res.data.html);
-                                    Chat.chat_var.offset = res.data.idcar;
-                                    console.log('idcar: ' + res.data.idcar);
-                                    scrollToEnd($('#nuevomensaje'));
-                                }, */
                 'scr-men': () => {
                     $('#nuevomensaje_load_gif').css({ height: '0em' });
                     $('#nuevomensaje').prepend(res.data.html);

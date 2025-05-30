@@ -68,15 +68,6 @@ export default function submit(data, typeSuccess, frmSubmit, load) {
                 }
                 frmSubmit.children('.alert_frm').html(res.data.res);
                 switch (typeSuccess) {
-                    /*                     case 'env-men': //enviar mensaje de chat
-                                            frmSubmit[0].reset(); //limpiar el input
-                                            $('#div_content_re_men_inp').html('');
-                                            $('#div_res_men_inp').fadeOut(250)
-                                            $('#frm_chat').find('[name=reply]').val('no');
-                                            Config.x_button('div_emotes_enviar'); //si envio un emote
-                                            scrollToEnd($('#nuevomensaje'));
-                                            $('.img_emote_enviar').removeClass('select_emote');
-                                            break; */
                     case 'env-enc': //enviar encuesta
                         if (res.data.success) {
                             $('#frm_enc')[0].reset();
@@ -89,16 +80,6 @@ export default function submit(data, typeSuccess, frmSubmit, load) {
                         }
                         $('[name="submit_frmencuesa"]').prop("disabled", false);
                         break;
-                    /*                     case 'env-com': //enviar comentario
-                                            if (res.data.success) {
-                                                $('.txt_comentar').val('');
-                                                frmSubmit.parents('.div_coment').find('.inf_com').text(''); //elimina Sin comentario cuando se evnia uno si esqu existe el mensaje
-                                                frmSubmit.parents('.div_coment').find('.nuevocoment').append('<br><div class="mensajes_usu caja_pub"><div class="div_logo perfil_pub"><img class="avatar" src="./Frontend/static/media/styles/user/avatars/' + res.data.avatar + '"><span style="white-space: pre"> </span><a class="a_nom_men" data-name="' + res.data.usuario + '">' + res.data.nombre + '</a><div class="div_fecha"><span class="span_fec_men_usu">' + res.data.datetime + '</span></div></br></div><div class="div_mensaje nuevomensaje"><span class="span_mensaje_usu">' + data.comlink + '</span></div></div>');
-                                                scrollToEnd($('.caja-coment'));
-                                            } else {
-                                                $('#div_com_res').html(res.data.res);
-                                            }
-                                            break; */
                     case 'ins-inf': //completar inf
                         $('#div_infusu p').html(res.data.inf);
                         break;
