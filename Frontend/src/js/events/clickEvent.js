@@ -75,40 +75,6 @@ export default function initEventClick() {
                     case 'btn_purchase': //muestra btn de opciones de pagos
                         alert('¡Lo sentimos! Las compras de gemas aún no está disponible, Pronto podrás adquirirlas. ¡Mantente al tanto!');
                         break;
-                    /*                         if (Cookie.getCookie('TypeAcount') == 'invitado') {
-                                                alert('¡Aún eres invitado!, Regístrate y únete a la fiesta de verdad.');
-                                                break;
-                                            }
-                                            let btnThis = $(this);
-                                            const precio = $(this).data('precio');
-                                            const valGems = $(this).data('valor');
-                                            $('#span_precio_gems').text(valGems);
-                                            $('#span_precio_get_gems').text(precio);
-                                            $('#div_pay_get_gems').slideDown(500);
-                    
-                                            // paypal
-                                            $('#paypal-button-container').empty();
-                    
-                                            paypal.Buttons({
-                                                env: 'production', // sandbox | production
-                                                createOrder: function (data, actions) { // createOrder() is called when the button is clicked
-                                                    return actions.order.create({
-                                                        purchase_units: [{
-                                                            amount: {
-                                                                value: precio,
-                                                                currency_code: 'USD'
-                                                            }
-                                                        }]
-                                                    });
-                                                },
-                                                onApprove: function (data, actions) { // onApprove() is called when the buyer approves the payment
-                                                    api({ approveOrder: true, type: precio, orderID: data.orderID, payerID: data.payerID }, 'apr-ord', null, btnThis);
-                                                }
-                                            }).render('#paypal-button-container');
-                    
-                                            // google pay 
-                                            $('#google-pay-button-container').empty();
-                     */
                     case 'cs-deck-collection__box-btns-option': // Cambiar de mazo
                         Deck.update($(this));
                         break;
