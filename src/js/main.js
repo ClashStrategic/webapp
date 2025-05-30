@@ -7,7 +7,7 @@ import PublicationModule from './models/Publication.js';
 import UserModule from './models/User.js';
 import DeckModule from './models/Deck.js';
 import CardModule from './models/Card.js';
-import StrategyModule from './tools/Strategy.js';
+import StrategyModule from './utilsjs/Strategy.js';
 import apiModule from './utilsjs/api.js';
 import submitModule from './utilsjs/submit.js';
 import clickEventModule from './events/clickEvent.js';
