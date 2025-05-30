@@ -1,6 +1,5 @@
 import CookieModule from './utilsjs/cookies.js';
-import BootModule from './config/Boot.js';
-import ConfigModule from './config/Config.js';
+import ConfigModule from './utilsjs/Config.js';
 import ChatModule from './models/Chat.js';
 import SectionModule from './models/Section.js';
 import PublicationModule from './models/Publication.js';
@@ -15,7 +14,6 @@ import otherEventModule from './events/otherEvent.js';
 import submitEventModule from './events/submitEvent.js';
 
 try {
-  window.Boot = BootModule;
   window.Config = ConfigModule;
   window.Chat = ChatModule;
   window.Section = SectionModule;

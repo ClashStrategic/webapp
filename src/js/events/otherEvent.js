@@ -2,7 +2,7 @@ export default function otherEvent() {
 
     // Evento para mostrar información al pasar el mouse sobre un elemento o al tocarlo en dispositivos móviles con la clase 'cs-tooltip-image'
     $(document).on('mouseenter touchstart', '.cs-tooltip-image', function (e) {
-        if ((e.type == 'mouseenter' && !Boot.isMobile()) || (e.type == 'touchstart' && Boot.isMobile())) {
+        if ((e.type == 'mouseenter' && !Config.isMobile()) || (e.type == 'touchstart' && Config.isMobile())) {
             let div_inf = $('#cs-tooltip-box').html('<span class="cs-tooltip__message">' + $(this).data('inf') + '</span>').fadeIn(0); // Actualiza el contenido
             let divWidth = parseFloat($(this).data('width') ?? '8em') * 16;
             let divHeight = div_inf.height();
@@ -18,7 +18,7 @@ export default function otherEvent() {
             });
         }
     }).on('mouseleave', '.cs-tooltip-image', function (e) {
-        if ((e.type == 'mouseleave' && !Boot.isMobile())) {
+        if ((e.type == 'mouseleave' && !Config.isMobile())) {
             $('#cs-tooltip-box').fadeOut(250);
         }
     });
@@ -67,7 +67,7 @@ export default function otherEvent() {
     // Manejo de toque largo en mensajes de chat
     $(document).on('mousedown touchstart', '.MsgChat', function () {
         // Solo iniciar en touchstart para evitar duplicidad en móvil
-        if (event.type === 'touchstart' || (event.type === 'mousedown' && !Boot.isMobile())) {
+        if (event.type === 'touchstart' || (event.type === 'mousedown' && !Config.isMobile())) {
             Chat.handleMessageTouchStart($(this));
         }
     }).on('mousemove touchmove', '.MsgChat', function () { // Delegar al MsgChat para precisión

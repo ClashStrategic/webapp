@@ -75,10 +75,10 @@
             // Bienvenida a un nuevo usuario
             Config.urlParam.get("new_user") &&
               Cookie.getCookie("bienvenida") === "false" &&
-              Boot.showInfBox(
+              Config.showInfBox(
                 "¡Bienvenido a Clash Strategic!",
                 "reyes_bienvenida.webp",
-                Boot.msgInit,
+                Config.msgInit,
                 60
               );
 

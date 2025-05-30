@@ -10,7 +10,6 @@ export default [
         ...globals.browser,
         jQuery: 'readonly',
         $: 'readonly',
-        Boot: 'readonly',
         Card: 'readonly',
         Deck: 'readonly',
         User: 'readonly',

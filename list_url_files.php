@@ -27,11 +27,9 @@ $dirs = [
     'src/css/skins',
 
     // js files
-    'src/js/config',
     'src/js/events',
     // 'src/js/libraries',
     'src/js/models',
-    'src/js/tools',
     'src/js/utilsjs'
 ];
 
