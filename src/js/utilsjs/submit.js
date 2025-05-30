@@ -23,7 +23,7 @@ const SUBMIT_CONFIG = {
 
     // Common settings
     common: {
-        loadingGif: './Frontend/static/media/styles/icons/menu/logo_cargando.gif'
+        loadingGif: './static/media/styles/icons/menu/logo_cargando.gif'
     }
 };
 
@@ -55,13 +55,13 @@ const SUCCESS_HANDLERS = {
 
         'ins-ava': (res, _data, _frmSubmit, _load) => {
             if (res.data.success) {
-                $('.avatar_perfil, .img_banner_perfil').attr('src', './Frontend/static/media/styles/user/avatars/' + res.data.avatar);
+                $('.avatar_perfil, .img_banner_perfil').attr('src', './static/media/styles/user/avatars/' + res.data.avatar);
             }
             $('#res-ava').html(res.data.res);
         },
 
         'cam-ban': (res, _data, _frmSubmit, _load) => {
-            $('#img_banner_per_usu').attr('src', './Frontend/static/media/styles/user/banners/' + res.data.Banner);
+            $('#img_banner_per_usu').attr('src', './static/media/styles/user/banners/' + res.data.Banner);
             $('#div_alert_cam_ban').html(res.data.res);
         }
     },

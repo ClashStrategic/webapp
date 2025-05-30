@@ -21,7 +21,7 @@ export default class Boot {
         $('#div_modal').fadeIn(250);
         $('#div_modal').css({ height: height + '%' });
         $('#conten_modal').html('<h3 class="cs-color-GoldenYellow">' + title + '</h3>' +
-            '<img id="img_mod" src="./Frontend/static/media/styles/modal/' + img + '">' +
+            '<img id="img_mod" src="./static/media/styles/modal/' + img + '">' +
             '<p class="cs-color-LightGrey">' + message + '</p><br><br><br><br>');
         $('#div_modal').append('<button class="cs-color-LightGrey" id="btn_mod">OK</button>');
     }

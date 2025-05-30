@@ -42,7 +42,7 @@ export default class Strategy {
     static setFunctionEstrategies() {
         console.log('setFunctionEstrategies()');
 
-        //<img class="cs-tooltip-image" src="./Frontend/static/media/styles/icons/info-circle.svg" alt="inf" data-inf="Elige si tu Estrategia sera visible y seleccionable por otros Usuarios para Crear sus Mazos">
+        //<img class="cs-tooltip-image" src="./static/media/styles/icons/info-circle.svg" alt="inf" data-inf="Elige si tu Estrategia sera visible y seleccionable por otros Usuarios para Crear sus Mazos">
         return `<div class="div_details_estrategia"><details>
                         <summary class="cs-color-GoldenYellow">¡Crea tus Estrategias!</summary>
                         <p class="cs-color-LightGrey">Crea tus propias estrategias y condiciones para personalizar y optimizar tus mazos de Clash Royale de manera más efectiva. Define las reglas que mejor se adapten a tu estilo de juego y descubre nuevas combinaciones ganadoras.</p>
@@ -124,7 +124,7 @@ export default class Strategy {
         select.siblings('select').eq(2).attr('name', 'Condiciones[comparadores][' + type + '][' + condicionIndexFun + '][valores][]');
     }
 
-    //<img class="cs-tooltip-image" src="./Frontend/static/media/styles/icons/info-circle.svg" alt="inf" data-inf="Es un Conjunto de Comparaciones para validar una Condicion y sumar puntos">
+    //<img class="cs-tooltip-image" src="./static/media/styles/icons/info-circle.svg" alt="inf" data-inf="Es un Conjunto de Comparaciones para validar una Condicion y sumar puntos">
     static getCondition = (condicionIndexFun, logicalOperatorIndexFun) => {
         console.log('getCondition(' + condicionIndexFun + ', ' + logicalOperatorIndexFun + ')');
         return `<fieldset class="fs_condition">` +

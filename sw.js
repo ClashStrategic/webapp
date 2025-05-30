@@ -2,9 +2,9 @@ const VERSION = '0.6.4';
 const DATETIME = '2025-05-29T14:59:12.465Z';
 const CACHE_NAME = `clash-strategic-webapp-${VERSION}`;
 const urlsToCache = [
-  'Frontend/src/js/main.js',
+  'src/js/main.js',
   'installsw.js',
-  'Frontend/src/css/main.css',
+  'src/css/main.css',
   'index.html',
   'home.html',
   'error404.html',

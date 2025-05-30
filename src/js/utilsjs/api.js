@@ -5,7 +5,7 @@ const API_CONFIG = {
     method: "POST",
     baseUrl: () => localStorage.getItem('base_url_api') + "/App/Config/Routes.php",
     dataType: "json",
-    loadingGif: "./Frontend/static/media/styles/icons/menu/logo_cargando.gif"
+    loadingGif: "./static/media/styles/icons/menu/logo_cargando.gif"
 };
 
 /**
@@ -25,7 +25,7 @@ const RESPONSE_HANDLERS = {
     ui: {
         'cam-pag': (res, data, options) => {
             const img = options.parents('.pagination-container').siblings('.gallery-container').find('.fg_img_pub');
-            img.html(`<img data-idpub="${data.idpub}" class="pub_img" src="./Frontend/static/media/styles/user/publicaciones/imagenes/${res.archivo}" alt="img_pub">`).fadeOut(0).fadeIn(250);
+            img.html(`<img data-idpub="${data.idpub}" class="pub_img" src="./static/media/styles/user/publicaciones/imagenes/${res.archivo}" alt="img_pub">`).fadeOut(0).fadeIn(250);
         },
         'inf-car': (res) => {
             $('#div_card_info').html(res.data.html);

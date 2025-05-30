@@ -30,7 +30,7 @@ export default class Deck {
     static cargandoMazo() {
         $('.cs-deck__slot').each(function () {
             $(this).css({ 'position': 'relative' });
-            $(this).append('<img class="img_loading" src="Frontend/static/media/styles/icons/menu/logo_cargando.gif" alt="Cargando...">');
+            $(this).append('<img class="img_loading" src="static/media/styles/icons/menu/logo_cargando.gif" alt="Cargando...">');
         });
     }
 
@@ -158,7 +158,7 @@ export default class Deck {
         let mazocamb = Mazos[(nmazo - 1)];
         console.warn('El mazo seleccionado es:', mazocamb);
         $('.cs-deck-collection__box-btns-option').removeClass('selectmaz');
-        deckCollection__boxbtnsOption.addClass('selectmaz').css({ 'position': 'relative' }).append('<img class="img_loading" src="./Frontend/static/media/styles/icons/menu/logo_cargando.gif">'); //cargando mazo
+        deckCollection__boxbtnsOption.addClass('selectmaz').css({ 'position': 'relative' }).append('<img class="img_loading" src="./static/media/styles/icons/menu/logo_cargando.gif">'); //cargando mazo
         deckCollection__boxbtnsOption.find('.img_loading').remove(); // Remove loading image before proceeding
         $('#main-deck-collection-box-btns').data('nmazo', nmazo); //cambiar el numero de mazo en el que esta
         mazocamb ? Deck.setMazo(mazocamb) : Deck.eliminarMazo();

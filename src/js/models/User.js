@@ -20,10 +20,10 @@ export default class User {
             if ('Notification' in window && 'serviceWorker' in navigator) {
                 Notification.requestPermission().then(permission => {
                     if (permission === 'granted') {
-                        navigator.serviceWorker.register('./Frontend/pwa/sw.js').then(registration => {
+                        navigator.serviceWorker.register('./pwa/sw.js').then(registration => {
                             const opciones = {
                                 body: body,
-                                icon: './Frontend/static/media/styles/notificacion/' + icon
+                                icon: './static/media/styles/notificacion/' + icon
                             };
                             const notificacion = new Notification(title, opciones); // Utiliza el nombre pasado como parámetro
                         });
@@ -111,7 +111,7 @@ export default class User {
      */
     static handleLoginSubmit(formElement) {
         const submitButton = formElement.find('[type=submit]');
-        submitButton.css({ 'position': 'relative' }).append('<img class="img_loading" src="./Frontend/static/media/styles/icons/menu/logo_cargando.gif">');
+        submitButton.css({ 'position': 'relative' }).append('<img class="img_loading" src="./static/media/styles/icons/menu/logo_cargando.gif">');
         // Asumiendo que 'Cookie.setCookiesForSession' y 'submit' son funciones globales o importadas
         if (typeof Cookie.setCookiesForSession === 'function' && typeof submit === 'function') {
             Cookie.setCookiesForSession(submitButton);

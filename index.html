@@ -1,89 +1,105 @@
 <!DOCTYPE html>
 <html lang="es">
+  <head>
+    <title>
+      Crea, Analiza y Comparte: ¡Únete a la Comunidad de Clash Strategic!
+    </title>
 
-<head>
-  <title>Crea, Analiza y Comparte: ¡Únete a la Comunidad de Clash Strategic!</title>
+    <!-- PWA -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Únete a nuestra vibrante comunidad de Clash Royale, donde los estrategas comparten análisis de mazos, trucos, torneos y más. ¡Domina el juego con nosotros hoy mismo!"
+    />
+    <meta
+      name="keywords"
+      content="clash strategic, clash royale, comunidad clash royale, estrategia clash royale, analizar mazos clash royale, crear mazos clash royale, trucos clash royale, torneos clash royale, jugadores clash royale, comunidad de estrategas clash royale, juegos móviles clash royale, supercell, cartas clash royale, ver cofres clash royale, mejorar en clash royale"
+    />
+    <meta
+      name="author"
+      content="Clash Strategic - Únete a nuestra comunidad en clashstrategic.com"
+    />
 
-  <!-- PWA -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="Únete a nuestra vibrante comunidad de Clash Royale, donde los estrategas comparten análisis de mazos, trucos, torneos y más. ¡Domina el juego con nosotros hoy mismo!">
-  <meta name="keywords"
-    content="clash strategic, clash royale, comunidad clash royale, estrategia clash royale, analizar mazos clash royale, crear mazos clash royale, trucos clash royale, torneos clash royale, jugadores clash royale, comunidad de estrategas clash royale, juegos móviles clash royale, supercell, cartas clash royale, ver cofres clash royale, mejorar en clash royale">
-  <meta name="author" content="Clash Strategic - Únete a nuestra comunidad en clashstrategic.com">
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="./static/media/styles/logo/logo_cs.webp"
+    />
 
-  <link rel="icon" type="image/png" sizes="512x512" href="./Frontend/static/media/styles/logo/logo_cs.webp">
+    <style>
+      #img_logo_index {
+        position: fixed;
+        width: 12em;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
 
-  <style>
-    #img_logo_index {
-      position: fixed;
-      width: 12em;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
+      #div_lin_loading {
+        position: fixed;
+        background: transparent;
+        border-radius: 5px;
+        text-align: center;
+        border: solid 1.5px #1b263b;
+        top: 97%;
+        left: 50%;
+        width: 99%;
+        height: 1em;
+        transform: translate(-50%, 0%);
+        z-index: 100;
+      }
 
-    #div_lin_loading {
-      position: fixed;
-      background: transparent;
-      border-radius: 5px;
-      text-align: center;
-      border: solid 1.5px #1B263B;
-      top: 97%;
-      left: 50%;
-      width: 99%;
-      height: 1em;
-      transform: translate(-50%, 0%);
-      z-index: 100;
-    }
+      #span_msg_load {
+        color: #1b263b;
+        position: absolute;
+        width: 100%;
+        top: -1.5em;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        z-index: 100;
+      }
 
-    #span_msg_load {
-      color: #1B263B;
-      position: absolute;
-      width: 100%;
-      top: -1.5em;
-      left: 50%;
-      transform: translate(-50%, 0%);
-      z-index: 100;
-    }
+      #span_num_por {
+        color: #f4f4f4;
+        position: absolute;
+        font-size: 1.25em;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+      }
 
-    #span_num_por {
-      color: #F4F4F4;
-      position: absolute;
-      font-size: 1.25em;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 100;
-    }
+      #div_porcentage {
+        position: absolute;
+        background: #1b263b;
+        border-radius: 5px;
+        width: 0%;
+        height: 1em;
+        top: 50%;
+        transform: translate(0%, -50%);
+      }
+    </style>
+  </head>
 
-    #div_porcentage {
-      position: absolute;
-      background: #1B263B;
-      border-radius: 5px;
-      width: 0%;
-      height: 1em;
-      top: 50%;
-      transform: translate(0%, -50%);
-    }
-  </style>
-</head>
-
-<body>
-  <img id="img_logo_index" src="./Frontend/static/media/styles/logo/logo_banner.webp" alt="Clash Strategic">
-  <!-- line de carga -->
-  <div id="div_lin_loading">
-    <span id="span_msg_load"></span>
-    <span id="span_num_por"></span>
-    <div id="div_porcentage"></div>
-  </div>
-</body>
+  <body>
+    <img
+      id="img_logo_index"
+      src="./static/media/styles/logo/logo_banner.webp"
+      alt="Clash Strategic"
+    />
+    <!-- line de carga -->
+    <div id="div_lin_loading">
+      <span id="span_msg_load"></span>
+      <span id="span_num_por"></span>
+      <div id="div_porcentage"></div>
+    </div>
+  </body>
   <script src="installsw.js"></script>
   <script>
-      installSW( () => {
-       location.href = "home";
-      });
+    installSW(() => {
+      location.href = "home";
+    });
   </script>
-
 </html>

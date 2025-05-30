@@ -1,38 +1,38 @@
 <?php
 $dirs = [
     // images files
-    'Frontend/static/media/cards/iconCards',
-    'Frontend/static/media/cards/towerCards',
-    /* '../Frontend/static/media/emotes', */
-    /* '../Frontend/static/media/icons', */
-    /* '../Frontend/static/media/styles/user/banners', */
-    /* '../Frontend/static/media/anuncios/CS', */
-    /* '../Frontend/static/media/styles', */
-    'Frontend/static/media/styles/audio',
-    /* '../Frontend/static/media/styles/cofres', */
-    'Frontend/static/media/styles/icons/card_stat_inf',
-    /* '../Frontend/static/media/styles/img_index', */
-    /* '../Frontend/static/media/styles/infjug', */
-    'Frontend/static/media/styles/logo',
-    /* '../Frontend/static/media/styles/menu', */
-    'Frontend/static/media/styles/icons/menu_opc',
-    'Frontend/static/media/styles/modal',
-    /* '../Frontend/static/media/styles/notificacion', */
-    /* '../Frontend/static/media/styles/reacciones', */
-    /* '../Frontend/static/media/styles/redes_sociales' */
+    'static/media/cards/iconCards',
+    'static/media/cards/towerCards',
+    /* '../static/media/emotes', */
+    /* '../static/media/icons', */
+    /* '../static/media/styles/user/banners', */
+    /* '../static/media/anuncios/CS', */
+    /* '../static/media/styles', */
+    'static/media/styles/audio',
+    /* '../static/media/styles/cofres', */
+    'static/media/styles/icons/card_stat_inf',
+    /* '../static/media/styles/img_index', */
+    /* '../static/media/styles/infjug', */
+    'static/media/styles/logo',
+    /* '../static/media/styles/menu', */
+    'static/media/styles/icons/menu_opc',
+    'static/media/styles/modal',
+    /* '../static/media/styles/notificacion', */
+    /* '../static/media/styles/reacciones', */
+    /* '../static/media/styles/redes_sociales' */
 
     // css files
-    'Frontend/src/css/base',
-    'Frontend/src/css/objects',
-    'Frontend/src/css/skins',
+    'src/css/base',
+    'src/css/objects',
+    'src/css/skins',
 
     // js files
-    'Frontend/src/js/config',
-    'Frontend/src/js/events',
-    // 'Frontend/src/js/libraries',
-    'Frontend/src/js/models',
-    'Frontend/src/js/tools',
-    'Frontend/src/js/utilsjs'
+    'src/js/config',
+    'src/js/events',
+    // 'src/js/libraries',
+    'src/js/models',
+    'src/js/tools',
+    'src/js/utilsjs'
 ];
 
 $allFiles = [];
