@@ -1,320 +1,321 @@
-export default function initEventClick() {
+/**
+ * Click handler registry - organized by handler type
+ */
+const CLICK_HANDLERS = {
+    // Handlers by CSS class
+    classes: {
+        'btn_x_perfil': (element) => Config.handleCloseToggleClick(element),
+        'card--is-interactive': (element) => Card.handleClick(element),
+        'cs-card__info': (element) => Card.handleInfoButtonClick(element),
+        'cs-card__use-remove': (element) => Card.handleAddRemoveButtonClick(element),
+        'img_cam_banner': (element) => User.handleSelectBannerClick(element),
+        'cs-deck-collection__box-btns-option': (element) => Deck.update(element),
+        'btn_opc_cre_maz': (element) => Deck.handleCreatedDeckOptionClick(element),
+        'btn_crear_est': () => Strategy.handleCreateStrategyClick(),
+        'btn_edit_est': (element) => Deck.handleEditStrategyClick(element),
+        'btn_purchase': () => alert('¡Lo sentimos! Las compras de gemas aún no está disponible, Pronto podrás adquirirlas. ¡Mantente al tanto!')
+    },
 
+    // Handlers by element ID
+    ids: {
+        'btn_publicacion': () => $('#div_publiquero').slideToggle(500),
+        'btn_infjug': (element) => User.handleTogglePlayerInfoClick(element),
+        'btn_idiomas': () => $('#div_content_idiomas').fadeToggle(250),
+        'btn_menu_opc': () => $('#menu_opciones').fadeToggle(250),
+        'btn_eli_maz': () => Deck.handleDeleteDeckClick(),
+        'btn_ocu_mos_res_ST': (element) => Deck.handleToggleAnalysisResultsClick(element),
+        'btn_analizar': () => Deck.handleAnalyzeButtonClick(),
+        'btn_analizar_mazo_basico': () => Deck.handleBasicAnalysisButtonClick(),
+        'btn_analizar_mazo_avanzado': () => Deck.handleAdvancedAnalysisButtonClick(),
+        'span_noti': () => User.handleShowNotificationsClick(),
+        'btn_settings': () => User.handleShowSettingsClick(),
+        'btn_reglas': () => { $('#capa_contenido').fadeIn(250); $('#div_reglas').fadeIn(250); },
+        'btn_peg_maz': () => Deck.handlePasteDeckLinkClick(),
+        'changeBanner': () => User.handleToggleChangeBannerClick(),
+        'changePhoto': () => User.handleToggleChangeAvatarClick(),
+        'btn_cop_maz': () => Deck.handleCopyDeckToGameClick(),
+        'btn_x_img_full': () => $('#div_fullimg').fadeToggle(250),
+        'btn_crear': () => Deck.handleCreateButtonClick(),
+        'btn_cam_mazos': () => Deck.handleChangeDeckViewClick(),
+        'btn_car_wiki': (element) => Deck.handleToggleWikiClick(element),
+        'btn_copiar_mazo': () => Deck.handleCopyDeckLinkClick(),
+        'btn_menu_enc_pub': () => { $('#capa_contenido').fadeIn(250); $('#div_enc_pub').fadeToggle(250); },
+        'btn_ver_log_maz': () => Deck.handleToggleDeckLogClick(),
+        'btn_noty_visto': (element) => User.handleMarkNotificationSeenClick(element),
+        'btn_noty_elim': () => { }, // Empty handler as in original
+        'btn_cam_card_no': () => Card.handleCancelReplaceClick(),
+        'btn_btns_opc_maz': () => Deck.handleToggleDeckOptionsClick(),
+        'btn_ban_act': () => $('#span_acercade').click(),
+        'btn_Orden_cards': () => Card.handleOrderButtonClick(),
+        'btn_Orden_cards_advanced': () => Card.handleAdvancedOrderButtonClick(),
+        'btn_com_clan': () => $('#div_com_clan').slideToggle(500),
+        'btn_nom_usu': () => User.handleShowUserDataClick()
+    },
+
+    // Multi-ID handlers (IDs that share the same logic)
+    multiIds: {
+        'cancel_analysis': {
+            ids: ['btn_can_ana_maz_ava', 'btn_cancelar_analisis_v1_1'],
+            handler: () => Deck.handleCancelAnalysisClick()
+        },
+        'cancel_create': {
+            ids: ['btn_can_cre_maz_pers', 'btn_concelar_crear_mazo_v1_1'],
+            handler: () => Deck.handleCancelCreateClick()
+        },
+        'shop_currency': {
+            ids: ['btn_mas_moneda', 'btn_mas_gema'],
+            handler: () => {
+                showDivToggle('showToggle');
+                api({ getSectionMembers: "shop" }, 'get-sho', null, $('#div_tog_gen_con'));
+            }
+        },
+        'image_fullscreen': {
+            ids: ['pub_img', 'avatar'],
+            handler: (element) => {
+                $('#div_fullimg').fadeToggle(250);
+                $('#img_fullscreen').attr('src', element.attr('src'));
+            }
+        }
+    }
+};
+
+/**
+ * Handles special cases that require complex logic
+ */
+const SPECIAL_HANDLERS = {
+    // Complex pagination handler
+    'span-pag': (element) => {
+        const pagina = element.data('pagina');
+        const inicio = (pagina - 1) * 1;
+        api({
+            db: element.data('database'),
+            idpub: element.data('idpub'),
+            inicio: inicio,
+            fin: (inicio + 1),
+            pagination: true
+        }, 'cam-pag', element, element.parents('#pagination-container').siblings('#gallery-container'));
+        element.parents('.pagination-container').find('.span-pag').removeClass('active');
+        element.addClass('active');
+    },
+
+    // Comments toggle handler
+    'btn_comentarios': (element) => {
+        element.siblings('.div_coment').slideToggle(500);
+        element.data('getcom') == 'no' && api({
+            returnComent: true,
+            id_Pub: element.data('idpub')
+        }, 'get-com', element.siblings('.div_coment').children('.caja-coment'), element);
+    },
+
+    // Strategy selection complex logic
+    'btn_sel_est_show': (element) => handleStrategySelection(element),
+
+    // Strategy choice handler
+    'btn_eleccion_est': (element) => {
+        showDivToggle('showToggle');
+        api({
+            getStrategies: 'html',
+            type: element.data('type')
+        }, 'get-est', {
+            type: element.data('type'),
+            idsEst: element.siblings('input[name="idsEstrategias"]').val()
+        }, $('#div_tog_gen_con'));
+    },
+
+    // Deck slot click handler
+    'cs-deck__slot': (element) => {
+        if (Card.selectedCardToMove) {
+            Card.handleMoveTargetSlotClick(element);
+        } else {
+            Card.handleEmptySlotClick(element);
+        }
+    },
+
+    // Special API handlers
+    'span_acercade': () => {
+        showDivToggle('showToggle');
+        api({ acercaDe: true }, 'get-inf', null, $('#div_tog_gen_con'));
+    },
+
+    'div_get_sb': () => {
+        showDivToggle('showToggle');
+        api({ sobreNosotros: true }, 'get-sb', null, $('#div_tog_gen_con'));
+    },
+
+    // Modal close handler
+    'btn_mod': () => {
+        $('#capa_contenido').fadeOut(250);
+        $('#div_modal').fadeOut(250);
+        Cookie.setCookie('bienvenida', true);
+    }
+};
+
+/**
+ * Handles the complex strategy selection logic
+ * @param {jQuery} element - The button element
+ */
+function handleStrategySelection(element) {
+    if (element.parent('.div_apply_est').data('state') != 'active') return;
+
+    const div_apply_est = element.parent('.div_apply_est');
+    const idest = div_apply_est.data('idest');
+    const type = $('#type_apply').data('type');
+    let divEstrategias = $('#frm_crear_mazo_1_1');
+
+    if (type == 'analizar') {
+        divEstrategias = $('#frm_ana_maz_ava_v1_1');
+    }
+
+    if (div_apply_est.hasClass('apply_est')) {
+        // Deselect strategy
+        element.text('Seleccionar').css({ background: 'var(--cs-color-GoldenYellow)' });
+        div_apply_est.removeClass('apply_est');
+        divEstrategias.find('.div_estrategias_seleccionadas p[data-id="' + idest + '"]').remove();
+
+        const estrategias = divEstrategias.find('input[name="idsEstrategias"]').val() ?
+            JSON.parse(divEstrategias.find('input[name="idsEstrategias"]').val()) : [];
+        const index = estrategias.indexOf(idest);
+        if (index >= 0) estrategias.splice(index, 1);
+        divEstrategias.find('input[name="idsEstrategias"]').val(JSON.stringify(estrategias));
+    } else {
+        // Select strategy
+        const currentStrategies = JSON.parse(divEstrategias.find('input[name="idsEstrategias"]').val());
+        if ((currentStrategies.length + 1) > 3) {
+            alert('Limite de Estrategias superado, No puedes seleccionar mas de 3 Estrategias');
+            return;
+        }
+
+        element.text('Deseleccionar').css({ background: 'var(--cs-color-IntenseOrange)' });
+        div_apply_est.addClass('apply_est');
+        divEstrategias.find('.div_estrategias_seleccionadas').append(
+            '<p class="p_est_show cs-color-GoldenYellow" data-id="' + idest + '">' +
+            div_apply_est.data('nombre') + '</p>'
+        );
+        divEstrategias.find('input[name="idsEstrategias"]').val(function (_index, val) {
+            let arr = val ? JSON.parse(val) : [];
+            arr.push(idest);
+            return JSON.stringify(arr);
+        });
+    }
+}
+
+export default function initEventClick() {
+    // Button sound effect
     $(document).on('click', 'button', function () {
         User.userInteracted && $('#audio_button')[0].play();
     });
 
+    // Main click event handler
     $(document).on('click', 'button:not([type="submit"]), .img_emote_enviar, #div_sections_content, #capa_contenido, #div_tog_gen, .div_res_men, .span-pag, .card--is-interactive, #btn_menu_perfil, .a_nom_pub, .a_nom_men, #span_acercade, #span_noti, .img_cam_banner, .pub_img, #btn_x_img_full, .cs-tooltip-image, .cs-deck-collection__box-btns-option, .avatar, #div_get_sb, .div_apply_est, .cs-deck__slot', function (e) {
-        // Evitar que el click normal interfiera con el toque largo o doble clic en las cartas del mazo
+        // Prevent interference with long press on deck cards
         if ($(this).closest('.card--is-interactive').parent().hasClass('cs-deck__slot') && Card.isLongPress) {
-            // Si fue long press, no hacer nada más en el click normal
             return;
         }
 
-        console.log(
-            "%cClick/Tap Event Triggered!",
-            "color: blue; font-weight: bold;",
-            "\nElement Class:", $(this).attr("class"),
-            "\nElement ID:", $(this).attr("id"),
-            "\nTarget:", e.target
-        );
+        console.log(`%cClick Event:`, `color: blue; font-weight: bold;`, `Class: ${$(this).attr("class")}`, `ID: ${$(this).attr("id")}`);
 
-        // --- Inicio: Lógica para Mover Cartas (Click en Slot Destino - Móvil) ---
+        // Handle card movement logic first
         if ($(this).hasClass('cs-deck__slot') && Card.selectedCardToMove) {
-            // Si hay una carta seleccionada y se hace clic en un slot (destino en móvil)
             Card.moveOrSwapCard($(this));
-            return; // Detener otras lógicas de click en slots
-        }
-        // --- Fin: Lógica para Mover Cartas ---
-
-        //con clases
-        if ($(this).attr('class') != undefined) {
-            let classes = $(this).attr('class').split(' ')
-            for (let i = 0; i < classes.length; i++) {
-                switch (classes[i]) {
-                    case 'btn_x_perfil': // Cerrar div toggle
-                        Config.handleCloseToggleClick($(this));
-                        break;
-                    case 'span-pag': //llamada a mostrar imagenes
-                        let pagina = $(this).data('pagina');
-                        let inicio = (pagina - 1) * 1;
-                        api({ db: $(this).data('database'), idpub: $(this).data('idpub'), inicio: inicio, fin: (inicio + 1), pagination: true }, 'cam-pag', $(this), $(this).parents('#pagination-container').siblings('#gallery-container'));
-                        $(this).parents('.pagination-container').find('.span-pag').removeClass('active');
-                        $(this).addClass('active');
-                        break;
-                    case 'btn_comentarios': //click para mostrar/ocultar comentarios
-                        $(this).siblings('.div_coment').slideToggle(500);
-                        $(this).data('getcom') == 'no' && api({ returnComent: true, id_Pub: $(this).data('idpub') }, 'get-com', $(this).siblings('.div_coment').children('.caja-coment'), $(this));
-                        break;
-                    case 'card--is-interactive': // Mostrar opciones de una carta
-                        Card.handleClick($(this));
-                        break;
-                    case 'cs-card__info': // Ver información de una carta
-                        Card.handleInfoButtonClick($(this));
-                        break;
-                    case 'cs-card__use-remove': // Insertar o eliminar una carta del mazo
-                        Card.handleAddRemoveButtonClick($(this));
-                        break;
-                    /*                     case 'a_nom_pub': //mostrar inf de usuario en publicaciones
-                                        case 'a_nom_men': //mostrar inf de usuario en mensajes
-                                            $('#capa_contenido').fadeIn(250);
-                                            $('#div_perfilusu').fadeIn(250).append('<div class="div_loading_toggle"></div>');
-                                            api({ nomusu: $(this).data('name'), type: 'pub', perfil: true }, 'ver-per', null, $('#div_perfilusu').children('.div_loading_toggle'));
-                                            $('.div_toggle').on('scroll', function () {
-                                                lazyloading();
-                                            });
-                                            break; */
-                    case 'img_cam_banner': // Seleccionar banner
-                        User.handleSelectBannerClick($(this));
-                        break;
-                    case 'pub_img':
-                    case 'avatar':
-                        $('#div_fullimg').fadeToggle(250);
-                        $('#img_fullscreen').attr('src', $(this).attr('src'));
-                        break;
-                    case 'btn_purchase': //muestra btn de opciones de pagos
-                        alert('¡Lo sentimos! Las compras de gemas aún no está disponible, Pronto podrás adquirirlas. ¡Mantente al tanto!');
-                        break;
-                    case 'cs-deck-collection__box-btns-option': // Cambiar de mazo
-                        Deck.update($(this));
-                        break;
-                    case 'btn_opc_cre_maz': // Opciones de mazos creados
-                        Deck.handleCreatedDeckOptionClick($(this));
-                        break;
-                    /* case 'reply-btn': // Click en responder mensaje
-                        Chat.handleReplyButtonClick($(this));
-                        break; */
-                    case 'btn_sel_est_show': //seleccionar la estrategia
-                        if ($(this).parent('.div_apply_est').data('state') == 'active') {
-                            let div_apply_est = $(this).parent('.div_apply_est');
-                            let idest = div_apply_est.data('idest');
-                            let type = $('#type_apply').data('type');
-                            let divEstrategias = $('#frm_crear_mazo_1_1');
-                            type == 'analizar' && (divEstrategias = $('#frm_ana_maz_ava_v1_1'));
-
-                            if (div_apply_est.hasClass('apply_est')) { // Verifica si el div tiene la clase "apply_est"
-                                $(this).text('Seleccionar').css({ background: 'var(--cs-color-GoldenYellow)' });
-                                div_apply_est.removeClass('apply_est'); // Si la tiene, la elimina
-                                divEstrategias.find('.div_estrategias_seleccionadas p[data-id="' + div_apply_est.data('idest') + '"]').remove(); // Elimina el p con el ID correspondiente
-                                const estrategias = divEstrategias.find('input[name="idsEstrategias"]').val() ? JSON.parse(divEstrategias.find('input[name="idsEstrategias"]').val()) : [];
-                                const index = estrategias.indexOf(idest);
-                                index >= 0 && estrategias.splice(index, 1);
-                                divEstrategias.find('input[name="idsEstrategias"]').val(JSON.stringify(estrategias)); //agrega los ids actualizados
-                            } else { //aplica la la estrategia al forma para ser enviado
-                                if ((JSON.parse(divEstrategias.find('input[name="idsEstrategias"').val()).length + 1) > 3) {
-                                    alert('Limite de Estrategias superado, No puedes seleccionar mas de 3 Estrategias');
-                                    break;
-                                }
-                                $(this).text('Deseleccionar').css({ background: 'var(--cs-color-IntenseOrange)' });
-                                div_apply_est.addClass('apply_est');
-                                divEstrategias.find('.div_estrategias_seleccionadas').append('<p class="p_est_show cs-color-GoldenYellow" data-id="' + idest + '">' + div_apply_est.data('nombre') + '</p>');
-                                divEstrategias.find('input[name="idsEstrategias"').val(function (index, val) {
-                                    let arr = val ? JSON.parse(val) : [];
-                                    arr.push(idest);
-                                    return JSON.stringify(arr);
-                                });
-                            }
-                        }
-                        break;
-                    case 'btn_eleccion_est': //muestra las estrategias para su eleccion
-                        showDivToggle('showToggle');
-                        api({ getStrategies: 'html', type: $(this).data('type') }, 'get-est', { type: $(this).data('type'), idsEst: $(this).siblings('input[name="idsEstrategias"]').val() }, $('#div_tog_gen_con'));
-                        break;
-                    case 'btn_crear_est': // Mostrar div para crear Estrategias
-                        Strategy.handleCreateStrategyClick();
-                        break;
-                    case 'btn_edit_est': // Editar la estrategia
-                        Deck.handleEditStrategyClick($(this));
-                        break;
-                    case 'cs-deck__slot': // Click en un slot de carta
-                        if (Card.selectedCardToMove) {
-                            // Si hay una carta seleccionada para mover, este es el slot destino
-                            Card.handleMoveTargetSlotClick($(this));
-                        } else {
-                            // Si no hay carta seleccionada y el slot está vacío, hacer scroll
-                            Card.handleEmptySlotClick($(this));
-                        }
-                        break;
-                }
-            }
+            return;
         }
 
-        //con id
-        switch ($(this).attr('id')) {
-            case 'div_sections_content'://desactiva las interacciones con los mensajes y de otros toggles activos
-            case 'capa_contenido': // También se usa para cancelar selección de movimiento
-            case 'div_tog_gen': //toggle general
-                // Oculta respuestas y opciones si el clic no está en elementos específicos
-                if (!$(e.target).is('.div_res, .reply-btn, .reply-text, .img_chat_res')) {
-                    $('.MsgChat').removeClass('div_tap_res').find('.div_res').fadeOut(250);
-                    $('#frm_chat').fadeIn(250);
-                    /* Chat.chat_var.MsgChat?.find('.reply-btn').fadeIn(250);
-                    Chat.chat_var.MsgChat?.find("#div_res_men_inp").fadeOut(250); */
-                }
+        // Handle click events using the registry system
+        const wasHandled = handleClickEvent($(this), e);
 
-                // Oculta menús y elementos si el clic no está en sus áreas
-                !$(e.target).closest('#div_opciones, #btn_btns_opc_maz, .cs-tooltip-image, #btn_Orden_cards_advanced, #div_options_advanced_order').length &&
-                    $('#menu_opciones, #div_sub_btns_mazo, #cs-tooltip-box, #div_options_advanced_order').fadeOut(250);
-
-                // Oculta las opciones de la card si el clic no es en una carta
-                !e.target.closest('.cs-card') && $('.card--show-opt').removeClass('card--show-opt').find('.cs-card__options').slideUp(100);
-
-                // Cancela la selección de mover carta si se hace clic fuera de un slot o carta del mazo
-                if (Card.selectedCardToMove && !$(e.target).closest('.cs-deck__slot').length) {
-                    Card.cancelCardMoveSelection();
-                }
-                break;
-            /*             case 'btn_bajar_chat'://bajar caja chat
-                            scrollToEnd($('#nuevomensaje'));
-                            break; */
-            /* case 'btn_emote_enviar': // Mostrar selector de emotes
-                Chat.handleOpenEmoteSelectorClick();
-                break; */
-            /*             case 'btn_encuesta': //toggle encuesta
-                            $('#div_encuesta').slideToggle(500, () => { setMinMaxEnc() });
-                            break; */
-            case 'btn_publicacion': //toggle publicacion
-                $('#div_publiquero').slideToggle(500);
-                break;
-            /* case 'img_emote_enviar-' + $(this).data('emote'): // Seleccionar emote
-                Chat.handleSelectEmoteClick($(this));
-                break; */
-            case 'btn_infjug': // Mostrar/Ocultar info del jugador (API)
-                User.handleTogglePlayerInfoClick($(this));
-                break;
-            /* case 'div_res_men-' + $(this).data('idrescha'): // Scroll al mensaje respondido
-                Chat.handleScrollToRepliedMessageClick($(this));
-                break; */
-            case 'btn_idiomas': //Idiomas
-                $('#div_content_idiomas').fadeToggle(250);
-                break;
-            case 'btn_menu_opc': //click al menu
-                $('#menu_opciones').fadeToggle(250);
-                break;
-            case 'btn_eli_maz': // Eliminar mazo
-                Deck.handleDeleteDeckClick();
-                break;
-            case 'btn_ocu_mos_res_ST': // Ocultar/Mostrar detalles del análisis del mazo
-                Deck.handleToggleAnalysisResultsClick($(this));
-                break;
-            case 'btn_analizar': // Mostrar botones para analizar mazos
-                Deck.handleAnalyzeButtonClick();
-                break;
-            case 'btn_analizar_mazo_basico': // Analizar mazo de forma básica
-                Deck.handleBasicAnalysisButtonClick();
-                break;
-            case 'btn_analizar_mazo_avanzado': // Analizar mazo de forma avanzada
-                Deck.handleAdvancedAnalysisButtonClick();
-                break;
-            /*             case 'btn_menu_perfil': //ver perfil personal
-                            $('#capa_contenido').fadeIn(250);
-                            $('#div_perfilusu').fadeIn(250).append('<div class="div_loading_toggle"></div>');
-                            api({ nomusu: 'session', type: 'per', perfil: true }, 'ver-per', null, $('#div_perfilusu').children('.div_loading_toggle'));
-                            $('.div_toggle').on('scroll', function () {
-                                lazyloading();
-                            });
-                            break; */
-            case 'span_noti': // Ver notificaciones
-                User.handleShowNotificationsClick();
-                break;
-            case 'span_acercade': //ver acercade
-                showDivToggle('showToggle');
-                api({ acercaDe: true }, 'get-inf', null, $('#div_tog_gen_con'));
-                break;
-            case 'btn_settings': // Mostrar configuración
-                User.handleShowSettingsClick();
-                break;
-            case 'btn_reglas': //ver reglas de chat
-                $('#capa_contenido').fadeIn(250);
-                $('#div_reglas').fadeIn(250);
-                break;
-            case 'btn_peg_maz': // Pegar enlace de mazo
-                Deck.handlePasteDeckLinkClick();
-                break;
-            case 'changeBanner': // Mostrar/Ocultar cambio de banner
-                User.handleToggleChangeBannerClick();
-                break;
-            case 'changePhoto': // Mostrar/Ocultar cambio de avatar
-                User.handleToggleChangeAvatarClick();
-                break;
-            case 'btn_cop_maz': // Copiar mazo a Clash Royale
-                Deck.handleCopyDeckToGameClick();
-                break;
-            case 'btn_x_img_full':
-                $('#div_fullimg').fadeToggle(250);
-                break;
-            case 'btn_crear': // Mostrar botones para crear mazo
-                Deck.handleCreateButtonClick();
-                break;
-            case 'btn_mod':
-                $('#capa_contenido').fadeOut(250);
-                $('#div_modal').fadeOut(250);
-                Cookie.setCookie('bienvenida', true);
-                break;
-            case 'btn_cam_mazos': // Cambiar vista de mazos (1-5 / 6-10)
-                Deck.handleChangeDeckViewClick();
-                break;
-            case 'btn_car_wiki': // Mostrar/Ocultar wiki de carta
-                Deck.handleToggleWikiClick($(this));
-                break;
-            case 'btn_can_ana_maz_ava': // Cancelar análisis v1.0
-            case 'btn_cancelar_analisis_v1_1': // Cancelar análisis v1.1
-                Deck.handleCancelAnalysisClick();
-                break;
-            case 'btn_can_cre_maz_pers': // Cancelar creación v1.0
-            case 'btn_concelar_crear_mazo_v1_1': // Cancelar creación v1.1
-                Deck.handleCancelCreateClick();
-                break;
-            case 'btn_mas_moneda': //lleva a shop para comprar mas monedas o gemas
-            case 'btn_mas_gema':
-                showDivToggle('showToggle');
-                api({ getSectionMembers: "shop" }, 'get-sho', null, $('#div_tog_gen_con'));
-                /* $('#a_menu_shop').click();
-                $(this).attr('id') == 'btn_mas_moneda' ? (menuSection.data.viewElement = 'div_tienda_monedas') : (menuSection.data.viewElement = 'div_tienda_gemas'); */
-                break;
-            case 'btn_copiar_mazo': // Copiar enlace del mazo
-                Deck.handleCopyDeckLinkClick();
-                break;
-            case 'btn_menu_enc_pub': //click al boton de publicaciones y encuestas
-                $('#capa_contenido').fadeIn(250);
-                $('#div_enc_pub').fadeToggle(250);
-                break;
-            case 'btn_ver_log_maz': // Mostrar/Ocultar log del mazo
-                Deck.handleToggleDeckLogClick();
-                break;
-            case 'btn_noty_visto': // Marcar notificación como vista
-                User.handleMarkNotificationSeenClick($(this));
-                break;
-            case 'btn_noty_elim': //eliminar un publicacion
-                break;
-            case 'btn_cam_card_no': // Cancela el reemplazo de carta
-                Card.handleCancelReplaceClick();
-                break;
-            case 'btn_btns_opc_maz': // Mostrar/Ocultar opciones del mazo
-                Deck.handleToggleDeckOptionsClick();
-                break;
-            case 'btn_ban_act': //ver la version y la inf de nuevas funciones de la actualizacion
-                $('#span_acercade').click();
-                break;
-            case 'btn_Orden_cards': // Cambiar el orden de las cartas
-                Card.handleOrderButtonClick();
-                break;
-            case 'btn_Orden_cards_advanced': // Orden avanzado de cartas
-                Card.handleAdvancedOrderButtonClick();
-                break;
-            case 'div_get_sb': //obener la inf sobre nosotros
-                showDivToggle('showToggle');
-                api({ sobreNosotros: true }, 'get-sb', null, $('#div_tog_gen_con'));
-                break;
-            case 'btn_com_clan': //muestra el form para clan
-                $('#div_com_clan').slideToggle(500);
-                break;
-            /* case 'btn_can_re_men_inp': // Cancelar respuesta de mensaje
-                Chat.handleCancelReplyClick();
-                break; */
-            case 'btn_nom_usu': // Mostrar datos básicos del usuario
-                User.handleShowUserDataClick();
-                break;
+        if (!wasHandled) {
+            console.warn(`No handler found for element with ID '${$(this).attr('id')}' and classes '${$(this).attr('class') || 'none'}'`);
         }
     });
+}
+
+/**
+ * Handles click events using the registry system
+ * @param {jQuery} element - The clicked element
+ * @param {Event} e - The click event
+ * @returns {boolean} - True if a handler was found and executed
+ */
+function handleClickEvent(element, e) {
+    const elementId = element.attr('id');
+    const elementClasses = element.attr('class')?.split(' ') || [];
+
+    // Handle special overlay/background clicks first
+    if (handleOverlayClicks(element, e, elementId)) {
+        return true;
+    }
+
+    // Check special handlers first (complex logic cases)
+    for (const className of elementClasses) {
+        if (SPECIAL_HANDLERS[className]) {
+            SPECIAL_HANDLERS[className](element);
+            return true;
+        }
+    }
+
+    if (elementId && SPECIAL_HANDLERS[elementId]) {
+        SPECIAL_HANDLERS[elementId](element);
+        return true;
+    }
+
+    // Check multi-ID handlers
+    for (const config of Object.values(CLICK_HANDLERS.multiIds)) {
+        if (config.ids.includes(elementId) || config.ids.some(id => elementClasses.includes(id))) {
+            config.handler(element);
+            return true;
+        }
+    }
+
+    // Check regular ID handlers
+    if (elementId && CLICK_HANDLERS.ids[elementId]) {
+        CLICK_HANDLERS.ids[elementId](element);
+        return true;
+    }
+
+    // Check class handlers
+    for (const className of elementClasses) {
+        if (CLICK_HANDLERS.classes[className]) {
+            CLICK_HANDLERS.classes[className](element);
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Handles special overlay/background click logic
+ * @param {jQuery} _element - The clicked element (unused)
+ * @param {Event} e - The click event
+ * @param {string} elementId - The element ID
+ * @returns {boolean} - True if handled
+ */
+function handleOverlayClicks(_element, e, elementId) {
+    const overlayIds = ['div_sections_content', 'capa_contenido', 'div_tog_gen'];
+
+    if (!overlayIds.includes(elementId)) {
+        return false;
+    }
+
+    // Hide replies and options if click is not on specific elements
+    if (!$(e.target).is('.div_res, .reply-btn, .reply-text, .img_chat_res')) {
+        $('.MsgChat').removeClass('div_tap_res').find('.div_res').fadeOut(250);
+        $('#frm_chat').fadeIn(250);
+    }
+
+    // Hide menus and elements if click is not in their areas
+    if (!$(e.target).closest('#div_opciones, #btn_btns_opc_maz, .cs-tooltip-image, #btn_Orden_cards_advanced, #div_options_advanced_order').length) {
+        $('#menu_opciones, #div_sub_btns_mazo, #cs-tooltip-box, #div_options_advanced_order').fadeOut(250);
+    }
+
+    // Hide card options if click is not on a card
+    if (!e.target.closest('.cs-card')) {
+        $('.card--show-opt').removeClass('card--show-opt').find('.cs-card__options').slideUp(100);
+    }
+
+    // Cancel card move selection if click is outside slot or deck card
+    if (Card.selectedCardToMove && !$(e.target).closest('.cs-deck__slot').length) {
+        Card.cancelCardMoveSelection();
+    }
+
+    return true;
 }
