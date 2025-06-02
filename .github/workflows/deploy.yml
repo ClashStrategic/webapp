@@ -1,0 +1,82 @@
+name: Deploy to InfinityFree via FTP
+
+on:
+  # Deploy after successful release
+  workflow_run:
+    workflows: ["Release"]
+    types:
+      - completed
+    branches:
+      - main
+  # Allow manual deployment
+  workflow_dispatch:
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+    # Only deploy if the release workflow succeeded or if manually triggered
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verificar archivos requeridos
+        run: |
+          echo "Verificando archivos críticos..."
+          if [ ! -f "index.html" ]; then
+            echo "❌ Error: index.html no encontrado"
+            exit 1
+          fi
+          if [ ! -f "sw.js" ]; then
+            echo "❌ Error: sw.js no encontrado"
+            exit 1
+          fi
+          if [ ! -f "manifest.json" ]; then
+            echo "❌ Error: manifest.json no encontrado"
+            exit 1
+          fi
+          echo "✅ Todos los archivos críticos están presentes"
+
+      - name: Mostrar información de despliegue
+        run: |
+          echo "🚀 Iniciando despliegue..."
+          echo "Commit: ${{ github.sha }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Workflow: ${{ github.workflow }}"
+
+      - name: Desplegar por FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /clashstrategic.great-site.net/htdocs/webapp/
+          local-dir: ./
+          exclude: |
+            **/.git*
+            **/.github/**
+            **/node_modules/**
+            **/tests/**
+            **/.env*
+            **/update-sw-version.js
+            **/.releaserc*
+            **/eslint.config.*
+            **/package-lock.json
+            **/package.json
+            **/.vscode/**
+            **/.clinerules/**
+            **/README*.md
+            **/CHANGELOG.md
+            **/*.log
+            **/.DS_Store
+            **/Thumbs.db
+            **/.npmrc
+            **/.editorconfig
+
+      - name: Verificar despliegue
+        run: |
+          echo "✅ Despliegue completado exitosamente"
+          echo "🌐 Sitio web: https://clashstrategic.great-site.net/webapp/"
