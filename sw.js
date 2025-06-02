@@ -130,7 +130,7 @@ self.addEventListener('activate', event => {
       console.log('[SW] Caches encontrados:', cacheNames);
       return Promise.all(
         cacheNames
-          .filter(name => name !== CACHE_NAME && name.startsWith('clash-strategic-webapp-'))
+          .filter(name => name !== CACHE_NAME)
           .map(name => {
             console.log('[SW] Borrando cache antiguo:', name);
             return caches.delete(name);
