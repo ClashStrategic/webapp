@@ -13,7 +13,7 @@
 
     # Modo Mantenimiento
     #RewriteCond %{REQUEST_URI} !^/maintenance\.html$
-    #RewriteCond %{REMOTE_ADDR} !^192\.168\.1\.1$
+    #RewriteCond %{REMOTE_ADDR} !^158\.172\.227\.100$
     #RewriteRule ^(.*)$ /maintenance.html [R=307,L]
 </IfModule>
 
