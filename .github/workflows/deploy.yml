@@ -53,7 +53,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /clashstrategic.great-site.net/htdocs/webapp/
+          server-dir: /clashstrategic.great-site.net/htdocs/
           local-dir: ./
           exclude: |
             .git/
@@ -81,4 +81,4 @@ jobs:
       - name: Verificar despliegue
         run: |
           echo "✅ Despliegue completado exitosamente"
-          echo "🌐 Sitio web: https://clashstrategic.great-site.net/webapp/"
+          echo "🌐 Sitio web: https://clashstrategic.great-site.net/"
