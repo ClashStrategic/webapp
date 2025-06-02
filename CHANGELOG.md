@@ -1,3 +1,10 @@
+## [0.6.5](https://github.com/ClashStrategic/webapp/compare/v0.6.4...v0.6.5) (2025-06-02)
+
+
+### Bug Fixes
+
+* **base_url_api:** Modify API base URL configuration for local and production ([d6a125e](https://github.com/ClashStrategic/webapp/commit/d6a125ef79bc87a9afe041a83048b3d3c29a0626))
+
 ## [0.6.4](https://github.com/ClashStrategic/webapp/compare/v0.6.3...v0.6.4) (2025-06-02)
 
 
