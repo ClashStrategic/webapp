@@ -57,7 +57,8 @@ jobs:
           local-dir: ./
           exclude: |
             .git/
-            **/.git*
+            **/.git/**
+            **/.gitignore
             **/.github/**
             **/node_modules/**
             **/tests/**
