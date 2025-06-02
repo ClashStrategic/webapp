@@ -1,4 +1,4 @@
-name: Deploy to InfinityFree via FTP
+name: Deploy WEBAPP via FTP
 
 on:
   # Deploy after successful release
