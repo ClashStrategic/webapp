@@ -1,3 +1,10 @@
+## [0.6.4](https://github.com/ClashStrategic/webapp/compare/v0.6.3...v0.6.4) (2025-06-02)
+
+
+### Bug Fixes
+
+* **home:** correct base URL for API in local storage ([1d09d4f](https://github.com/ClashStrategic/webapp/commit/1d09d4f5f495a6bf8afe9f80df9285c450bf529c))
+
 ## [0.6.3](https://github.com/ClashStrategic/webapp/compare/v0.6.2...v0.6.3) (2025-05-29)
 
 
