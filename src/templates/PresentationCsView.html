@@ -13,7 +13,9 @@
             <p class="text-center">Únete a la comunidad de Clash Strategic y descubre herramientas exclusivas para
                 llevar tus habilidades en Clash Royale al siguiente nivel. Domina el juego y mejora tu estrategia
                 con nosotros.</p>
-            <button class="btn_pre_reg" onclick="api({RegLog: true, type: 'reg'}, 'get-rl', null, $(this));">
+            <button class="btn_pre_reg" onclick="Config.renderTemplate('SignUpView').then((result) => {
+                showDivToggle('loadContent', 'Crear Cuenta', result);
+            });">
                 ¡Unirme a la comunidad!</button>
             <p class="cs-color-GoldenYellow text-center">¡Recibe 1000 monedas y 100 gemas GRATIS para comenzar tu
                 aventura en Clash Strategic!</p>

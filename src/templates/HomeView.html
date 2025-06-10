@@ -50,13 +50,17 @@
             <p>¡Bienvenido!</p>
           </button>
           <button class="cs-btn cs-btn--medium a_conten"
-            onclick="showDivToggle('showToggle'); api('/api/v1/register', 'get-rl', {RegLog: true, type: 'reg'});">
+            onclick="showDivToggle('showToggle'); Config.renderTemplate('SignUpView').then(html => {
+              showDivToggle('loadContent', 'Crear Cuenta', html);
+            });">
             <img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/menu_opc/icon_registro.webp"
               alt="crear">
             <p>Crear Cuenta</p>
           </button>
           <button class="cs-btn cs-btn--medium a_conten"
-            onclick="showDivToggle('showToggle'); api('/api/v1/login', 'get-rl', {RegLog: true, type: 'log'});">
+            onclick="showDivToggle('showToggle'); Config.renderTemplate('SignInView').then(html => {
+              showDivToggle('loadContent', 'Iniciar Sesión', html);
+            });">
             <img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/menu_opc/icon_login.webp" alt="login">
             <p>Iniciar Sesion</p>
           </button>

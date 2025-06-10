@@ -155,10 +155,6 @@ const RESPONSE_HANDLERS = {
         'get-not': (res) => {
             showDivToggle('loadContent', 'Notificación', res.data.res);
         },
-        'get-rl': (res) => {
-            console.log(res);
-            showDivToggle('loadContent', res.data.inf.title, res.data.inf.content);
-        },
         'get-inf': (res) => {
             showDivToggle('loadContent', res.data.title, res.data.content);
         },

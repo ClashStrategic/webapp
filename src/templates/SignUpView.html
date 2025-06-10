@@ -1,0 +1,37 @@
+<script src="https://accounts.google.com/gsi/client"></script>
+
+<h3 class="cs-color-GoldenYellow">Únete a Clash Strategic</h3><br>
+
+<div class="m-a text-center flex justify-content-center">
+    <div id="g_id_onload" data-client_id="638638911314-gqio8c2tjjsqhoo8dea7dmov2mft501o.apps.googleusercontent.com"
+        data-callback="handleCredentialResponse" data-auto_prompt="false"></div>
+    <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_up_with"
+        data-logo_alignment="left" data-shape="rectangular">
+    </div>
+</div><br>
+<div id="div_frm_signup" class="m-1 text-center">
+    <!-- <form id="frm_registro" data-ajax-submit="default" data-ajax-success="ins-reg">
+                            <h2>Únete a Clash Strategic ahora</h2>
+                            <span class="cs-color-DeepBlue">Nombre:</span><br>
+                            <input type="text" name="Nombre" maxlength="15" placeholder="Ingresa tu Nombre" required autocomplete="username"><br><br>
+                            <span class="cs-color-DeepBlue">Contraseña:</span><br>
+                            <input type="password" name="Contraseña" placeholder="Contraseña" required autocomplete="new-password"><br><br>
+                            <input type="password" name="RepContraseña" placeholder="Repita la contraseña" required autocomplete="new-password"></br><br>
+                            <input type="checkbox" required><span class="cs-color-DeepBlue">Acepto los </span><a class="cs-link cs-link--default" href="./term&cond">Terminos y condiciones</a><span class="cs-color-DeepBlue"> de Clash Strategic</span><br>
+                            <div id="alert_reg"></div>
+                            <button id="btn_registro" type="submit" class="cs-btn cs-btn--medium cs-btn--primary cs-bg-color-1" name="registro">¡Unirme Ya!</button><br>
+                        </form> -->
+    <div>
+        <span>¿Tienes cuenta?</span>&nbsp;&nbsp;<a class="cs-link cs-link--default"
+            onclick="Config.renderTemplate('SignInView').then((result) => {
+                showDivToggle('loadContent', 'Iniciar Sesión', result);
+            });">Iniciar Sesión </a><br><br>
+        <p class="cs-color-LightGrey">Al acceder, aceptas nuestra <a class="cs-link cs-link--default m-0-25"
+                href='./PrivacyPolicy' target="_blank">Política de Privacidad</a>y nuestros
+            <a class="cs-link cs-link--default m-0-25" href='./TermsService' target="_blank">Términos de servicio</a>.
+        </p>
+    </div>
+</div>
+<script>
+    $('#userAgent').val(navigator.userAgent); //insertar el user al form
+</script>
