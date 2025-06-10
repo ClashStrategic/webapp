@@ -49,50 +49,12 @@
       } else if (window.location.hostname === "clashstrategic.great-site.net") {
         localStorage.setItem("base_url_api", "https://clashstrategic.great-site.net/api");
       }
-
-      fetch(localStorage.getItem("base_url_api") + "/home")
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-          if (data.state == "success") {
-            document.body.innerHTML = data.data;
-
-            // Inicialización de la configuración del usuario
-            User.toggleSounds(Cookie.getCookie("sound_effects"));
-            Cookie.setCookiesForSession();
-
-            // Bienvenida a un nuevo usuario
-            Config.urlParam.get("new_user") &&
-              Cookie.getCookie("bienvenida") === "false" &&
-              Config.showInfBox(
-                "¡Bienvenido a Clash Strategic!",
-                "reyes_bienvenida.webp",
-                Config.msgInit,
-                60
-              );
-
-            // Bienvenida a los usuarios invitados
-            Cookie.getCookie("TypeAcount") == "invitado" &&
-              api({ PreCS: true }, "show-pre");
-
-            // Activa seccion de cartas
-            $("#a_menu_cartas").click();
-          } else {
-            alert(data.alerts[0]);
-          }
-        })
-        .catch((error) => {
-          console.error(
-            "There has been a problem with your fetch operation:",
-            error
-          );
-          alert("There has been a problem with your fetch operation:" + error);
-        });
+      
+      if (window.mainJsFullyLoaded) {
+        api("/api/v1/session", "get-session");
+      } else {
+        window.addEventListener('mainjsloaded', initializeAppHomeLogic, { once: true });
+      }
     });
   </script>
 </html>

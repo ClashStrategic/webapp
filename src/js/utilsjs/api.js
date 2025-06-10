@@ -40,6 +40,35 @@ const RESPONSE_HANDLERS = {
 
     // User and Profile Management
     user: {
+        'get-session': (res) => {
+            $.each(res.data, function (index, value) {
+                sessionStorage.setItem(index, JSON.stringify(value));
+            });
+
+            Config.renderTemplate("HomeView", res.data).then(html => {
+                $(document.body).html(html);
+                User.toggleSounds(Cookie.getCookie("sound_effects"));
+                Cookie.setCookiesForSession();
+
+                // Bienvenida a un nuevo usuario
+                Config.urlParam.get("new_user") &&
+                    Cookie.getCookie("bienvenida") === "false" &&
+                    Config.showInfBox(
+                        "¡Bienvenido a Clash Strategic!",
+                        "reyes_bienvenida.webp",
+                        Config.msgInit,
+                        60
+                    );
+
+                // Bienvenida a los usuarios invitados
+                Cookie.getCookie("TypeAcount") == "invitado" && showDivToggle('showToggle'); Config.renderTemplate('PresentationCsView').then(html => {
+                    showDivToggle('loadContent', 'Bienvenido', html);
+                });
+
+                // Activa seccion de cartas
+                $("#a_menu_cartas").click();
+            });
+        },
         'ver-per': (res) => {
             $('#div_perfilusu').html(res.data.html);
             if (Cookie.getCookie('TypeAcount') !== 'invitado') {
