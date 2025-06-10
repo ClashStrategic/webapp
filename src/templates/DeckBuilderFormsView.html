@@ -1,0 +1,152 @@
+<form id="frm_crear_mazo" class="frm frm--primary">
+    <h3 class="cs-color-LightGrey">¡Creador de Mazos! Beta</h3>
+
+    <div class="alert alert--info">
+        <p class="alert__message">Esta herramienta se encuentra en fase beta y puede no ser precisa. Se recomienda
+            revisar y ajustar los mazos generados manualmente.</p>
+    </div>
+
+    <h3 class="cs-color-LightGrey">Opciones</h3>
+
+    <input type="hidden" name="version" value="${ version}">
+    <input type="hidden" name="level" value="${ level}">
+
+    <!-- Opciones Basicas -->
+
+   ${ ['basic', 'intermediate', 'advanced'].includes(level) ? `
+        <fieldset>
+            <legend>Opciones Básicas</legend>
+            <div id="div_che_win">
+                <input id="inp_che_win" type="checkbox" class="cs-color-DeepBlue">
+                <label for="inp_che_win">Elegir una Win</label>&nbsp;<img class="cs-tooltip-image"
+                    src="./static/media/styles/icons/info-circle.svg" alt="inf"
+                    data-inf="Crea el Mazo basado en la Win Condition que elijas en el primer slot."><br><br>
+            </div>
+            <div id="div_sel_ata">
+                <label for="inp_sel_ata">Ataque:</label>
+                <select name="attackLevel" id="inp_sel_ata">
+                    <option value="Libre" selected>Libre</option>
+                    <option value="Muy Pasivo">Muy Pasivo</option>
+                    <option value="Pasivo">Pasivo</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Agresivo">Agresivo</option>
+                    <option value="Muy Agresivo">Muy Agresivo</option>
+                </select><br><br>
+            </div>
+        </fieldset>
+    ` : '' }
+
+    <!-- Opciones Intermedias -->
+
+    ${ ['intermediate', 'advanced'].includes(level) ? `
+        <fieldset>
+            <legend>Opciones Intermedias</legend>
+            <div id="div_sel_cam">
+                <label for="sel_cam">Campeones:</label>
+                <select name="ChampeonName" id="sel_cam">
+                    <option value="Libre" selected>Libre</option>
+                    <option value="0">Sin Campeones</option>
+                    <option value="Mighty Miner">Mighty Miner</option>
+                    <option value="Skeleton King">Skeleton King</option>
+                    <option value="Archer Queen">Archer Queen</option>
+                    <option value="Golden Knight">Golden Knight</option>
+                    <option value="Monk">Monk</option>
+                    <option value="Little Prince">Little Prince</option>
+                </select><br><br>
+            </div>
+            <div id="div_sel_est">
+                <label>Estrategia<img class="cs-tooltip-image" src="./static/media/styles/icons/info-circle.svg" alt="inf"
+                        data-inf="Elige una Estrategia para Crear el Mazo Basada en Ella">:</label><br>
+                <select name="Estrategias">
+                    <option value="Control" selected>Control</option>
+                    <option value="Ciclo">Ciclo</option>
+                    <option value="Push">Push</option>
+                    <option value="Split Push">Split Push</option>
+                    <option value="Personalizado" style="display:none;">Personalizado</option>
+                </select>
+                <br>
+            </div>
+            <div id="div_sel_prelix">
+                <label for="sel_prelix">Promedio de Elixir:</label>
+                <select name="PrElixir" id="sel_prelix">
+                    <option value="Libre" selected>Libre</option>
+                    <option value="2.5">2.5</option>
+                    <option value="3.0">3.0</option>
+                    <option value="3.5">3.5</option>
+                    <option value="4.0">4.0</option>
+                    <option value="4.5">4.5</option>
+                    <option value="5.0">5.0</option>
+                    <option value="5.5">5.5</option>
+                </select><br><br>
+            </div>
+        </fieldset>
+    ` : '' }
+
+    <!-- Opciones Avanzadas -->
+
+    ${ level == 'advanced' ? `
+        <fieldset>
+            <legend>Opciones Avanzadas</legend>
+            <div id="div_sel_iter">
+                <label for="sel_iter">Iterarcion: </label><img class="cs-tooltip-image"
+                    src="./static/media/styles/icons/info-circle.svg" alt="inf"
+                    data-inf="Veses que se volvera a buscar las sinergias de cartas para el mazo, basado en sus anteriores busquedas de Mazos.">
+                <select name="iteration" id="sel_iter">
+                    <option value="1">1 iteracion</option>
+                    <option value="3">3 iteraciones</option>
+                    <option value="5" selected>5 iteraciones</option>
+                    <option value="8">8 iteraciones</option>
+                    <option value="10">10 iteraciones</option>
+                </select><br><br>
+            </div>
+            <div id="div_inp_maz_opt">
+                <label for="inp_sel_maz_opt">Versiones del Mazo:</label>
+                <select name="MazOpt" id="inp_sel_maz_opt">
+                    <option value="1" selected>1 Mazo</option>
+                    <option value="2">2 Mazos</option>
+                    <option value="3">3 Mazos</option>
+                </select><br><br>
+            </div>
+            <div id="div_sel_evo">
+                <label for="sel_evo">Evoluciones:</label>
+                <select name="evo" id="sel_evo">
+                    <option value="0" selected>Sin Evoluciones</option>
+                    <option value="1" disabled>1 Evo (Libre)</option>
+                    <option value="2">2 Evo (Libres)</option>
+                </select><br><br>
+            </div>
+            <div></div>
+        </fieldset>
+    ` : '' }
+        
+    <button class="cs-btn cs-btn--medium cs-btn--primary" type="submit">Crear</button>&nbsp;&nbsp;&nbsp;
+    <button id="btn_can_cre_maz_pers" class="cs-btn cs-btn--medium cs-btn--cancel" type="button">Cancelar</button>
+</form>
+
+<!-- v1.1 -->
+<div id="div_frm_crear_mazo_v1_1" style="display: none;">
+    <form id="frm_crear_mazo_1_1" class="frm frm--primary" style="display: none;">
+        <h3 class="cs-color-LightGrey">¡Creador de Mazos! v1.1</h3>
+
+        <input type="hidden" name="version" value="1.1">
+
+        <label>Versiones: </label>
+        <select name="MazOpt">
+            <option value="1" selected>1 Mazo</option>
+            <option value="2">2 Mazos +3Gem</option>
+            <option value="3">3 Mazos +5Gem</option>
+        </select><br><br>
+
+        <label>Estrategia<img class="cs-tooltip-image" src="./static/media/styles/icons/info-circle.svg" alt="inf"
+                data-inf="Son un Conjunto de Condiciones para Filtrar cartas y lograr Crear un Mazo Estrategico, elige las Estrategias para Crear el Mazo Basada en Ella.">:</label>&nbsp;<button
+            type="button" class="btn_crear_est">Crear</button>&nbsp;<button type="button" class="btn_eleccion_est"
+            data-type="crear">Elegir..</button><br>
+        <input type="hidden" name="idsEstrategias" value="[]">
+        <div id="div_est_cre" class="div_estrategias_seleccionadas">
+            <p>Estrategias Seleccionadas:</p>
+        </div>
+        <button class="cs-btn cs-btn--medium cs-btn--primary" type="submit">Crear</button>&nbsp;&nbsp;&nbsp;
+        <button id="btn_concelar_crear_mazo_v1_1" class="cs-btn cs-btn--medium cs-btn--cancel"
+            type="button">Cancelar</button>
+    </form>
+</div>

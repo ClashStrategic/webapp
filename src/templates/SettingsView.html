@@ -1,0 +1,7 @@
+<div class="text-center">
+    <h3 class="cs-color-GoldenYellow">Sonidos</h3>
+    <input type="checkbox" id="inp_settings_sound_effects" ${ sound_effects == 'true' ? 'checked' : '' }
+        onchange="Cookie.setCookie('sound_effects', (this.checked ? 'true' : 'false')); User.toggleSounds(this.checked ? 'true' : 'false')" />
+    <label for="inp_settings_sound_effects"><span>Efectos de Sonidos</span>
+        <hr>
+</div>

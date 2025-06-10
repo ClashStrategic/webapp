@@ -1,0 +1,147 @@
+<div class="line_diamond"></div>
+
+<div id="capa_contenido" class="cs-layer cs-layer--default"></div>
+
+<div id="cargando" class="cs-layer cs-layer--light">
+  <img class="cs-layer__icon cs-layer__icon--medium" src="./static/media/styles/icons/menu/logo_cargando.gif"
+    alt="Cargando...">
+</div>
+
+<audio id="audio_button" src="./static/media/styles/audio/clickboton.mp3" style="display: none;"></audio>
+<audio id="audio_tap_card" src="./static/media/styles/audio/Tap card.mp3" style="display: none;"></audio>
+
+<div id="div_modal" style="display: none;">
+  <div id="conten_modal"></div>
+</div>
+
+<div id="div_dat_usu">
+  <button id="btn_nom_usu" class="cs-btn flex">
+    <img
+      src="static/media/styles/user/avatars/${ Avatar == 'invited.webp' ? 'invited_white.webp' : Avatar }"
+      class="cs-icon cs-icon--medium" alt="avatar">&nbsp;${ Nombre }</button>
+  <div id="div_coin_gema"> <!-- monedas y gemas -->
+    <div id="div_coins">
+      <button id="btn_mas_moneda" class="cs-btn"><img class="cs-icon cs-icon--small"
+          src="./static/media/styles/icons/icon_aumento3.webp" alt="icon_aumento3.webp"></button>
+      <span id="span_coins">${ Coins }</span><img class="cs-icon cs-icon--medium"
+        src="./static/media/styles/icons/icon_moneda.webp" alt="Monedas">
+    </div>
+    <div id="div_gems">
+      <button id="btn_mas_gema" class="cs-btn"><img class="cs-icon cs-icon--small"
+          src="./static/media/styles/icons/icon_aumento3.webp" alt="icon_aumento3.webp"></button>
+      <span id="span_gems">${ Gems }</span><img class="cs-icon cs-icon--medium"
+        src="./static/media/styles/icons/icon_gema.webp" alt="Gemas">
+    </div>
+  </div>
+</div>
+
+<div id="div_munu_in_cartas">
+  <div id="div_opciones">
+    <button id="btn_menu_opc" class="cs-btn-icon cs-btn-icon--large cs-btn--primary"><img
+        class="cs-icon cs-icon--medium" src="./static/media/styles/icons/menu/logo_menu.svg" alt="menu"></button>
+    <div id="div_menu_contenido">
+      <div id="menu_opciones"><!-- contenido de opciones -->
+        ${ TypeAcount == 'invitado' ? `
+          <button id="btn_bienvenido" class="cs-btn cs-btn--medium a_conten"
+            onclick="showDivToggle('showToggle'); Config.renderTemplate('PresentationCsView').then(html => {
+              showDivToggle('loadContent', 'Bienvenido', html);
+            });">
+            <img class="cs-icon cs-icon--medium" src="./static/media/styles/logo/logo_cs.webp" alt="¡Bienvenido!">
+            <p>¡Bienvenido!</p>
+          </button>
+          <button class="cs-btn cs-btn--medium a_conten"
+            onclick="showDivToggle('showToggle'); api('/api/v1/register', 'get-rl', {RegLog: true, type: 'reg'});">
+            <img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/menu_opc/icon_registro.webp"
+              alt="crear">
+            <p>Crear Cuenta</p>
+          </button>
+          <button class="cs-btn cs-btn--medium a_conten"
+            onclick="showDivToggle('showToggle'); api('/api/v1/login', 'get-rl', {RegLog: true, type: 'log'});">
+            <img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/menu_opc/icon_login.webp" alt="login">
+            <p>Iniciar Sesion</p>
+          </button>
+        ` : '' }
+        ${ TypeAcount != 'invitado' ? `
+          <button id="span_noti" class="cs-btn cs-btn--medium a_conten" disabled>
+            <img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/menu_opc/icon_noty.webp" alt="logo_not">
+            <p>Notificaciones</p>
+          </button>
+        ` : '' }
+        <!-- <a id="a_metodo_cs" class="a_conten" href="https://clashstrategic.notion.site/M-todo-Clash-Strategic-e0da2ec4cdda46cbb08ca3c6d7e81298?pvs=4" target="_blank">
+                                <img class=" icon cs-icon--medium" src="./static/media/styles/logo/logo_cs.webp" alt="logo_cs">
+                                <p>Método CS</p>
+                            </a><br> -->
+        <button id="btn_settings" class="cs-btn cs-btn--medium a_conten">
+          <img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/icon_settings.webp" alt="logo_not">
+          <p>Configuración</p>
+        </button>
+        <hr>
+        <button id="span_acercade" class="cs-btn cs-btn--medium a_conten">
+          <img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/info-circle.svg" alt="logo_not">
+          <p>Acerca De</p>
+        </button>
+        <button id="div_get_sb" class="cs-btn cs-btn--medium a_conten">
+          <img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/menu_opc/icon_acercade.webp"
+            alt="logo_acercade">
+          <p>Sobre Nosotros</p>
+        </button>
+        <hr>
+        <button class="cs-btn cs-btn--medium a_conten"
+          onclick="window.open('https://clashstrategic.notion.site/Solicitudes-de-Funciones-Clash-Strategic-1aa03f96d73a80a2a618c66525e59285?pvs=4', '_blank')">
+          <img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/icon_request_function.webp"
+            alt="icon_idea_function">
+          <p>Solicitar Función</p>
+        </button>
+        <button class="cs-btn cs-btn--medium a_conten"
+          onclick="window.open('https://clashstrategic.notion.site/1b203f96d73a80e7ab45faa508382bc7?pvs=105', '_blank')">
+          <img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/icon_bug.webp" alt="icon_bug">
+          <p>Reportar Error</p>
+        </button>
+        ${ TypeAcount != 'invitado' ? `
+          <button class="cs-btn cs-btn--medium a_conten"
+            onclick="if(confirm('¿Esta seguro que desea Cerrar la Session Actual?')){api('/api/v1/logout', 'cer-ses')}">
+            <img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/menu_opc/icon_logout.webp"
+              alt="logo_not">
+            <p>Cerrar Session</p>
+          </button>
+        ` : '' }
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="div_alert_animation" class="cs-layer"></div>
+
+<div id="div_tog_gen" class="div_toggle">
+  <div class="div_barrasup_perfil">
+    <h3 id="h3_tog_gen_tit"></h3>
+    <button class="btn_x_perfil">X</button>
+  </div><br><br><br>
+  <div id="div_tog_gen_con"><br><br><br><br></div>
+</div>
+
+<div id="div_perfilusu" class="div_toggle"></div>
+
+<div id="div_fullimg" style="display: none;">
+  <button id="btn_x_img_full">X</button><br><img id="img_fullscreen" alt="fullscreen">
+</div>
+
+<div id="cs-tooltip-box" style="display: none;"></div>
+
+<div id="div_sections_content" class="container w-100"></div>
+
+<div id="menu" style="display: none;">
+  <a data-url="shop.php" id="a_menu_shop" class="a_menu"><img class="img_menu"
+      src="./static/media/styles/icons/menu/icon_menu_shop.webp"></a>
+  <a data-url="cartas.php" id="a_menu_cartas" class="a_menu" hx-get="/SectionController/show"
+    hx-target="#div_sections_content" hx-vals="{getSections: cartas}"><img class="img_menu"
+      src="./static/media/styles/icons/menu/icon_menu_cards.webp" alt="icon_menu_cards"></a>
+  <a data-url="publicacion.php" id="a_menu_publicacion" class="a_menu"><img class="img_menu"
+      src="./static/media/styles/icons/menu/icon_pub.webp" alt="Legendary Arena"></a>
+  <a data-url="ch4t.php" id="a_menu_ch4t" class="a_menu"><img class="img_menu"
+      src="./static/media/styles/icons/menu/icon_ch4t.webp" alt="icon_menu_clan_wars"><button id="btn_new_message"
+      class="bg-transparent position-absolute" style="display: none;"><img
+        src="./static/media/styles/icons/icon_new_mesage.webp" alt="new message"><span id="span_new_mesasge"
+        class="cs-color-DeepBlue"></span></button></a>
+  <!--<a href="#" id="añadir" class="a_menu"><img class="img_menu" src="./static/media/styles/icons/menu/logo_añadir.svg" ></a>-->
+</div>
