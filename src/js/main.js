@@ -33,6 +33,10 @@ try {
   window.handleCredentialResponse = Config.handleCredentialResponse;
   window.addSlick = Config.addSlick;
   window.showDivToggle = Config.showDivToggle;
+
+  window.mainJsFullyLoaded = true;
+  window.dispatchEvent(new CustomEvent('mainjsloaded'));
+  console.log('[main.js] Módulos cargados correctamente.');
 } catch (error) {
   console.error("Error al cargar los módulos:", error);
   alert("Error al cargar la aplicación. Por favor, recarga la página o intenta más tarde.");
