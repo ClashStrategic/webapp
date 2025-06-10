@@ -30,11 +30,6 @@ const RESPONSE_HANDLERS = {
         'inf-car': (res) => {
             $('#div_card_info').html(res.data.html);
             $('#div_card_info').scrollTop(0);
-        },
-        'get-sec': (res, _data, options) => {
-            $('#div_sections_content').html(res.data.res).fadeIn(500);
-            $("#cargando").fadeOut(250);
-            Section.afterGetSection({ id: options.id, body: options.body });
         }
     },
 
@@ -92,12 +87,6 @@ const RESPONSE_HANDLERS = {
             } else {
                 alert(res.data.res);
             }
-        },
-        'user-data': (res) => {
-            showDivToggle('loadContent', 'Mis Datos', res.data);
-        },
-        'get-settings': (res) => {
-            showDivToggle('loadContent', 'Configuración', res.data);
         }
     },
 
@@ -134,9 +123,6 @@ const RESPONSE_HANDLERS = {
         },
         'ana-maz': (res) => {
             $('#div_det_basic').html(res.data);
-        },
-        'deck-form': (res) => {
-            $('#div_frm_crear_mazo').html(res.data);
         }
     },
 
@@ -166,19 +152,12 @@ const RESPONSE_HANDLERS = {
 
     // Content and Information
     content: {
-        'show-pre': (res) => {
-            showDivToggle('showToggle');
-            showDivToggle('loadContent', res.data.inf.title, res.data.inf.content);
-        },
         'get-not': (res) => {
             showDivToggle('loadContent', 'Notificación', res.data.res);
         },
         'get-rl': (res) => {
             console.log(res);
             showDivToggle('loadContent', res.data.inf.title, res.data.inf.content);
-        },
-        'get-sb': (res) => {
-            showDivToggle('loadContent', 'SobreNosotros', res.data.content);
         },
         'get-inf': (res) => {
             showDivToggle('loadContent', res.data.title, res.data.content);

@@ -66,7 +66,7 @@ const CLICK_HANDLERS = {
             ids: ['btn_mas_moneda', 'btn_mas_gema'],
             handler: () => {
                 showDivToggle('showToggle');
-                api({ getSectionMembers: "shop" }, 'get-sho', null, $('#div_tog_gen_con'));
+                api("/api/v1/sections", 'get-sho', { getSectionMembers: "shop" }, null, $('#div_tog_gen_con'));
             }
         },
         'image_fullscreen': {
@@ -134,12 +134,14 @@ const SPECIAL_HANDLERS = {
     // Special API handlers
     'span_acercade': () => {
         showDivToggle('showToggle');
-        api({ acercaDe: true }, 'get-inf', null, $('#div_tog_gen_con'));
+        api("/api/v1/aboutus", 'get-inf', {}, null, $('#div_tog_gen_con'));
     },
 
     'div_get_sb': () => {
         showDivToggle('showToggle');
-        api({ sobreNosotros: true }, 'get-sb', null, $('#div_tog_gen_con'));
+        Config.renderTemplate("AboutUsView").then(html => {
+            showDivToggle('loadContent', 'SobreNosotros', html);
+        });
     },
 
     // Modal close handler

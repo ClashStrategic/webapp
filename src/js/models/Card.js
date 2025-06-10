@@ -335,7 +335,7 @@ export default class Card {
         $('#div_card_info').empty().append('<div class="div_loading_toggle" style="margin-top: 50%; margin-bottom: 50%;"></div>');
 
         // Llamada a la API para obtener la información
-        api({ name: cardName, type: cardType, infcards: true }, 'inf-car', null, $('#div_card_info').children('.div_loading_toggle'));
+        api("/api/v1/cards/info", 'inf-car', { name: cardName, type: cardType }, null, $('#div_card_info').children('.div_loading_toggle'));
     }
 
     /**

@@ -14,7 +14,7 @@ export default class Section {
                 break;
             case 'a_menu_cartas':
                 Deck.cargandoMazo();
-                Card.cardsByArena == '' && api({ showCards: true }, 'sho-car', null, $('#div_cards_all'));//cargar cartar solo la primera vez
+                Card.cardsByArena == '' && api("/api/v1/cards", 'sho-car', {}, null, $('#div_cards_all'));//cargar cartar solo la primera vez
                 if (Card.cardsByArena) { //si ya se cargaron las cartas
                     $('#div_cards_all').html(Card.cardsByArena); //si ya cargo las cartas solo insertarlas al div
                     let byOrdenCardsOld = Cookie.getCookie('byOrdenCards'); //guardar la cookie en la variable

@@ -143,7 +143,9 @@ export default class User {
     static handleShowSettingsClick() {
         if (typeof showDivToggle === 'function' && typeof api === 'function') {
             showDivToggle('showToggle');
-            api({ getSettings: true }, 'get-settings', null, $('#div_tog_gen_con'));
+            Config.renderTemplate("SettingsView", { sound_effects: Cookie.getCookie("sound_effects") }).then(html => {
+                showDivToggle('loadContent', 'Configuración', html);
+            });
         } else {
             console.error("Las funciones 'showDivToggle' o 'api' no están definidas.");
         }
@@ -185,7 +187,22 @@ export default class User {
     static handleShowUserDataClick() {
         if (typeof showDivToggle === 'function' && typeof api === 'function') {
             showDivToggle('showToggle');
-            api({ showUserBasicData: true }, 'user-data', null, $('#div_tog_gen_con'));
+            let userData = {
+                type: 'per',
+                Usuario: sessionStorage.getItem('Usuario') || Cookie.getCookie('Usuario'),
+                Avatar: sessionStorage.getItem('Avatar') || Cookie.getCookie('Avatar'),
+                Banner: sessionStorage.getItem('Banner') || Cookie.getCookie('Banner'),
+                Nombre: sessionStorage.getItem('Nombre') || Cookie.getCookie('Nombre'),
+                Correo: sessionStorage.getItem('Correo') || Cookie.getCookie('Correo'),
+                Tag: sessionStorage.getItem('Tag') || Cookie.getCookie('Tag'),
+                TypeAcount: sessionStorage.getItem('TypeAcount') || Cookie.getCookie('TypeAcount'),
+                State: sessionStorage.getItem('State') || Cookie.getCookie('State'),
+                created_at: sessionStorage.getItem('created_at') || Cookie.getCookie('created_at'),
+            }
+
+            Config.renderTemplate("UserDataView", userData).then(html => {
+                showDivToggle('loadContent', 'Mis Datos', html);
+            });
         } else {
             console.error("Las funciones 'showDivToggle' o 'api' no están definidas.");
         }

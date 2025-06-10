@@ -100,7 +100,14 @@ export default function otherEvent() {
             $('#div_sections_content').html(section);
             //afterGetSection({ id: id, body: '' });
         } else { //si no existe la seccion guardada 
-            api({ getSections: id.split('_')[2] }, 'get-sec', { id: id, body: '' }, null); //hacer la solicitud de las seccion
+            let sectionName = id.split('_')[2];
+            if (sectionName == 'cartas') {
+                Config.renderTemplate("CardSectionView").then(html => {
+                    $('#div_sections_content').html(html).fadeIn(500);
+                    $("#cargando").fadeOut(250);
+                    Section.afterGetSection({ id: id, body: '' });
+                });
+            }
         }
     });
 

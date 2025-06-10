@@ -106,14 +106,14 @@ export default class Deck {
     static analyzeBasic(cards) {
         console.log('analyzeBasic(' + cards + ')');
         if (cards.length == 9) {
-            api({
+            api("/api/v1/tools/deckanalyzer", 'ana-maz', {
                 analizarMazo: true,
                 version: '1.0',
                 type: 'basic',
                 namesCards: JSON.stringify(cards),
                 AnaEvo: 2,
                 Estrategia: 'Libre'
-            }, 'ana-maz', null, $('#div_det_basic'));
+            }, null, $('#div_det_basic'));
         } else {
             $('#div_det_basic').html(Deck.incompleteDeckMessage);
         }
@@ -144,7 +144,7 @@ export default class Deck {
                     return;
                 }
 
-                api({ mazo: JSON.stringify(cardNames), nmazo: nmazo, guardarMazo: true }, 'gua-maz');
+                api("/api/v1/deck/save", 'gua-maz', { mazo: JSON.stringify(cardNames), nmazo: nmazo });
             }
         } else {
             $('#main-deck-collection-alert').html('<span class="cs-color-IntenseOrange text-center">El mazo debe tener 9 cartas, no se puede guardar.</span>');
@@ -447,7 +447,9 @@ export default class Deck {
     static deckBuilderRequest(level, version) {
         $('#div_btns_crear_mazo').fadeOut(0);
         $('#div_frm_crear_mazo').fadeIn(250);
-        api({ getDeckBuilderForms: true, level: level, version: version }, "deck-form", null, $('#div_frm_crear_mazo'))
+        Config.renderTemplate("DeckBuilderFormsView", { level: level, version: version }).then(html => {
+            $('#div_frm_crear_mazo').html(html);
+        });
     }
 
     /**
@@ -579,13 +581,12 @@ export default class Deck {
 
             const apiPayload = {
                 ...formData,
-                crearMazo: true,
                 winConditionName: winConditionChecked && winConditionCard ? winConditionCard.name : 'null'
             };
 
             // Asumiendo que 'api' es una función global o importada
             if (typeof api === 'function') {
-                api(apiPayload, 'cre-maz', null, $('#btn_crear'));
+                api("/api/v1/tools/deckbuilder", 'cre-maz', apiPayload, null, $('#btn_crear'));
             } else {
                 console.error("La función 'api' no está definida.");
             }
