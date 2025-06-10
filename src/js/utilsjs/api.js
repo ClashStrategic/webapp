@@ -302,8 +302,13 @@ function handleComplete(load) {
  * @param {Object} options - Additional options for the request
  * @param {jQuery} load - Loading element to show/hide loading indicator
  */
-export default function api(data, type, options = null, load = null) {
+export default function api(url, type, data = {}, options = null, load = null) {
     // Input validation
+    if (!url) {
+        console.error('API: url parameter is required');
+        return;
+    }
+
     if (!type) {
         console.error('API: type parameter is required');
         return;
@@ -314,7 +319,7 @@ export default function api(data, type, options = null, load = null) {
 
     $.ajax({
         type: API_CONFIG.method,
-        url: API_CONFIG.baseUrl(),
+        url: url,
         data: data,
         dataType: API_CONFIG.dataType,
         beforeSend: function () {
