@@ -155,9 +155,6 @@ const RESPONSE_HANDLERS = {
         'get-not': (res) => {
             showDivToggle('loadContent', 'Notificación', res.data.res);
         },
-        'get-inf': (res) => {
-            showDivToggle('loadContent', res.data.title, res.data.content);
-        },
         'pub-usu': (res) => {
             $('#div_pubusu').html(res.data.html);
             $('#div_perfilusu').scrollTop(0);

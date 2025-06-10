@@ -134,7 +134,9 @@ const SPECIAL_HANDLERS = {
     // Special API handlers
     'span_acercade': () => {
         showDivToggle('showToggle');
-        api("/api/v1/aboutus", 'get-inf', {}, null, $('#div_tog_gen_con'));
+        Config.renderTemplate("AboutView").then(html => {
+            showDivToggle('loadContent', 'AcercaDe', html);
+        });
     },
 
     'div_get_sb': () => {
