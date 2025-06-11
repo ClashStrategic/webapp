@@ -1,0 +1,43 @@
+<br>
+<hr>
+<br>
+<div id="div_tower-card_containers">
+        ${Object.values(stats.towerCards).map(card => `
+        <div class="cs-card-space cs-card-space--medium" data-id="div_card_${card.name}">
+            <div class="cs-card card--is-interactive" data-name="${card.name}"
+                data-json='${JSON.stringify(card)}' data-type="tower" data-id="${card.id}"
+                data-inmazo="no">
+                <img class="cs-card__image" src="${media[card.name].iconUrls.medium}"
+                    title="${card.name}" alt="${card.name}">
+                <span class="cs-card__name">${card.name}</span>
+
+                <div class="cs-card__options" id="cs-card__options" style="display: none;">
+                    <button class="cs-card__info">Info</button><br>
+                    <button class="cs-card__use-remove">Usar</button><br>
+                </div>
+            </div>
+        </div>
+    `).join('')}
+</div><br>
+<hr>
+<br>
+<div id="div_card_containers">
+    ${Object.values(stats.cards).map(card => `
+        <div class="cs-card-space cs-card-space--medium" data-id="div_card_${card.name}">
+            <div class="cs-card card--is-interactive" data-name="${card.name}"
+                data-json='${JSON.stringify(card)}' data-type="card" data-id="${card.id}"
+                data-inmazo="no">
+                <img class="cs-card__image" src="${media[card.name].iconUrls.medium}"
+                    title="${card.name}" alt="${card.name}">
+                <span class="cs-card__name">${card.name}</span>
+                <span class="cs-card__elixir">${card.elixirCost}</span>
+                ${card.evolution ? '<span class="cs-card__tag-evo">Evo</span>' : null}
+
+                <div class="cs-card__options" id="cs-card__options" style="display: none;">
+                    <button class="cs-card__info">Info</button><br>
+                    <button class="cs-card__use-remove">Usar</button><br>
+                </div>
+            </div>
+        </div>
+    `).join('')}
+</div>
