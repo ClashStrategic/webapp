@@ -323,7 +323,7 @@ export default class Config {
     static handleCredentialResponse(res) {
         console.log('handleCredentialResponse()');
         Cookie.setCookiesForSession();
-        api("/api/v1/googleAccess", 'ini-gog', res); //envia los datos al servidor
+        api("/v1/googleAccess", 'ini-gog', res); //envia los datos al servidor
     }
 
     // --- Métodos Estáticos para Manejar Eventos de Click ---

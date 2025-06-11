@@ -1,56 +1,80 @@
 <script>
-    LemonSqueezy.Setup({
-        eventHandler: (event) => {
-            if (event.event === "Checkout.Success") {
-                console.log(event);
-                const orderData = event.data;
-                $('#div_alert_shop_gems').html("<span class='cs-color-VibrantTurquoise text-center'>Pago realizado con éxito</span><br><span class='cs-color-GoldenYellow text-center'>Solicitando el Producto..</span><br>");
-                api("/api/v1/products/purchase/gems", "get-gem", { LemonSqueezy: JSON.stringify(orderData) });
-            }
-            if (event.event === "PaymentMethodUpdate.Mounted") {
-                console.log(event);
-            }
+  LemonSqueezy.Setup({
+    eventHandler: (event) => {
+      if (event.event === "Checkout.Success") {
+        console.log(event);
+        const orderData = event.data;
+        $("#div_alert_shop_gems").html(
+          "<span class='cs-color-VibrantTurquoise text-center'>Pago realizado con éxito</span><br><span class='cs-color-GoldenYellow text-center'>Solicitando el Producto..</span><br>"
+        );
+        api("/v1/products/purchase/gems", "get-gem", {
+          LemonSqueezy: JSON.stringify(orderData),
+        });
+      }
+      if (event.event === "PaymentMethodUpdate.Mounted") {
+        console.log(event);
+      }
 
-            if (event.event === "PaymentMethodUpdate.Closed") {
-                console.log(event);
-            }
-        }
-    });
+      if (event.event === "PaymentMethodUpdate.Closed") {
+        console.log(event);
+      }
+    },
+  });
 </script>
 
 <h1 class="cs-color-GoldenYellow">Tienda</h1>
 
 <h2 class="cs-color-GoldenYellow">Gemas</h2>
-<div id="div_tienda_gemas" class="cs-product-container cs-product-container--primary">
-    ${Object.values(products.gems).map(product => `
-        <div class="cs-product cs-product--medium cs-product--default">
-            <p class="cs-product__title">${product.name}</p>
-            <p class="cs-product__amound">${product.amount}</p>
-            <img class="cs-product__img" src="./static/media/styles/icons/${product.id}.webp"
-                alt="${product.name}">
-            <a class="cs-btn cs-btn--medium cs-btn--primary lemonsqueezy-button"
-                onclick="LemonSqueezy.Url.Open('${product.link}');">${product.price}${product.currency_price === 'USD' ? '$' : product.currency_price}</a>
-        </div>
-    `).join('')}
+<div
+  id="div_tienda_gemas"
+  class="cs-product-container cs-product-container--primary"
+>
+  ${Object.values(products.gems).map(product => `
+  <div class="cs-product cs-product--medium cs-product--default">
+    <p class="cs-product__title">${product.name}</p>
+    <p class="cs-product__amound">${product.amount}</p>
+    <img
+      class="cs-product__img"
+      src="./static/media/styles/icons/${product.id}.webp"
+      alt="${product.name}"
+    />
+    <a
+      class="cs-btn cs-btn--medium cs-btn--primary lemonsqueezy-button"
+      onclick="LemonSqueezy.Url.Open('${product.link}');"
+      >${product.price}${product.currency_price === 'USD' ? '$' :
+      product.currency_price}</a
+    >
+  </div>
+  `).join('')}
 </div>
 <div id="div_alert_shop_gems" class="text-center"></div>
 
-<div id="div_pay_get_gems" class="cs-color-DeepBlue" style="display: none;">
-    <h3>Comprar Gemas</h3>
-    <p class="cs-color-DeepBlue">Comprar: <span id="span_precio_gems" class="cs-color-DeepBlue"></span><img
-            class="cs-icon cs-icon--medium" src="./static/media/styles/icons/icon_gema.webp" alt="gema"> x
-        <span class="cs-color-DeepBlue" id="span_precio_get_gems"></span>$
-    </p>
-    <div id="paypal-button-container" class="cs-color-DeepBlue"></div>
-    <div id="google-pay-button-container" class="cs-color-DeepBlue"></div>
+<div id="div_pay_get_gems" class="cs-color-DeepBlue" style="display: none">
+  <h3>Comprar Gemas</h3>
+  <p class="cs-color-DeepBlue">
+    Comprar: <span id="span_precio_gems" class="cs-color-DeepBlue"></span
+    ><img
+      class="cs-icon cs-icon--medium"
+      src="./static/media/styles/icons/icon_gema.webp"
+      alt="gema"
+    />
+    x <span class="cs-color-DeepBlue" id="span_precio_get_gems"></span>$
+  </p>
+  <div id="paypal-button-container" class="cs-color-DeepBlue"></div>
+  <div id="google-pay-button-container" class="cs-color-DeepBlue"></div>
 </div>
 
 <h2 class="cs-color-GoldenYellow">Monedas</h2>
-<div id="div_tienda_monedas" class="cs-product-container cs-product-container--primary">
-    <div class="alert alert--info">
-        <p class="alert__message">Las monedas no estan disponibles en este momento.</p>
-    </div>
-    <!--     <?php foreach ($data["products"]->Coins as $value) { ?>
+<div
+  id="div_tienda_monedas"
+  class="cs-product-container cs-product-container--primary"
+>
+  <div class="alert alert--info">
+    <p class="alert__message">
+      Las monedas no estan disponibles en este momento.
+    </p>
+  </div>
+  <!--     <?php foreach ($data["products"]->Coins as $value) { ?>
         <div class="cs-product cs-product--medium cs-product--default">
             <p class="cs-product__title"><?php echo $value->name; ?></p>
             <p class="cs-product__amound"><?php echo $value->amount; ?></p>
@@ -67,6 +91,16 @@
 <div id="div_alert_shop_gold" class="text-center"></div>
 
 <div class="m-0-25 text-center">
-    <a class="cs-link cs-link--default m-0-25" href='./TermsService' target="_blank">Términos de Servicio</a>
-    <a class="cs-link cs-link--default m-0-25" href='./RefundPolicy' target="_blank">Política de Reembolso.</a>
+  <a
+    class="cs-link cs-link--default m-0-25"
+    href="./TermsService"
+    target="_blank"
+    >Términos de Servicio</a
+  >
+  <a
+    class="cs-link cs-link--default m-0-25"
+    href="./RefundPolicy"
+    target="_blank"
+    >Política de Reembolso.</a
+  >
 </div>

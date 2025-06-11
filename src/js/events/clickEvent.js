@@ -66,7 +66,7 @@ const CLICK_HANDLERS = {
             ids: ['btn_mas_moneda', 'btn_mas_gema'],
             handler: () => {
                 showDivToggle('showToggle');
-                api("/api/v1/products", 'get-products', null, $('#div_tog_gen_con'));
+                api("/v1/products", 'get-products', null, $('#div_tog_gen_con'));
             }
         },
         'image_fullscreen': {

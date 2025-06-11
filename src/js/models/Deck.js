@@ -106,7 +106,7 @@ export default class Deck {
     static analyzeBasic(cards) {
         console.log('analyzeBasic(' + cards + ')');
         if (cards.length == 9) {
-            api("/api/v1/tools/deckanalyzer", 'ana-maz', {
+            api("/v1/tools/deckanalyzer", 'ana-maz', {
                 version: '1.0',
                 type: 'basic',
                 namesCards: JSON.stringify(cards),
@@ -147,7 +147,7 @@ export default class Deck {
                     return;
                 }
 
-                api("/api/v1/deck/save", 'gua-maz', { mazo: JSON.stringify(cardNames), nmazo: nmazo });
+                api("/v1/deck/save", 'gua-maz', { mazo: JSON.stringify(cardNames), nmazo: nmazo });
             }
         } else {
             $('#main-deck-collection-alert').html('<span class="cs-color-IntenseOrange text-center">El mazo debe tener 9 cartas, no se puede guardar.</span>');
@@ -589,7 +589,7 @@ export default class Deck {
 
             // Asumiendo que 'api' es una función global o importada
             if (typeof api === 'function') {
-                api("/api/v1/tools/deckbuilder", 'cre-maz', apiPayload, null, $('#btn_crear'));
+                api("/v1/tools/deckbuilder", 'cre-maz', apiPayload, null, $('#btn_crear'));
             } else {
                 console.error("La función 'api' no está definida.");
             }
@@ -634,7 +634,7 @@ export default class Deck {
                     AnaEvo: analysisEvo
                 };
 
-                api("/api/v1/tools/deckanalyzer", 'det-maz', apiPayload, $('#btn_analizar'));
+                api("/v1/tools/deckanalyzer", 'det-maz', apiPayload, $('#btn_analizar'));
             }
         } else {
             $('#main-deck-collection-alert').html('<span class="cs-color-IntenseOrange text-center">El Mazo está incompleto</span>');

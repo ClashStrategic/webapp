@@ -3,7 +3,7 @@
  */
 const API_CONFIG = {
     method: "POST",
-    baseUrl: () => localStorage.getItem('base_url_api') + "/App/Config/Routes.php",
+    baseUrl: () => localStorage.getItem('base_url_api'),
     dataType: "json",
     loadingGif: "./static/media/styles/icons/menu/logo_cargando.gif"
 };
@@ -147,7 +147,7 @@ const RESPONSE_HANDLERS = {
             Config.showAlert(res.data.alerts[0]);
         },
         'get-products': (res) => {
-            Config.renderTemplate("ShopSectionView", { products: res.data}).then(html => {
+            Config.renderTemplate("ShopSectionView", { products: res.data }).then(html => {
                 showDivToggle('loadContent', 'Tienda', html);
             });
         }
@@ -323,7 +323,7 @@ export default function api(url, type, data = {}, options = null, load = null) {
 
     $.ajax({
         type: API_CONFIG.method,
-        url: url,
+        url: API_CONFIG.baseUrl() + url,
         data: data,
         dataType: API_CONFIG.dataType,
         beforeSend: function () {

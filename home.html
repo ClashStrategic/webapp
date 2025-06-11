@@ -51,10 +51,10 @@
       }
       
       if (window.mainJsFullyLoaded) {
-        api("/api/v1/session", "get-session");
+        api("/v1/session", "get-session");
       } else {
         window.addEventListener('mainjsloaded', () => {
-          api("/api/v1/session", "get-session");
+          api("/v1/session", "get-session");
         }, { once: true });
       }
     });
