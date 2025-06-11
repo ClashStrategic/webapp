@@ -148,36 +148,34 @@ export default class Card {
         Card.stats = res.data.stats;
         Card.media = res.data.media;
 
-        for (let i = 1; i < 5; i++) {
-            let orderById = [...Object.values(res.data.stats.cards)].sort((a, b) => a.id - b.id);
-            let orderByElixir = [...Object.values(res.data.stats.cards)].sort((a, b) => a.elixirCost - b.elixirCost);
-            let valRarity = ['Common', 'Rare', 'Epic', 'Legendary', 'Champion'];
-            let orderByRarity = [...Object.values(res.data.stats.cards)].sort((a, b) => valRarity.indexOf(a.rarity) - valRarity.indexOf(b.rarity));
-            let valEvo = ['si', 'no'];
-            let orderByEvolution = [...Object.values(res.data.stats.cards)].sort((a, b) => valEvo.indexOf(a.evolution ? 'si' : 'no') - valEvo.indexOf(b.evolution ? 'si' : 'no'));
+        let orderById = [...Object.values(res.data.stats.cards)].sort((a, b) => a.id - b.id);
+        let orderByElixir = [...Object.values(res.data.stats.cards)].sort((a, b) => a.elixirCost - b.elixirCost);
+        let valRarity = ['Common', 'Rare', 'Epic', 'Legendary', 'Champion'];
+        let orderByRarity = [...Object.values(res.data.stats.cards)].sort((a, b) => valRarity.indexOf(a.rarity) - valRarity.indexOf(b.rarity));
+        let valEvo = ['si', 'no'];
+        let orderByEvolution = [...Object.values(res.data.stats.cards)].sort((a, b) => valEvo.indexOf(a.evolution ? 'si' : 'no') - valEvo.indexOf(b.evolution ? 'si' : 'no'));
 
-            $.each([orderById, orderByElixir, orderByRarity, orderByEvolution], function (index, value) {
-                Config.renderTemplate("ShowCards", { stats: { cards: value, towerCards: res.data.stats.towerCards }, media: res.data.media }).then((html) => {
-                    if (index == 0) {
-                        Card.cardsByArena = html;
-                        $('#div_cards_all').html(Card.cardsByArena);
-                        Cookie.setCookie('byOrdenCards', 1);
-                        let TypeAcount = Cookie.getCookie('TypeAcount');
-                        if (TypeAcount == 'invitado') {
-                            let Mazos = Cookie.getCookie('Mazos');
-                            if (!Mazos) Cookie.setCookie('Mazos', '["", "", "", "", "", "", "", "", "", ""]');
-                        }
-                        $('.cs-deck-collection__box-btns-option[data-nmazo=1]').click();
-                        Cookie.setCookie('nmazo', 1);
-                    } else if (index == 1)
-                        Card.cardsByElixir = html;
-                    else if (index == 2)
-                        Card.cardsByRarity = html;
-                    else if (index == 3)
-                        Card.cardsByEvolution = html;
-                });
+        $.each([orderById, orderByElixir, orderByRarity, orderByEvolution], function (index, value) {
+            Config.renderTemplate("ShowCards", { stats: { cards: value, towerCards: res.data.stats.towerCards }, media: res.data.media }).then((html) => {
+                if (index == 0) {
+                    Card.cardsByArena = html;
+                    $('#div_cards_all').html(Card.cardsByArena);
+                    Cookie.setCookie('byOrdenCards', 1);
+                    let TypeAcount = Cookie.getCookie('TypeAcount');
+                    if (TypeAcount == 'invitado') {
+                        let Mazos = Cookie.getCookie('Mazos');
+                        if (!Mazos) Cookie.setCookie('Mazos', '["", "", "", "", "", "", "", "", "", ""]');
+                    }
+                    $('.cs-deck-collection__box-btns-option[data-nmazo=1]').click();
+                    Cookie.setCookie('nmazo', 1);
+                } else if (index == 1)
+                    Card.cardsByElixir = html;
+                else if (index == 2)
+                    Card.cardsByRarity = html;
+                else if (index == 3)
+                    Card.cardsByEvolution = html;
             });
-        }
+        });
 
         $('#btn_Orden_cards').prop('disabled', false);
     }
