@@ -104,7 +104,9 @@ const RESPONSE_HANDLERS = {
         },
         'det-maz': (res) => {
             $('#div_res_ST').fadeIn(125);
-            $('#div_res_ana_maz').html(res.data.view);
+            Config.renderTemplate("DeckAnalysisView", res.data.data).then(html => {
+                $('#div_res_ana_maz').html(html);
+            });
             $('#span_gems').text(res.data.Gems);
             if (res.data.alerts) {
                 let resAlerts = Object.values(res.data.alerts).join('<br>');
@@ -118,7 +120,9 @@ const RESPONSE_HANDLERS = {
             }
         },
         'ana-maz': (res) => {
-            $('#div_det_basic').html(res.data);
+            Config.renderTemplate("DeckAnalysisView", res.data.data).then(html => {
+                $('#div_det_basic').html(html);
+            });
         }
     },
 
