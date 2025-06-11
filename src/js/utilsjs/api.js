@@ -145,8 +145,10 @@ const RESPONSE_HANDLERS = {
             }
             Config.showAlert(res.data.alerts[0]);
         },
-        'get-sho': (res) => {
-            showDivToggle('loadContent', "Tienda", res.data.res);
+        'get-products': (res) => {
+            Config.renderTemplate("ShopSectionView", { products: res.data}).then(html => {
+                showDivToggle('loadContent', 'Tienda', html);
+            });
         }
     },
 
