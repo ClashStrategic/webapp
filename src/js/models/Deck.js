@@ -107,7 +107,6 @@ export default class Deck {
         console.log('analyzeBasic(' + cards + ')');
         if (cards.length == 9) {
             api("/api/v1/tools/deckanalyzer", 'ana-maz', {
-                analizarMazo: true,
                 version: '1.0',
                 type: 'basic',
                 namesCards: JSON.stringify(cards),
@@ -631,17 +630,11 @@ export default class Deck {
 
                 const apiPayload = {
                     ...formData,
-                    analizarMazo: true,
                     namesCards: JSON.stringify(cardNames),
                     AnaEvo: analysisEvo
                 };
 
-                // Asumiendo que 'api' es una función global o importada
-                if (typeof api === 'function') {
-                    api(apiPayload, 'det-maz', null, $('#btn_analizar')); // Target es null, loader es el botón
-                } else {
-                    console.error("La función 'api' no está definida.");
-                }
+                api("/api/v1/tools/deckanalyzer", 'det-maz', apiPayload, $('#btn_analizar'));
             }
         } else {
             $('#main-deck-collection-alert').html('<span class="cs-color-IntenseOrange text-center">El Mazo está incompleto</span>');
