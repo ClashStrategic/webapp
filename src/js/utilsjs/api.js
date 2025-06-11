@@ -26,10 +26,6 @@ const RESPONSE_HANDLERS = {
         'cam-pag': (res, data, options) => {
             const img = options.parents('.pagination-container').siblings('.gallery-container').find('.fg_img_pub');
             img.html(`<img data-idpub="${data.idpub}" class="pub_img" src="./static/media/styles/user/publicaciones/imagenes/${res.archivo}" alt="img_pub">`).fadeOut(0).fadeIn(250);
-        },
-        'inf-car': (res) => {
-            $('#div_card_info').html(res.data.html);
-            $('#div_card_info').scrollTop(0);
         }
     },
 

@@ -1,0 +1,116 @@
+<img id="img_model_card" class="cs-card cs-card--large cs-card--model-fixed"
+    src="${card.media.iconUrls.medium}"
+    alt="model">
+<div id="div_barrasup_perfil" class="div_barrasup_perfil">
+    <h3>${card.stats.name}</h3>
+    <button id="btn_x-card" class="btn_x_perfil">X</button>
+</div><br><br><br>
+
+<div class="text-center m-a">
+    <!--                 <div id="div_parent_tricks">
+                        <?php /* $tricks = $data['jsonMedia']->{$data['card']->name}->tricks ?? []; */ ?>
+                        <?php /* if (!empty($tricks)) { */ ?>
+                            <div class="div_tricks" id="div_tricks">
+                                <?php /* foreach ($tricks as $alltricks) { */ ?>
+                                    <div class="div_tvd">
+                                        <p><?php /* echo $alltricks->title; */ ?></p>
+                                        <video poster="./static/media/styles/miniatura_tricks.webp" class="video_tricks" src="<?php /* echo $alltricks->video; */ ?>" type="video/mp4" loop autoplay muted controls></video>
+                                        <p><?php /* echo $alltricks->Description; */ ?></p>
+                                    </div>
+                                <?php /* } */ ?>
+                            </div>
+                        <?php /* } else { */ ?>
+                            <p>Todavia no Hay trucos para esta carta, la implementaremos pronto.</p>
+                            <p>"¿Tienes trucos?, Comparte el video y recibe 10 gemas por cada truco, mas inf <a class="cs-link cs-link--default" target="_blank" href="https://clashstrategic.notion.site/Comparte-Estrategias-y-Trucos-de-Clash-Royale-1402fc31dff94f0ebcc15f4d0ad56515?pvs=4">aqui</a>"</p>
+                        <?php /* } */ ?>
+                    </div> -->
+
+<table class="cs-table cs-table--light">
+    <caption>Estadisticas</caption>
+    
+    <!-- Estadísticas básicas en filas de 2 columnas -->
+    ${(() => {
+        const stats = statsInfo.basicStats;
+        let html = '';
+        
+        for (let i = 0; i < stats.length; i += 2) {
+            html += '<tr>';
+            
+            // Procesar hasta 2 estadísticas por fila
+            for (let j = 0; j < 2 && (i + j) < stats.length; j++) {
+                const stat = stats[i + j];
+                html += `
+                    <td>
+                        <div class="cs-media">
+                            <div class="cs-media__figure">
+                                <img class="cs-icon cs-icon--large" src="${stat.icon}" alt="${stat.alt}">
+                            </div>
+                            <div class="cs-media__body">
+                                <span class="cs-color-DeepBlue">${stat.label}: </span><br>
+                                <span class="cs-color-DeepBlue">${stat.value}</span>
+                            </div>
+                        </div>
+                    </td>
+                `;
+            }
+            
+            html += '</tr>';
+        }
+        
+        return html;
+    })()}
+    
+    <!-- Estadísticas de niveles -->
+    ${statsInfo.levelStats
+        .filter(stat => {
+            // Filtrar estadísticas condicionales
+            if (stat.conditional && !card.stats[stat.property]) {
+                return false;
+            }
+            return true;
+        })
+        .map(stat => `
+            <tr>
+                <td>
+                    <div class="cs-media">
+                        <div class="cs-media__figure">
+                            <img class="cs-icon cs-icon--large" src="${stat.icon}" alt="${stat.alt}">
+                        </div>
+                        <div class="cs-media__body">
+                            <span class="cs-color-DeepBlue">${stat.label} Nvl11: </span><br>
+                            <span class="cs-color-DeepBlue">${card.stats[stat.property]?.level11 ?? 'N/A'}</span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="cs-media">
+                        <div class="cs-media__figure">
+                            <img class="cs-icon cs-icon--large" src="${stat.icon}" alt="${stat.alt}">
+                        </div>
+                        <div class="cs-media__body">
+                            <span class="cs-color-DeepBlue">${stat.label} Nvl15: </span><br>
+                            <span class="cs-color-DeepBlue">${card.stats[stat.property]?.level15 ?? 'N/A'}</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        `).join('')
+    }
+</table>
+    <div class="alert alert--info">
+        <span
+            class="alert__message">${card.stats.description ?? 'No hay descripcion para esta carta.'}</span>
+    </div><br><br><br>
+    <!--                 <hr><br>
+
+                    <h3>Wiki</h3>
+                    <?php /* $wiki = $data['jsonMedia']->{$data['card']->name}->ResourcesUrls->wiki ?? '#'; */ ?>
+                    <button id="btn_car_wiki" class="cs-btn cs-btn--medium cs-btn--primary cs-bg-color-1" data-url="<?php /* echo $wiki; */ ?>">Cargar/Ocultar Wiki</button>
+                    <a class="card__details-url enlace" href="<?php /* echo $wiki; */ ?>" target="_blank"><?php /* echo $wiki; */ ?></a>
+                    <div id="div_ifrm_wiki" style="display: none;">
+                        <iframe id="ifrm_det_card" class="card__details-iframe" src=""></iframe>
+                    </div> -->
+</div><br><br><br><br><br>
+<script>
+    addSlick('vid', '.div_tricks');
+</script>
