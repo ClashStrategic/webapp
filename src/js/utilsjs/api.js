@@ -52,9 +52,10 @@ const RESPONSE_HANDLERS = {
                     );
 
                 // Bienvenida a los usuarios invitados
-                Cookie.getCookie("TypeAcount") == "invitado" && showDivToggle('showToggle'); Config.renderTemplate('PresentationCsView').then(html => {
-                    showDivToggle('loadContent', 'Bienvenido', html);
-                });
+                Cookie.getCookie("TypeAcount") == "invitado" &&
+                    (showDivToggle('showToggle'), Config.renderTemplate('PresentationCsView').then(html => {
+                        showDivToggle('loadContent', 'Bienvenido', html);
+                    }));
 
                 // Activa seccion de cartas
                 $("#a_menu_cartas").click();

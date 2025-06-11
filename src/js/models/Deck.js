@@ -131,7 +131,11 @@ export default class Deck {
         if (cardNames.length == 9) {
             let TypeAcount = Cookie.getCookie('TypeAcount');
             if (TypeAcount == 'invitado') {
-                Cookie.setCookie('Mazos', JSON.stringify(cardNames));
+                let Mazos = Cookie.getCookie('Mazos');
+                Mazos == null && Cookie.setCookie('Mazos', '["", "", "", "", "", "", "", "", "", ""]');
+                Mazos = JSON.parse(Mazos);
+                Mazos[(nmazo - 1)] = cardNames;
+                Cookie.setCookie('Mazos', JSON.stringify(Mazos));
                 $('#main-deck-collection-alert').html('<span class="cs-color-GoldenYellow text-center">Para guardar tu mazo de forma segura, crea una cuenta. Por ahora, se guardará temporalmente en tu navegador.</span>');
             } else {
                 let Mazos = JSON.parse(Cookie.getCookie('Mazos'));
