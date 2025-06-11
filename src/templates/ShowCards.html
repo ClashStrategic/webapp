@@ -5,7 +5,7 @@
         ${Object.values(stats.towerCards).map(card => `
         <div class="cs-card-space cs-card-space--medium" data-id="div_card_${card.name}">
             <div class="cs-card card--is-interactive" data-name="${card.name}"
-                data-json='${JSON.stringify(card)}' data-type="tower" data-id="${card.id}"
+                data-json='${JSON.stringify({...card,...media[card.name]})}' data-type="tower" data-id="${card.id}"
                 data-inmazo="no">
                 <img class="cs-card__image" src="${media[card.name].iconUrls.medium}"
                     title="${card.name}" alt="${card.name}">
@@ -25,7 +25,7 @@
     ${Object.values(stats.cards).map(card => `
         <div class="cs-card-space cs-card-space--medium" data-id="div_card_${card.name}">
             <div class="cs-card card--is-interactive" data-name="${card.name}"
-                data-json='${JSON.stringify(card)}' data-type="card" data-id="${card.id}"
+                data-json='${JSON.stringify({...card,...media[card.name]})}' data-type="card" data-id="${card.id}"
                 data-inmazo="no">
                 <img class="cs-card__image" src="${media[card.name].iconUrls.medium}"
                     title="${card.name}" alt="${card.name}">

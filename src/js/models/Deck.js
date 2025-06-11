@@ -60,7 +60,7 @@ export default class Deck {
     }
 
     static addDeleteCard(card, json, name) {
-        console.log('addDeleteCard(' + card + ', ' + json + ', ' + name + ')');
+        console.log('addDeleteCard(' + JSON.stringify(card) + ', ' + JSON.stringify(json) + ', ' + name + ')');
         if (card.data("inmazo") == 'no') { //si la carta no esta en el mazo, entonse añadirla
             if ($('#deck-slots-main').data('cards').filter(item => item.rarity == 'Champion').length == 1 && json.rarity == 'Champion') { //si existe un campeon en el mazo alertar y cerrar
                 alert('Ya Tienes un Campeón en el Mazo');
@@ -168,7 +168,7 @@ export default class Deck {
     }
 
     static setMazo(namesCardInMazo) {
-        console.log('setMazo(' + namesCardInMazo + ')');
+        console.log('setMazo(' + JSON.stringify(namesCardInMazo) + ')');
 
         $('.cs-deck__slot').each(function (index, element) { //eliminar el mazo
             $(element).data('lleno') == 'yes' && $(element).find('.cs-card__use-remove').click();
