@@ -47,15 +47,22 @@
       if (window.location.hostname === "localhost") {
         localStorage.setItem("base_url_api", "http://localhost/api");
       } else if (window.location.hostname === "clashstrategic.great-site.net") {
-        localStorage.setItem("base_url_api", "https://clashstrategic.great-site.net/api");
+        localStorage.setItem(
+          "base_url_api",
+          "https://clashstrategic.great-site.net/api"
+        );
       }
-      
+
       if (window.mainJsFullyLoaded) {
-        api("/v1/session", "get-session");
+        api("POST", "/v1/session", "get-session");
       } else {
-        window.addEventListener('mainjsloaded', () => {
-          api("/v1/session", "get-session");
-        }, { once: true });
+        window.addEventListener(
+          "mainjsloaded",
+          () => {
+            api("POST", "/v1/session", "get-session");
+          },
+          { once: true }
+        );
       }
     });
   </script>

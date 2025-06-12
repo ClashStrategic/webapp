@@ -189,7 +189,7 @@
         ${ TypeAcount != 'invitado' ? `
         <button
           class="cs-btn cs-btn--medium a_conten"
-          onclick="if(confirm('¿Esta seguro que desea Cerrar la Session Actual?')){api('/v1/logout', 'cer-ses')}"
+          onclick="if(confirm('¿Esta seguro que desea Cerrar la Session Actual?')){api("POST", '/v1/logout', 'cer-ses')}"
         >
           <img
             class="cs-icon cs-icon--medium"

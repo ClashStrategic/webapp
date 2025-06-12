@@ -7,7 +7,7 @@
         $("#div_alert_shop_gems").html(
           "<span class='cs-color-VibrantTurquoise text-center'>Pago realizado con éxito</span><br><span class='cs-color-GoldenYellow text-center'>Solicitando el Producto..</span><br>"
         );
-        api("/v1/products/purchase/gems", "get-gem", {
+        api("POST", "/v1/products/purchase/gems", "get-gem", {
           LemonSqueezy: JSON.stringify(orderData),
         });
       }

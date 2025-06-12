@@ -2,7 +2,6 @@
  * API Configuration
  */
 const API_CONFIG = {
-    method: "POST",
     baseUrl: () => localStorage.getItem('base_url_api'),
     dataType: "json",
     loadingGif: "./static/media/styles/icons/menu/logo_cargando.gif"
@@ -306,8 +305,13 @@ function handleComplete(load) {
  * @param {Object} options - Additional options for the request
  * @param {jQuery} load - Loading element to show/hide loading indicator
  */
-export default function api(url, type, data = {}, options = null, load = null) {
+export default function api(method, url, type, data = {}, options = null, load = null) {
     // Input validation
+    if (!method) {
+        console.error('API: method parameter is required');
+        return;
+    }
+
     if (!url) {
         console.error('API: url parameter is required');
         return;
@@ -322,7 +326,7 @@ export default function api(url, type, data = {}, options = null, load = null) {
     console.log(`🌐 API Call: ${type}`, { data, options, hasLoadElement: !!load });
 
     $.ajax({
-        type: API_CONFIG.method,
+        type: method,
         url: API_CONFIG.baseUrl() + url,
         data: data,
         dataType: API_CONFIG.dataType,
