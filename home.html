@@ -54,12 +54,12 @@
       }
 
       if (window.mainJsFullyLoaded) {
-        api("POST", "/v1/session", "get-session");
+        api("POST", "/v1/session/login", "get-session");
       } else {
         window.addEventListener(
           "mainjsloaded",
           () => {
-            api("POST", "/v1/session", "get-session");
+            api("POST", "/v1/session/login", "get-session");
           },
           { once: true }
         );
