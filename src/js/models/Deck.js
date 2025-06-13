@@ -147,7 +147,10 @@ export default class Deck {
                     return;
                 }
 
-                api("POST", "/v1/deck/save", 'gua-maz', { mazo: JSON.stringify(cardNames), nmazo: nmazo });
+                let saveDecks = Mazos;
+                saveDecks[(nmazo - 1)] = cardNames;
+
+                api("PATCH", "/v1/users", 'update-deck', { data: { decks: saveDecks } });
             }
         } else {
             $('#main-deck-collection-alert').html('<span class="cs-color-IntenseOrange text-center">El mazo debe tener 9 cartas, no se puede guardar.</span>');

@@ -105,8 +105,8 @@ const RESPONSE_HANDLERS = {
             Deck.eliminarGifCargando();
             Card.setCards(res);
         },
-        'gua-maz': (res) => {
-            res.data.state == 'success' && (Cookie.setCookie('Mazos', res.data.Mazos), $('#main-deck-collection-alert').html(res.data.res));
+        'update-deck': (res) => {
+            Cookie.setCookie('Mazos', JSON.stringify(res.data));
         },
         'det-maz': (res) => {
             $('#div_res_ST').fadeIn(125);
@@ -312,30 +312,21 @@ function handleComplete(load) {
  * @param {jQuery} load - Loading element to show/hide loading indicator
  */
 export default function api(method, url, type, data = {}, options = null, load = null) {
-    // Input validation
-    if (!method) {
-        console.error('API: method parameter is required');
+    if (!method || !url || !type) {
+        console.error('API: method, url, and type are required');
         return;
     }
 
-    if (!url) {
-        console.error('API: url parameter is required');
-        return;
-    }
+    const isJson = ['PUT', 'PATCH', 'DELETE'].includes(method.toUpperCase());
 
-    if (!type) {
-        console.error('API: type parameter is required');
-        return;
-    }
-
-    // Enhanced logging
-    console.log(`🌐 API Call: ${type}`, { data, options, hasLoadElement: !!load });
+    console.log(`🌐 API Call: ${type}`, { method, url, data, options, hasLoadElement: !!load });
 
     $.ajax({
         type: method,
         url: API_CONFIG.baseUrl() + url,
-        data: data,
-        dataType: API_CONFIG.dataType,
+        data: isJson ? JSON.stringify(data) : data,
+        dataType: API_CONFIG.dataType || 'json',
+        contentType: isJson ? 'application/json; charset=utf-8' : 'application/x-www-form-urlencoded; charset=UTF-8',
         beforeSend: function () {
             handleBeforeSend(type, load);
         },
