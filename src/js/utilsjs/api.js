@@ -75,13 +75,19 @@ const RESPONSE_HANDLERS = {
             sessionStorage.clear();
             res.data.cer_ses ? (location.href = './home') : alert(res.data.res);
         },
-        'ini-gog': (res) => {
-            if (res.data.acount) {
-                res.data.new_user ?
-                    (Cookie.setCookie('bienvenida', false), location.href = './home?new_user=true') :
-                    (location.href = './home');
+        'login': (res) => {
+            if (Object.keys(res.data).length > 0) {
+                location.href = './home';
             } else {
-                alert(res.data.res);
+                alert("Error al iniciar sesión.");
+            }
+        },
+        'register': (res) => {
+            if (Object.keys(res.data).length > 0) {
+                Cookie.setCookie('bienvenida', false);
+                location.href = './home?new_user=true';
+            } else {
+                alert("Error al registrar el usuario.");
             }
         }
     },

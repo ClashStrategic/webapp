@@ -30,7 +30,8 @@ try {
   clickEventModule();
   otherEventModule();
 
-  window.handleCredentialResponse = Config.handleCredentialResponse;
+  window.login = User.login;
+  window.registerByGoogle = User.registerByGoogle;
   window.addSlick = Config.addSlick;
   window.showDivToggle = Config.showDivToggle;
 

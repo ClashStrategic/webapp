@@ -7,6 +7,18 @@ export default class User {
         this.userInteracted = false;
     }
 
+    static registerByGoogle(data) {
+        console.log('registerByGoogle(' + JSON.stringify(data) + ')');
+        Cookie.setCookiesForSession();
+        api("POST", "/v1/users", 'register', { data: data, type: "google" });
+    }
+
+    static login(data) {
+        console.log('login(' + JSON.stringify(data) + ')');
+        Cookie.setCookiesForSession();
+        api("POST", "/v1/session", 'login', { data: data });
+    }
+
     static toggleSounds(enable) {
         console.log('Toggle sounds:', enable);
         if (enable == 'true') {

@@ -319,13 +319,6 @@ export default class Config {
         });
     };
 
-    //callback acceso con google
-    static handleCredentialResponse(res) {
-        console.log('handleCredentialResponse()');
-        Cookie.setCookiesForSession();
-        api("POST", "/v1/googleAccess", 'ini-gog', res); //envia los datos al servidor
-    }
-
     // --- Métodos Estáticos para Manejar Eventos de Click ---
 
     /**
