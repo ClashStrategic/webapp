@@ -286,11 +286,18 @@ function findHandler(type) {
 /**
  * Handles API request errors
  * @param {Object} error - Error object
+ * @param {string} url - API endpoint URL
  * @param {string} type - API endpoint type
  */
-function handleError(error, type) {
-    console.error(`❌ API Error for ${type}:`, error);
-    alert('Hubo un problema al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.');
+function handleError(error, url, type) {
+    console.error(`❌ API Error for ${url} (${type})}:`, error);
+    let msgError;
+    if (error.responseJSON && error.responseJSON.alerts) {
+        msgError = error.responseJSON.alerts[0];
+    } else {
+        msgError = 'Hubo un problema al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.';
+    }
+    alert(msgError);
 }
 
 /**
@@ -332,7 +339,7 @@ export default function api(method, url, type, data = {}, options = null, load =
             handleSuccess(res, type, data, options);
         },
         error: function (error) {
-            handleError(error, type);
+            handleError(error, url, type);
         },
         complete: function () {
             handleComplete(load);
