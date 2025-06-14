@@ -114,11 +114,9 @@ const RESPONSE_HANDLERS = {
                 $('#div_res_ana_maz').html(html);
             });
             $('#span_gems').text(res.data.Gems);
-            if (res.data.alerts) {
-                let resAlerts = Object.values(res.data.alerts).join('<br>');
-                const alertMessages = Object.values(res.data.alerts);
-                $('#main-deck-collection-alert').html(resAlerts);
-                Config.showAlertSequentially(alertMessages);
+            if (res.data.message) {
+                $('#main-deck-collection-alert').html(res.data.message);
+                Config.showAlert(res.data.message);
             }
             $('#div_analizar_mazo').slideUp(0);
             if (res.state === 'success') {
@@ -145,11 +143,11 @@ const RESPONSE_HANDLERS = {
         'get-gem': (res) => {
             if (res.data.state == "success") {
                 $('#span_gems').text(res.data.data.Gems);
-                $('#div_alert_shop_gems').append(res.data.alerts[0]);
+                $('#div_alert_shop_gems').append(res.data.message);
             } else {
-                $('#div_alert_shop_gems').append(res.data.alerts[0]);
+                $('#div_alert_shop_gems').append(res.data.message);
             }
-            Config.showAlert(res.data.alerts[0]);
+            Config.showAlert(res.data.message);
         },
         'get-products': (res) => {
             Config.renderTemplate("ShopSectionView", { products: res.data }).then(html => {
@@ -241,17 +239,6 @@ function handleBeforeSend(type, load) {
  * @param {Object} options - Request options
  */
 function handleSuccess(res, type, data, options) {
-    // Handle error responses
-    if (res.state === 'error') {
-        alert(Object.values(res.alerts).join('. <br>'));
-        return;
-    }
-
-    // Handle info responses
-    if (res.state === 'info') {
-        alert(Object.values(res.alerts).join('. '));
-    }
-
     // Find and execute the appropriate handler
     const handler = findHandler(type);
     if (handler) {
@@ -292,8 +279,8 @@ function findHandler(type) {
 function handleError(error, url, type) {
     console.error(`❌ API Error for ${url} (${type})}:`, error);
     let msgError;
-    if (error.responseJSON && error.responseJSON.alerts) {
-        msgError = error.responseJSON.alerts[0];
+    if (error.responseJSON && error.responseJSON.message) {
+        msgError = error.responseJSON.message;
     } else {
         msgError = 'Hubo un problema al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.';
     }
