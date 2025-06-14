@@ -317,16 +317,14 @@ export default function api(method, url, type, data = {}, options = null, load =
         return;
     }
 
-    const isJson = ['PUT', 'PATCH', 'DELETE'].includes(method.toUpperCase());
-
     console.log(`🌐 API Call: ${type}`, { method, url, data, options, hasLoadElement: !!load });
 
     $.ajax({
         type: method,
         url: API_CONFIG.baseUrl() + url,
-        data: isJson ? JSON.stringify(data) : data,
+        data: JSON.stringify(data),
         dataType: API_CONFIG.dataType || 'json',
-        contentType: isJson ? 'application/json; charset=utf-8' : 'application/x-www-form-urlencoded; charset=UTF-8',
+        contentType: 'application/json; charset=utf-8',
         beforeSend: function () {
             handleBeforeSend(type, load);
         },
@@ -341,3 +339,4 @@ export default function api(method, url, type, data = {}, options = null, load =
         }
     });
 }
+
