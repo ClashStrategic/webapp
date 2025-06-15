@@ -12,16 +12,23 @@
         <h3>Vista rápida</h3>
         ${Object.entries(averages).map(([label, section]) => `
             <span><span>${label}</span> :
-                <span class="${section.displayClass}">
-                    ${section.displayScore}%
-                    ${section.displayMessage}
+                <span class="${section.displayClass ?? ''}">
+                    ${section.totalScore}%
+                    ${section.displayMessage ?? ''}
                 </span>
                 <img class="cs-tooltip-image" src="./static/media/styles/icons/info-circle.svg" alt="msgInfo"
-                    data-width="12rem" data-inf="${section.msgInfo}">
+                    data-width="12rem" data-inf="${section.description}">
             </span><br>
         `).join('')}
         <div id="div_view_quik_aditional">
-            <span class="cs-color-LightGrey">Arquetipo: </span>${data.formattedArchetype}
+            <span class="cs-color-LightGrey">Arquetipo: </span>${(data.archetype.archetype === 'Híbrido' && data.archetype.details) && `
+                <span class="cs-color-GoldenYellow">Híbrido</span> <span class="text-sm cs-color-GoldenYellow">(Coincide parcialmente con: ${data.archetype.details})</span>
+        ` || (data.archetype.archetype === 'Desconocido') ? `
+            <span class="cs-color-IntenseOrange">Desconocido</span>
+        ` :  `
+            <span class="cs-color-GoldenYellow">${data.archetype.archetype}</span>
+        ` }
+        <img class="cs-tooltip-image" src="./static/media/styles/icons/info-circle.svg" alt="info" data-width="20rem" data-inf="${data.archetype.description ?? 'Información no disponible.'}">
         </div>
         <div id="div_data_view_quick">
             <img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/card_stat_inf/icon_gota_elixir.webp"
@@ -41,7 +48,7 @@
             <div class="cs-analysis__section cs-analysis__section--default">
                 <h3>Cobertura de Defensa<img class="cs-tooltip-image" src="./static/media/styles/icons/info-circle.svg"
                         alt="msgInfo" data-width="12rem"
-                        data-inf="${defenseCoverage.generalDescription}"></h3>
+                        data-inf="${defenseCoverage.description}"></h3>
                 <table class="cs-table cs-table--dark">
                     <thead>
                         <tr>
@@ -50,7 +57,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        ${Object.entries(defenseCoverage.items).map(([type, coverageInfo]) => `
+                        ${Object.entries(defenseCoverage.data).map(([type, coverageInfo]) => `
                             <tr>
                                 <td>
                                     ${coverageInfo.displayName}
@@ -66,18 +73,18 @@
         ` : ''}
 
         <!-- Sección: Posibles Debilidades -->
-        ${(formattedWeaknesses) ? `
+        ${(weaknesses) ? `
             <div class="cs-analysis__section cs-analysis__section--default">
                 <h3>Posibles Debilidades y Sugerencias<img class="cs-tooltip-image"
                         src="./static/media/styles/icons/info-circle.svg" alt="msgInfo" data-width="12rem"
-                        data-inf="${formattedWeaknesses.generalDescription}"></h3>
-                ${Object.values(formattedWeaknesses.items).map(weaknessItem => `
+                        data-inf="${weaknesses.description}"></h3>
+                ${Object.entries(weaknesses.suggestions).map(([name, suggestion]) => `
                     <div class="m-1">
                         <div class="cs-color-IntenseOrange text-center">
-                            ${weaknessItem.name}
+                            ${name}
                         </div>
                         <div class="cs-color-GoldenYellow text-center">
-                            ${weaknessItem.suggestion}
+                            ${suggestion}
                         </div>
                     </div>
                 `).join('')}
@@ -85,14 +92,22 @@
         ` : ''}
 
         ${Object.entries(averages).map(([keySection, section]) => {
-            if (keySection == 'Versatilidad' && section.imgArrays) {
-                const imgArrays = section.imgArrays;
+            if (keySection == 'Versatilidad') {
+                const cardTypes = ['win', 'ter', 'aer', 'dew', 'hech'];
+                section['cardhech'] = [
+                ...section['cardhech']['hech0'],
+                ...section['cardhech']['hech1'],
+                ...section['cardhech']['hech2'],
+                ...section['cardhech']['hech3'],
+                ...section['cardhech']['hech4']
+                ];
+
                 return `
                     <!-- Sección: Detalles de ataque/defensa -->
                     <div class="cs-analysis__section cs-analysis__section--default">
                         <h3>Versatilidad - Ataque y Defensa<img class="cs-tooltip-image"
                                 src="./static/media/styles/icons/info-circle.svg" alt="msgInfo" data-width="12rem"
-                                data-inf="${section.generalDescription}">
+                                data-inf="${section.description}">
                         </h3>
                         <table class="cs-table cs-table--dark">
                             <thead>
@@ -108,11 +123,15 @@
                             <tbody>
                                 <tr>
                                     <th>Cartas</th>
-                                    <td>${Object.values(imgArrays.win).join(' ')}</td>
-                                    <td>${Object.values(imgArrays.ter).join(' ')}</td>
-                                    <td>${Object.values(imgArrays.aer).join(' ')}</td>
-                                    <td>${Object.values(imgArrays.dew).join(' ')}</td>
-                                    <td>${Object.values(imgArrays.hech).join(' ')}</td>
+                                    ${cardTypes.map((type) => {
+                                        let keyGroupCard = 'card' + type;
+                                        return `
+                                            <td>
+                                            ${section[keyGroupCard].map((card) => `
+                                                <div class='cs-card'><img class='cs-card__image' src='${card ? card.urlIcon : "./static/media/styles/icons/icon_card_denegado.webp"}' alt='card_image'></div>
+                                            `).join('')}
+                                            </td>
+                                    `}).join('')}
                                 </tr>
                                 <tr>
                                     <th>Ataque</th>
@@ -140,7 +159,7 @@
                     <!-- Sección: Detalles de sinergia -->
                     <div class="cs-analysis__section cs-analysis__section--default">
                         <h3>Sinergias<img class="cs-tooltip-image" src="./static/media/styles/icons/info-circle.svg" alt="msgInfo"
-                                data-width="12rem" data-inf="${section.generalDescription}"></h3>
+                                data-width="12rem" data-inf="${section.description}"></h3>
                         <!-- Sección: Top Sinergias Positivas -->
                         ${section.topPositiveSynergies ? `
                             <div class="cs-analysis__sub-section cs-analysis__section--default">
@@ -181,15 +200,24 @@
                                     data-inf="${section.generalDescription ?? 'Información no disponible.'}">
                             </p>
                             <div class="cs-deck cs-deck--default">
-                                ${Object.values(section.arraySynergyStrategy).map(strategy => `
+                                ${section.arraySynergyStrategy.map(strategy => `
                                     <div class="cs-card cs-card--medium">
                                         <img class="cs-card__image" src="${strategy.medium}" alt='card_img'>
                                         <span class="span_infver"
-                                            style="${strategy.stylePointsStrategiCard ?? ''}">+${strategy.pointsSynergy}pts
+                                            style="${strategy.pointsSynergy > 10 ? 'color: var(--cs-color-VibrantTurquoise);' :
+                                            strategy.pointsSynergy > 5 ? 'color: var(--cs-color-GoldenYellow);' :
+                                            strategy.pointsSynergy >= 0 ? 'color: var(--cs-color-IntenseOrange);' :
+                                            ''}">+${strategy.pointsSynergy}pts
                                         </span>
                                         <img class="cs-analysis-sinergy-cards__toltip cs-tooltip-image"
                                             src="./static/media/styles/icons/info-circle.svg" alt="inf" data-width="15em"
-                                            data-overflow="true" data-inf='${strategy.reasonsOutput ?? "No hay detalles."}'>
+                                            data-overflow="true" data-inf='<ul class="cs-list cs-list--small">${
+                                            strategy.reasons ?
+                                                strategy.reasons.map(reason => `
+                                                     <li>${reason["reason"]}: ${reason["points"] >= 0 ? "+" : ""}${reason["points"]} pts</li>
+                                                `).join("")
+                                            : `<li>No hay detalles específicos.</li>`
+                                            }</ul>'>
                                     </div>
                                 `).join('')}
                             </div>
@@ -201,12 +229,15 @@
                                     data-width="12rem"
                                     data-inf="${section.generalDescription ?? 'Información no disponible.'}">
                             </p>
-                            ${Object.values(section.arraySynergyCards).map(synergyCard => `
+                            ${section.arraySynergyCards.map(synergyCard => `
                                 <div class="cs-analysis-sinergy-cards">
                                     <div class="cs-analysis-sinergy-cards__card">
                                         <div class="cs-card">
                                             <span class="span_infver"
-                                                style="${synergyCard.stylePointsStrategyGeneral ?? ''}">+${synergyCard.pointsSynergy ?? 0}pts
+                                                style="${synergyCard.pointsSynergy > 10 ? 'color: var(--cs-color-VibrantTurquoise);' :
+                                                synergyCard.pointsSynergy > 5 ? 'color: var(--cs-color-GoldenYellow);' :
+                                                synergyCard.pointsSynergy >= 0 ? 'color: var(--cs-color-IntenseOrange);' :
+                                                ''}">+${synergyCard.pointsSynergy ?? 0}pts
                                             </span>
                                             <img class='cs-card__image' src="${synergyCard.medium}" alt='img_aumento'>
                                         </div>
@@ -226,7 +257,13 @@
                                                     <img class="cs-analysis-sinergy-cards__toltip cs-tooltip-image"
                                                         src="./static/media/styles/icons/info-circle.svg" alt="inf" data-width="15em"
                                                         data-overflow="true"
-                                                        data-inf='${synergyCardSynergy.reasonsOutput ?? "No hay detalles."}'>
+                                                        data-inf='<ul class="cs-list cs-list--small">${
+                                                        synergyCardSynergy.reasons ?
+                                                            synergyCardSynergy.reasons.map(reason => `
+                                                                 <li>${reason["reason"]}: ${reason["points"] >= 0 ? "+" : ""}${reason["points"]} pts</li>
+                                                            `).join("")
+                                                        : `<li>No hay detalles específicos.</li>`
+                                                        }</ul>'>
                                                 </div>
                                             `).join('')}
                                         `}
@@ -238,8 +275,8 @@
                 `;
             }
             // Mostrar mensajes adicionales formateados
-            if (section.formattedMessages) {
-                return `<br> <hr> <h3 class="cs-color-GoldenYellow">Notas Adicionales</h3> ${section.formattedMessages}`;
+            if (section.msg) {
+                return `<br> <hr> <h3 class="cs-color-GoldenYellow">Notas Adicionales</h3> ${section.msg}`;
             }
             return '';
         }).join('')}
