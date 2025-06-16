@@ -31,11 +31,12 @@ const RESPONSE_HANDLERS = {
     // User and Profile Management
     user: {
         'get-session': (res) => {
-            $.each(res.data, function (index, value) {
-                sessionStorage.setItem(index, JSON.stringify(value));
-            });
-
-            Config.renderTemplate("HomeView", res.data).then(html => {
+            sessionStorage.setItem("session", JSON.stringify(res.data));
+            api("GET", "/v1/users", "get-user");
+        },
+        'get-user': (res) => {
+            sessionStorage.setItem("user", JSON.stringify(res.data));
+            Config.renderTemplate("HomeView", { user: res.data }).then(html => {
                 $(document.body).html(html);
                 User.toggleSounds(Cookie.getCookie("sound_effects"));
                 Cookie.setCookiesForSession();
@@ -71,9 +72,13 @@ const RESPONSE_HANDLERS = {
             Cookie.setCookie('dateBanHideAct', res.data.dateBanHideAct);
         },
         'cer-ses': (res) => {
-            Cookie.deleteAllCookies();
-            sessionStorage.clear();
-            res.data.cer_ses ? (location.href = './home') : alert(res.data.res);
+            if (res.state == 'success') {
+                Cookie.deleteAllCookies();
+                sessionStorage.clear();
+                location.href = './home';
+            } else {
+                alert("Error al cerrar sesión.");
+            }
         },
         'login': (res) => {
             if (Object.keys(res.data).length > 0) {
@@ -106,14 +111,15 @@ const RESPONSE_HANDLERS = {
             Card.setCards(res);
         },
         'update-deck': (res) => {
-            Cookie.setCookie('Mazos', JSON.stringify(res.data));
+            Cookie.setCookie('Mazos', res.data.decks);
+            sessionStorage.setItem("user", JSON.stringify(res.data));
         },
         'det-maz': (res) => {
             $('#div_res_ST').fadeIn(125);
-            Config.renderTemplate("DeckAnalysisView", res.data.data).then(html => {
+            Config.renderTemplate("DeckAnalysisView", { result: res.data.result }).then(html => {
                 $('#div_res_ana_maz').html(html);
             });
-            $('#span_gems').text(res.data.Gems);
+            $('#span_gems').text(res.data.balance.gems);
             if (res.data.message) {
                 $('#main-deck-collection-alert').html(res.data.message);
                 Config.showAlert(res.data.message);
@@ -124,7 +130,7 @@ const RESPONSE_HANDLERS = {
             }
         },
         'ana-maz': (res) => {
-            Config.renderTemplate("DeckAnalysisView", res.data.data).then(html => {
+            Config.renderTemplate("DeckAnalysisView", { result: res.data.result }).then(html => {
                 $('#div_det_basic').html(html);
             });
         }

@@ -30,7 +30,7 @@ try {
   clickEventModule();
   otherEventModule();
 
-  window.login = User.login;
+  window.loginByGoogle = User.loginByGoogle;
   window.registerByGoogle = User.registerByGoogle;
   window.addSlick = Config.addSlick;
   window.showDivToggle = Config.showDivToggle;

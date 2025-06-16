@@ -266,23 +266,23 @@ export default class Deck {
     }
 
     static setCreatedDecks(res) {
-        if (res.data.MazosOptions === undefined || res.data.MazosOptions === null) {
+        if (res.data.result.MazosOptions === undefined || res.data.result.MazosOptions === null) {
             $('#main-deck-collection-alert').html('<span class="cs-color-IntenseOrange text-center">No se pudieron cargar las opciones de mazos guardados.</span>');
         } else {
-            Deck.MazosOpcionsArray = res.data.MazosOptions;
+            Deck.MazosOpcionsArray = res.data.result.MazosOptions;
             $('#div_opc_cre_maz').fadeIn(250).html(`<span class="cs-color-LightGrey">Mazos Creados: </span>`);
-            for (let i = 0; i < Object.keys(res.data.MazosOptions).length; i++) {
-                if (Object.keys(res.data.MazosOptions[i]).length > 0) {
+            for (let i = 0; i < Object.keys(res.data.result.MazosOptions).length; i++) {
+                if (Object.keys(res.data.result.MazosOptions[i]).length > 0) {
                     let numMaz = i + 1;
                     $('#div_opc_cre_maz').append(`<button class="btn_opc_cre_maz" data-nmazo="${numMaz}">${numMaz}</button> `);
                 }
             }
             $('.btn_opc_cre_maz[data-nmazo=1]').click();
             $('#div_crear_mazo').fadeOut(250);
-            $('#div_log_maz').fadeIn(0).html(Object.entries(res.data.log).map(([key, value]) => `<span style="color: var(--cs-color-DeepBlue);">${key}</span>: ${JSON.stringify(value)}`).join('<br>')).fadeOut(0);
+            //$('#div_log_maz').fadeIn(0).html(Object.entries(res.data.log).map(([key, value]) => `<span style="color: var(--cs-color-DeepBlue);">${key}</span>: ${JSON.stringify(value)}`).join('<br>')).fadeOut(0);
         }
-        $('#span_gems').text(res.data.Gems);
-        $('#main-deck-collection-alert').html(res.data.res);
+        $('#span_gems').text(res.data.balance.gems);
+        $('#main-deck-collection-alert').html(res.data.message);
     }
 
     // --- Métodos Estáticos para Manejar Eventos de Click ---

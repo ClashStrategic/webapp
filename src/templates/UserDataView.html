@@ -5,13 +5,13 @@
                 <div id="btn_menu_perfil" class="perfil">
                     <div class="banner_perfil">
                         <img id="img_banner_per"
-                            src="./static/media/styles/user/banners/defect.webp"
-                            class="img_banner" alt="banner">
+                            src="static/media/styles/user/banners/${ user.banner }"
+                            class="img_banner" alt="banner_image">
                         <img class="avatar_perfil"
-                            src="./static/media/styles/user/avatars/defect.webp"
-                            alt="defect.webp">
+                            src="./static/media/styles/user/avatars/${ user.avatar }"
+                            alt="avatar_image">
                     </div>
-                    <p class="cs-color-DeepBlue p_nom_perfil cs-color-LightGrey">${ Nombre }</p>
+                    <p class="cs-color-DeepBlue p_nom_perfil cs-color-LightGrey">${ user.name }</p>
                 </div>
             </div>
 
@@ -62,19 +62,19 @@
                 <div class="div_inf_per">
                     <h3 class="cs-color-GoldenYellow">Detalles del Perfil</h3>
                     <p class="cs-color-LightGrey"><span class="cs-color-GoldenYellow">Nombre:
-                        </span>${ Nombre }</p>
+                        </span>${ user.name }</p>
                     <p class="cs-color-LightGrey"><span class="cs-color-GoldenYellow">Usuario:
-                        </span>${ Usuario }</p>
+                        </span>${ user.user }</p>
                     <!-- <p class="cs-color-LightGrey"><span class="cs-color-GoldenYellow">Cumpleaño:
                         </span><?php echo date('d-m-Y', strtotime($_SESSION['FecNac'])); ?></p> -->
                     <p class="cs-color-LightGrey"><span class="cs-color-GoldenYellow">Tag:
-                        </span>${ Tag }</p>
+                        </span>${ user.tag }</p>
                     <p class="cs-color-LightGrey"><span class="cs-color-GoldenYellow">Tipo de Registro:
-                        </span>${ TypeAcount }</p>
+                        </span>${ user.authProvider }</p>
                     <p class="cs-color-LightGrey"><span class="cs-color-GoldenYellow">Correo:
-                        </span>${ Correo }</p>
+                        </span>${ user.email }</p>
                     <p class="cs-color-LightGrey"><span class="cs-color-GoldenYellow">Estado de Cuenta:
-                        </span>${ State }
+                        </span>${ user.state }
                     </p>
                     <br>
                 </div>

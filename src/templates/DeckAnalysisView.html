@@ -1,5 +1,5 @@
 <div class="cs-analysis cs-analysis--default">
-    ${(type == 'intermediate' || type == 'advanced') ? `
+    ${(result.level == 'intermediate' || result.level == 'advanced') ? `
         <h2>Resultados del análisis</h2>
         <div class="alert alert--info">
             <span class="alert__message">Esta herramienta está en fase de desarrollo.
@@ -10,7 +10,7 @@
     <!-- Sección: Vista rápida -->
     <div class="cs-analysis__section cs-analysis__section--default">
         <h3>Vista rápida</h3>
-        ${Object.entries(averages).map(([label, section]) => `
+        ${Object.entries(result.averages).map(([label, section]) => `
             <span><span>${label}</span> :
                 <span class="${section.displayClass ?? ''}">
                     ${section.totalScore}%
@@ -21,34 +21,34 @@
             </span><br>
         `).join('')}
         <div id="div_view_quik_aditional">
-            <span class="cs-color-LightGrey">Arquetipo: </span>${(data.archetype.archetype === 'Híbrido' && data.archetype.details) && `
-                <span class="cs-color-GoldenYellow">Híbrido</span> <span class="text-sm cs-color-GoldenYellow">(Coincide parcialmente con: ${data.archetype.details})</span>
-        ` || (data.archetype.archetype === 'Desconocido') ? `
+            <span class="cs-color-LightGrey">Arquetipo: </span>${(result.data.archetype.archetype === 'Híbrido' && result.data.archetype.details) && `
+                <span class="cs-color-GoldenYellow">Híbrido</span> <span class="text-sm cs-color-GoldenYellow">(Coincide parcialmente con: ${result.data.archetype.details})</span>
+        ` || (result.data.archetype.archetype === 'Desconocido') ? `
             <span class="cs-color-IntenseOrange">Desconocido</span>
         ` :  `
-            <span class="cs-color-GoldenYellow">${data.archetype.archetype}</span>
+            <span class="cs-color-GoldenYellow">${result.data.archetype.archetype}</span>
         ` }
-        <img class="cs-tooltip-image" src="./static/media/styles/icons/info-circle.svg" alt="info" data-width="20rem" data-inf="${data.archetype.description ?? 'Información no disponible.'}">
+        <img class="cs-tooltip-image" src="./static/media/styles/icons/info-circle.svg" alt="info" data-width="20rem" data-inf="${result.data.archetype.description ?? 'Información no disponible.'}">
         </div>
         <div id="div_data_view_quick">
             <img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/card_stat_inf/icon_gota_elixir.webp"
                 alt="cycle">
-            <span class="color-elixir">${data.averageElixirCost}</span>
+            <span class="color-elixir">${result.data.averageElixirCost}</span>
             &nbsp;&nbsp;
             <img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/icon_cycle.webp"
                 alt="shortCycle">&nbsp;
-            <span class="color-elixir">${data.shortCycle}</span>&nbsp;
+            <span class="color-elixir">${result.data.shortCycle}</span>&nbsp;
         </div>
     </div>
 
-    ${(type == 'intermediate' || type == 'advanced') ? `
+    ${(result.level == 'intermediate' || result.level == 'advanced') ? `
         <h2>Detalles</h2>
-        ${(defenseCoverage) ? `
+        ${(result.defenseCoverage) ? `
             <!-- Sección: Cobertura de Defensa -->
             <div class="cs-analysis__section cs-analysis__section--default">
                 <h3>Cobertura de Defensa<img class="cs-tooltip-image" src="./static/media/styles/icons/info-circle.svg"
                         alt="msgInfo" data-width="12rem"
-                        data-inf="${defenseCoverage.description}"></h3>
+                        data-inf="${result.defenseCoverage.description}"></h3>
                 <table class="cs-table cs-table--dark">
                     <thead>
                         <tr>
@@ -57,7 +57,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        ${Object.entries(defenseCoverage.data).map(([type, coverageInfo]) => `
+                        ${Object.entries(result.defenseCoverage.data).map(([type, coverageInfo]) => `
                             <tr>
                                 <td>
                                     ${coverageInfo.displayName}
@@ -73,12 +73,12 @@
         ` : ''}
 
         <!-- Sección: Posibles Debilidades -->
-        ${(weaknesses) ? `
+        ${(result.weaknesses) ? `
             <div class="cs-analysis__section cs-analysis__section--default">
                 <h3>Posibles Debilidades y Sugerencias<img class="cs-tooltip-image"
                         src="./static/media/styles/icons/info-circle.svg" alt="msgInfo" data-width="12rem"
-                        data-inf="${weaknesses.description}"></h3>
-                ${Object.entries(weaknesses.suggestions).map(([name, suggestion]) => `
+                        data-inf="${result.weaknesses.description}"></h3>
+                ${Object.entries(result.weaknesses.suggestions).map(([name, suggestion]) => `
                     <div class="m-1">
                         <div class="cs-color-IntenseOrange text-center">
                             ${name}
@@ -91,7 +91,7 @@
             </div>
         ` : ''}
 
-        ${Object.entries(averages).map(([keySection, section]) => {
+        ${Object.entries(result.averages).map(([keySection, section]) => {
             if (keySection == 'Versatilidad') {
                 const cardTypes = ['win', 'ter', 'aer', 'dew', 'hech'];
                 section['cardhech'] = [

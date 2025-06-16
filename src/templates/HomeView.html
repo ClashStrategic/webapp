@@ -28,10 +28,10 @@
 <div id="div_dat_usu">
   <button id="btn_nom_usu" class="cs-btn flex">
     <img
-      src="static/media/styles/user/avatars/${ Avatar == 'invited.webp' ? 'invited_white.webp' : Avatar }"
+      src="static/media/styles/user/avatars/${ user.avatar == 'invited.webp' ? 'invited_white.webp' : user.avatar }"
       class="cs-icon cs-icon--medium"
       alt="avatar"
-    />&nbsp;${ Nombre }
+    />&nbsp;${ user.name }
   </button>
   <div id="div_coin_gema">
     <!-- monedas y gemas -->
@@ -43,7 +43,7 @@
           alt="icon_aumento3.webp"
         />
       </button>
-      <span id="span_coins">${ Coins }</span
+      <span id="span_coins">${ user.coins }</span
       ><img
         class="cs-icon cs-icon--medium"
         src="./static/media/styles/icons/icon_moneda.webp"
@@ -58,7 +58,7 @@
           alt="icon_aumento3.webp"
         />
       </button>
-      <span id="span_gems">${ Gems }</span
+      <span id="span_gems">${ user.gems }</span
       ><img
         class="cs-icon cs-icon--medium"
         src="./static/media/styles/icons/icon_gema.webp"
@@ -83,7 +83,7 @@
     <div id="div_menu_contenido">
       <div id="menu_opciones">
         <!-- contenido de opciones -->
-        ${ TypeAcount == 'invitado' ? `
+        ${ user.authProvider == null? `
         <button
           id="btn_bienvenido"
           class="cs-btn cs-btn--medium a_conten"
@@ -124,7 +124,7 @@
           />
           <p>Iniciar Sesion</p>
         </button>
-        ` : '' } ${ TypeAcount != 'invitado' ? `
+        ` : '' } ${ user.authProvider != null ? `
         <button id="span_noti" class="cs-btn cs-btn--medium a_conten" disabled>
           <img
             class="cs-icon cs-icon--medium"
@@ -186,7 +186,7 @@
           />
           <p>Reportar Error</p>
         </button>
-        ${ TypeAcount != 'invitado' ? `
+        ${ user.authProvider != 'invitado' ? `
         <button
           class="cs-btn cs-btn--medium a_conten"
           onclick="if(confirm('¿Esta seguro que desea Cerrar la Session Actual?')){api('DELETE', '/v1/session', 'cer-ses')}"

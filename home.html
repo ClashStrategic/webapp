@@ -53,16 +53,23 @@
         );
       }
 
+      function initialWebApp() {
+        console.log("initialWebApp()");
+        if (sessionStorage.getItem("session")) {
+          console.log("Session encontrada, cargando usuario...");
+          api("GET", "/v1/users", "get-user");
+        } else {
+          console.log("No se encontró session, creando una nueva...");
+          api("GET", "/v1/session", "get-session");
+        }
+      }
+
       if (window.mainJsFullyLoaded) {
-        api("GET", "/v1/session", "get-session");
+        initialWebApp();
       } else {
-        window.addEventListener(
-          "mainjsloaded",
-          () => {
-            api("GET", "/v1/session", "get-session");
-          },
-          { once: true }
-        );
+        window.addEventListener("mainjsloaded", initialWebApp, {
+          once: true,
+        });
       }
     });
   </script>

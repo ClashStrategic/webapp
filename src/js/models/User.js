@@ -13,10 +13,10 @@ export default class User {
         api("POST", "/v1/users", 'register', { data: data, type: "google" });
     }
 
-    static login(data) {
+    static loginByGoogle(data) {
         console.log('login(' + JSON.stringify(data) + ')');
         Cookie.setCookiesForSession();
-        api("POST", "/v1/session", 'login', { data: data });
+        api("POST", "/v1/session", 'login', { data: data, type: "google" });
     }
 
     static toggleSounds(enable) {
@@ -199,20 +199,7 @@ export default class User {
     static handleShowUserDataClick() {
         if (typeof showDivToggle === 'function' && typeof api === 'function') {
             showDivToggle('showToggle');
-            let userData = {
-                type: 'per',
-                Usuario: sessionStorage.getItem('Usuario') || Cookie.getCookie('Usuario'),
-                Avatar: sessionStorage.getItem('Avatar') || Cookie.getCookie('Avatar'),
-                Banner: sessionStorage.getItem('Banner') || Cookie.getCookie('Banner'),
-                Nombre: sessionStorage.getItem('Nombre') || Cookie.getCookie('Nombre'),
-                Correo: sessionStorage.getItem('Correo') || Cookie.getCookie('Correo'),
-                Tag: sessionStorage.getItem('Tag') || Cookie.getCookie('Tag'),
-                TypeAcount: sessionStorage.getItem('TypeAcount') || Cookie.getCookie('TypeAcount'),
-                State: sessionStorage.getItem('State') || Cookie.getCookie('State'),
-                created_at: sessionStorage.getItem('created_at') || Cookie.getCookie('created_at'),
-            }
-
-            Config.renderTemplate("UserDataView", userData).then(html => {
+            Config.renderTemplate("UserDataView", { user: JSON.parse(sessionStorage.getItem('user')) }).then(html => {
                 showDivToggle('loadContent', 'Mis Datos', html);
             });
         } else {
