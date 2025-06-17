@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/ClashStrategic/webapp/compare/v1.0.0...v1.0.1) (2025-06-17)
+
+
+### Bug Fixes
+
+* Use 'invitado' for guest user check in HomeView ([00a2ac7](https://github.com/ClashStrategic/webapp/commit/00a2ac7c9a9b6c57c2234579a735007129de5ec3))
+
 # [1.0.0](https://github.com/ClashStrategic/webapp/compare/v0.6.5...v1.0.0) (2025-06-17)
 
 
