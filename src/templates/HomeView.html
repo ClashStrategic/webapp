@@ -83,7 +83,7 @@
     <div id="div_menu_contenido">
       <div id="menu_opciones">
         <!-- contenido de opciones -->
-        ${ user.authProvider == null? `
+        ${ user.authProvider == 'invitado' ? `
         <button
           id="btn_bienvenido"
           class="cs-btn cs-btn--medium a_conten"
@@ -124,7 +124,7 @@
           />
           <p>Iniciar Sesion</p>
         </button>
-        ` : '' } ${ user.authProvider != null ? `
+        ` : '' } ${ user.authProvider != 'invitado' ? `
         <button id="span_noti" class="cs-btn cs-btn--medium a_conten" disabled>
           <img
             class="cs-icon cs-icon--medium"
