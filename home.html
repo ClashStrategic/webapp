@@ -37,7 +37,7 @@
     />
 
     <!-- Java Script -->
-    <script type="module" src="./src/js/main.js"></script>
+    <script type="module" src="./src/js/main.js" defer></script>
     <script src="installsw.js"></script>
   </head>
 
@@ -47,52 +47,30 @@
       if (window.location.hostname === "localhost") {
         localStorage.setItem("base_url_api", "http://localhost/api");
       } else if (window.location.hostname === "clashstrategic.great-site.net") {
-        localStorage.setItem("base_url_api", "https://clashstrategic.great-site.net/api");
+        localStorage.setItem(
+          "base_url_api",
+          "https://clashstrategic.great-site.net/api"
+        );
       }
 
-      fetch(localStorage.getItem("base_url_api") + "/home")
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-          if (data.state == "success") {
-            document.body.innerHTML = data.data;
+      function initialWebApp() {
+        console.log("initialWebApp()");
+        if (sessionStorage.getItem("session")) {
+          console.log("Session encontrada, cargando usuario...");
+          api("GET", "/v1/users", "get-user");
+        } else {
+          console.log("No se encontró session, creando una nueva...");
+          api("GET", "/v1/session", "get-session");
+        }
+      }
 
-            // Inicialización de la configuración del usuario
-            User.toggleSounds(Cookie.getCookie("sound_effects"));
-            Cookie.setCookiesForSession();
-
-            // Bienvenida a un nuevo usuario
-            Config.urlParam.get("new_user") &&
-              Cookie.getCookie("bienvenida") === "false" &&
-              Config.showInfBox(
-                "¡Bienvenido a Clash Strategic!",
-                "reyes_bienvenida.webp",
-                Config.msgInit,
-                60
-              );
-
-            // Bienvenida a los usuarios invitados
-            Cookie.getCookie("TypeAcount") == "invitado" &&
-              api({ PreCS: true }, "show-pre");
-
-            // Activa seccion de cartas
-            $("#a_menu_cartas").click();
-          } else {
-            alert(data.alerts[0]);
-          }
-        })
-        .catch((error) => {
-          console.error(
-            "There has been a problem with your fetch operation:",
-            error
-          );
-          alert("There has been a problem with your fetch operation:" + error);
+      if (window.mainJsFullyLoaded) {
+        initialWebApp();
+      } else {
+        window.addEventListener("mainjsloaded", initialWebApp, {
+          once: true,
         });
+      }
     });
   </script>
 </html>

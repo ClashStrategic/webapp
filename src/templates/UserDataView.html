@@ -1,0 +1,136 @@
+<div id="basicUserDataView" class="text-center">
+    <div id="div_menu_contenido_perfil" class="div_menu_contenido_perfil">
+        <div id="div_perfil_banner" class="perfil_visual">
+            <div class="div_perfil">
+                <div id="btn_menu_perfil" class="perfil">
+                    <div class="banner_perfil">
+                        <img id="img_banner_per"
+                            src="static/media/styles/user/banners/${ user.banner }"
+                            class="img_banner" alt="banner_image">
+                        <img class="avatar_perfil"
+                            src="./static/media/styles/user/avatars/${ user.avatar }"
+                            alt="avatar_image">
+                    </div>
+                    <p class="cs-color-DeepBlue p_nom_perfil cs-color-LightGrey">${ user.name }</p>
+                </div>
+            </div>
+
+            <!--             <div id="div_cam_ava" class="border text-center" style="display: none;"><br>
+                <h3>Cambia tu Avatar</h3>
+                <div id="div_ava_preview"><img style="display: none;" id="img_ava_preview" alt="avatar_preview"></div>
+                <form id="frm_camfot" enctype="multipart/form-data" autocomplete="off">
+                    <input type="file" accept="image/*" name="file_ava[]" id="cam_ava"><br>
+                    <div id="res-ava"></div>
+                    <button class="cs-btn cs-btn--medium cs-btn--primary" type="submit" name="camfot">Cambiar</button>
+                </form><br><br>
+            </div>
+
+            <div id="div_cam_ban" class="border text-center" style="display: none;"><br>
+                <h3>Cambia tu Banner</h3>
+                <?php $banners = json_decode(file_get_contents('App/Data/banners.json'));
+                foreach ($banners as $key) {
+                    echo '<img class="img_cam_banner" data-banner="' . $key->name . '.webp" src="' . $key->src . '" alt="' . $key->name . '.webp">';
+                }
+                ?>
+                <div id="div_alert_cam_ban"></div>
+                <form id="frm_cam_ban" data-ajax-submit="default" data-ajax-success="cam-ban">
+                    <input id="inp_banner" name="banner" class="cs-btn cs-btn--medium cs-btn--primary" type="hidden">
+                    <button class="cs-btn cs-btn--medium cs-btn--primary" type="submit">Cambiar</button>
+                </form><br><br>
+            </div> -->
+
+            <!--  <div id="div_infusu" class="cs-bg-color-4">
+                <?php if (!isset($_SESSION['Informacion'])) { ?>
+                    <p class="cs-color-DeepBlue">Sin informacion.</p>
+                <?php } else { ?>
+                    <p class="cs-color-DeepBlue"><?php $inf = $_SESSION['Informacion'];
+                    $pattern = '/((http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-]*)*\/?)/';
+                    $inf_con_saltos = str_replace("<br>", "\n", $inf);
+                    $inf_limpiado = strip_tags($inf_con_saltos);
+                    $inf_formateado = nl2br($inf_limpiado);
+                    $inf_formateado = preg_replace($pattern, '<a class="cs-link cs-link--default" href="$0" target="_blank">$0</a>', $inf_formateado);
+                    echo $inf_formateado; ?></p>
+                <?php } ?>
+            </div> -->
+            <!-- <?php echo ($type == 'per') ? '<button id="changePhoto"><i class="bi bi-person-badge"></i></button>' : null; ?>
+            <?php echo ($type == 'per') ? '<button id="changeBanner"><img id="img_cam_ban" src="./static/media/styles/icons/icon_cam_ban.webp" alt="icon-cambiar_banner"></button>' : null; ?> -->
+        </div>
+        <hr>
+
+        <!-- Personal -->
+            <div id="div_data_per">
+                <div class="div_inf_per">
+                    <h3 class="cs-color-GoldenYellow">Detalles del Perfil</h3>
+                    <p class="cs-color-LightGrey"><span class="cs-color-GoldenYellow">Nombre:
+                        </span>${ user.name }</p>
+                    <p class="cs-color-LightGrey"><span class="cs-color-GoldenYellow">Usuario:
+                        </span>${ user.user }</p>
+                    <!-- <p class="cs-color-LightGrey"><span class="cs-color-GoldenYellow">Cumpleaño:
+                        </span><?php echo date('d-m-Y', strtotime($_SESSION['FecNac'])); ?></p> -->
+                    <p class="cs-color-LightGrey"><span class="cs-color-GoldenYellow">Tag:
+                        </span>${ user.tag }</p>
+                    <p class="cs-color-LightGrey"><span class="cs-color-GoldenYellow">Tipo de Registro:
+                        </span>${ user.authProvider }</p>
+                    <p class="cs-color-LightGrey"><span class="cs-color-GoldenYellow">Correo:
+                        </span>${ user.email }</p>
+                    <p class="cs-color-LightGrey"><span class="cs-color-GoldenYellow">Estado de Cuenta:
+                        </span>${ user.state }
+                    </p>
+                    <br>
+                </div>
+            </div>
+            <hr>
+
+            <!-- Edicion perfil -->
+            <div id="div_edperfil">
+                <!-- <h3 class="cs-color-GoldenYellow">Edicion de Perfil</h3> -->
+                <div class="text-center">
+                    <!--                     <div class="div_dat_usu">
+                        <p>Descripción de tu Perfil:</p>
+                        <form id="frm_inf" data-ajax-submit="default" data-ajax-success="ins-inf">
+                            <input type="hidden" name="idUsuario" value="<?php echo $_SESSION['id_Usu'] ?? 'null'; ?>">
+                            <textarea id="text_inf" type="text" name="informacion"
+                                placeholder='Twitter, Instagram, Tiktok, etc.'><?php $inf = strip_tags($_SESSION['Informacion'] ?? '');
+                                echo $inf; ?></textarea>
+                            <p><span id="contador"></span>/150 Caracteres</p>
+                            <div class="alert_frm"></div>
+                            <input class="cs-btn cs-btn--medium cs-btn--primary" type="submit" name="btn_guardar" value="Guardar"><br>
+                        </form>
+                    </div> -->
+
+                    <!-- <div class="div_frm_compdat">
+                      
+                            <h3 class="cs-color-GoldenYellow">Completa tu Perfil:</h3>
+                            <form id="frm_complete_tag">
+                                <p class="cs-color-GoldenYellow" for="Tag">Tag:</p>
+                                <p> <span class="cs-color-LightGrey">Tu tag será utilizado para ofrecer mejores resultados en el
+                                        analizador y creador de mazo.</span></p>
+                                <input id="inp_tag" type="text" name="Tag" placeholder="#VY0Q8GPCQ" required><br><br>
+                                <button id="inp_sub_com_dat" class="cs-btn cs-btn--medium cs-btn--primary"
+                                    type="submit">Enviar</button><br>
+                                <div id="div_alert_frm_compreg"></div>
+                            </form>
+                       
+                    </div> -->
+                    <br>
+                </div>
+            </div>
+
+        <!-- <div class="text-center">
+                <button class="cs-btn cs-btn--medium cs-btn--primary" id="btn_infjug" data-name="<?php echo $_SESSION['Usuario']; ?>">Inf-Api de Jugador</button><br><br>
+                <div id="div_infjug" style="display: none;"></div>
+            </div> -->
+
+        <!-- publicaciones -->
+        <!--         <div id="div_publiusu">
+            <center>
+                <h3><?php echo ($type == 'per') ? 'Tus Publicaciones' : 'Publicaciones de ' . $_SESSION['Nombre']; ?></h3>
+            </center>
+
+            <div id="div_pubusu"></div>
+        </div>
+    </div>
+    <script>
+        $('#contador').length > 0 && $('#contador').text($('#text_inf').val().length); //numeros de carcateres de inf
+    </script> -->
+    </div>

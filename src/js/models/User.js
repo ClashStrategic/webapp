@@ -7,6 +7,18 @@ export default class User {
         this.userInteracted = false;
     }
 
+    static registerByGoogle(data) {
+        console.log('registerByGoogle(' + JSON.stringify(data) + ')');
+        Cookie.setCookiesForSession();
+        api("POST", "/v1/users", 'register', { data: data, type: "google" });
+    }
+
+    static loginByGoogle(data) {
+        console.log('login(' + JSON.stringify(data) + ')');
+        Cookie.setCookiesForSession();
+        api("POST", "/v1/session", 'login', { data: data, type: "google" });
+    }
+
     static toggleSounds(enable) {
         console.log('Toggle sounds:', enable);
         if (enable == 'true') {
@@ -143,7 +155,9 @@ export default class User {
     static handleShowSettingsClick() {
         if (typeof showDivToggle === 'function' && typeof api === 'function') {
             showDivToggle('showToggle');
-            api({ getSettings: true }, 'get-settings', null, $('#div_tog_gen_con'));
+            Config.renderTemplate("SettingsView", { sound_effects: Cookie.getCookie("sound_effects") }).then(html => {
+                showDivToggle('loadContent', 'Configuración', html);
+            });
         } else {
             console.error("Las funciones 'showDivToggle' o 'api' no están definidas.");
         }
@@ -185,7 +199,9 @@ export default class User {
     static handleShowUserDataClick() {
         if (typeof showDivToggle === 'function' && typeof api === 'function') {
             showDivToggle('showToggle');
-            api({ showUserBasicData: true }, 'user-data', null, $('#div_tog_gen_con'));
+            Config.renderTemplate("UserDataView", { user: JSON.parse(sessionStorage.getItem('user')) }).then(html => {
+                showDivToggle('loadContent', 'Mis Datos', html);
+            });
         } else {
             console.error("Las funciones 'showDivToggle' o 'api' no están definidas.");
         }

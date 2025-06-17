@@ -1,0 +1,196 @@
+<!-- analizador de mazo -->
+<main class="main">
+    <section class="section">
+        <h1>¡Colección de Mazos!</h1>
+        <div id="main-deck-collection" class="cs-deck-collection"><br>
+            <div id="main-deck-collection-box-btns" class="cs-deck-collection__box-btns" data-nmazo="1">
+                <div id="div_maz_1_5">
+                    <div class="cs-deck-collection__box-btns-option" data-nmazo="1"><span>1</span></div>
+                    <div class="cs-deck-collection__box-btns-option" data-nmazo="2"><span>2</span></div>
+                    <div class="cs-deck-collection__box-btns-option" data-nmazo="3"><span>3</span></div>
+                    <div class="cs-deck-collection__box-btns-option" data-nmazo="4"><span>4</span></div>
+                    <div class="cs-deck-collection__box-btns-option" data-nmazo="5"><span>5</span></div>
+                </div>
+                <div id="div_maz_6_10" style="display: none;">
+                    <div class="cs-deck-collection__box-btns-option" data-nmazo="6"><span>6</span></div>
+                    <div class="cs-deck-collection__box-btns-option" data-nmazo="7"><span>7</span></div>
+                    <div class="cs-deck-collection__box-btns-option" data-nmazo="8"><span>8</span></div>
+                    <div class="cs-deck-collection__box-btns-option" data-nmazo="9"><span>9</span></div>
+                    <div class="cs-deck-collection__box-btns-option" data-nmazo="10"><span>10</span></div>
+                </div> &nbsp;
+                <button class="cs-btn cs-btn--small cs-btn--primary cs-btn-icon" id="btn_cam_mazos"
+                    title="Cambiar Mazo"><img class="cs-icon cs-icon--medium" id="img_cam_maz"
+                        src="./static/media/styles/icons/icon_cambio.webp" alt="cambio"></button>
+            </div>
+            <div id="deck-slots-main" class="cs-deck cs-deck--default" data-cards="[]" data-towercard="">
+                <!-- slot de cartas -->
+                    <div class="cs-deck__slot cs-deck__slot--default cs-deck__slot--evo"
+                        id="cs-deck__slot-1" data-lleno="no"></div>
+                    <div class="cs-deck__slot cs-deck__slot--default cs-deck__slot--evo"
+                        id="cs-deck__slot-2" data-lleno="no"></div>
+                    <div class="cs-deck__slot cs-deck__slot--default"
+                        id="cs-deck__slot-3" data-lleno="no"></div>
+                    <div class="cs-deck__slot cs-deck__slot--default"
+                        id="cs-deck__slot-4" data-lleno="no"></div>
+                    <div class="cs-deck__slot cs-deck__slot--default"
+                        id="cs-deck__slot-5" data-lleno="no"></div>
+                    <div class="cs-deck__slot cs-deck__slot--default"
+                        id="cs-deck__slot-6" data-lleno="no"></div>
+                    <div class="cs-deck__slot cs-deck__slot--default"
+                        id="cs-deck__slot-7" data-lleno="no"></div>
+                    <div class="cs-deck__slot cs-deck__slot--default"
+                        id="cs-deck__slot-8" data-lleno="no"></div>
+                <div class="cs-card--medium"> <!-- King Tower Card -->
+                    <img class="cs-card__image" src="./static/media/cards//towerCards/King Tower.webp" alt="King Tower">
+                    <!-- <span class="cs-card__name">King Tower</span> -->
+                </div>
+                <div id="div_card_slot_tower" class="cs-deck__slot cs-deck__slot--default" data-lleno="no"></div>
+            </div>
+            <div id="div_inf_mazo"> <!-- analisis intermediate-->
+                <h3 class="cs-color-GoldenYellow">Análisis Básico</h3>
+                <div id="div_det_basic"><br><br><br></div>
+            </div>
+            <div id="div_btns_mazo">
+                <div id="div_btns_pri"> <!-- btns principales -->
+                    <button id="btn_analizar" class="cs-btn cs-btn--medium cs-btn--primary">Analizar (Beta)</button>
+                    <button id="btn_crear" class="cs-btn cs-btn--medium cs-btn--primary">Crear (Beta)</button>
+                </div>
+                <button id="btn_btns_opc_maz" class="cs-btn cs-btn--medium cs-btn--primary"><img
+                        class="cs-icon cs-icon--medium" src="./static/media/styles/icons/menu/logo_menu.svg"
+                        alt="menu"></button>
+                <div id="div_sub_btns_mazo" style="display: none;"> <!-- opciones -->
+                    <button id="btn_cop_maz" class="a_conten" title="Copiar Mazo"><img class="cs-icon cs-icon--medium"
+                            src="./static/media/styles/icons/icon_cop_maz.webp" alt="copiar mazo">&nbsp;<p>
+                            Copiar</p></button>
+                    <button id="btn_peg_maz" class="a_conten" title="Pegar Mazo"><img class="cs-icon cs-icon--medium"
+                            src="./static/media/styles/icons/icon_pegar_link.webp" alt="pegar mazo">&nbsp;<p>
+                            Pegar</p></button>
+                    <button id="btn_copiar_mazo" class="a_conten" title="Copiar Enlace del Mazo"><img
+                            class="cs-icon cs-icon--medium" src="./static/media/styles/icons/icon_copiar2.webp"
+                            alt="copiar mazo">&nbsp;<p>
+                            Enlace</p></button>
+                    <button id="btn_eli_maz" class="a_conten" title="Eliminar Mazo"><img class="cs-icon cs-icon--medium"
+                            src="./static/media/styles/icons/icon_basurero.webp" alt="eliminar mazo">&nbsp;<p>
+                            Eliminar</p></button>
+                </div>
+            </div>
+            <div id="main-deck-collection-alert" class="cs-deck-collection__alert"></div> <!-- alertas -->
+            <div id="div_opc_cre_maz" style="display: none;"></div>
+            <div id="div_log_maz" style="display: none;"></div>
+
+            <!-- ver/ocultar resultados de analisis -->
+            <button id="btn_ocu_mos_res_ST" class="cs-btn cs-btn--medium cs-btn--primary" style="display: none;">Ocultar
+                Análisis</button>
+
+            <!-- Crear mazos -->
+            <div id="div_crear_mazo" style="display: none;">
+                <div id="div_btns_crear_mazo">
+                    <h3 class="cs-color-LightGrey">¡Creador de Mazos!</h3>
+                    <!-- <label>Version:</label><br> -->
+                    <select id="sel_version_creador" class="select" style="display: none;">
+                        <option value="1.0" selected>1.0</option>
+                        <option value="1.1" disabled>1.1</option>
+                    </select>
+                    <button class="cs-btn cs-btn--medium cs-btn--primary"
+                        onclick="Deck.deckBuilderRequest('basic', 1.0)">Crear Basico (Gratis)</button><br>
+                    <button class="cs-btn cs-btn--medium cs-btn--primary"
+                        onclick="Deck.deckBuilderRequest('intermediate', 1.0)">Crear Intermedio (6 Gemas)</button><br>
+                    <button class="cs-btn cs-btn--medium cs-btn--primary"
+                        onclick="Deck.deckBuilderRequest('advanced', 1.0)">Crear Avanzado (12 Gemas)</button><br>
+                </div>
+                <div id="div_frm_crear_mazo"><br><br><br></div>
+            </div><br>
+
+            <!-- analizar mazos -->
+            <div id="div_analizar_mazo" style="display: none;">
+                <h3 class="cs-color-GoldenYellow">¡Analizador de Mazos!</h3>
+                <select id="sel_version_analizador" class="select" style="display: none;">
+                    <option value="1.0" selected>1.0</option>
+                    <option value="1.1" disabled>1.1</option>
+                </select>
+                <div id="div_btns_analizar_mazo">
+                    <!-- <label>Version:</label><br> -->
+                    <div>
+                        <p class="cs-color-LightGrey">Selecciona el nivel de análisis deseado:</p>
+                        <button id="btn_analizar_mazo_basico" class="cs-btn cs-btn--medium cs-btn--primary">Analisis
+                            Normal (Gratis)</button><img class="cs-tooltip-image"
+                            src="./static/media/styles/icons/info-circle.svg" alt="inf"
+                            data-inf="Analiza un Mazo de forma Basica"><br>
+                        <button id="btn_analizar_mazo_avanzado" class="cs-btn cs-btn--medium cs-btn--primary">Analisis
+                            Avanzado x 3<img class="cs-icon cs-icon--medium"
+                                src="./static/media/styles/icons/icon_gema.webp" alt="gema"></button><img
+                            class="cs-tooltip-image" src="./static/media/styles/icons/info-circle.svg" alt="inf"
+                            data-inf="Analiza un Mazo de forma Avanzada"><br>
+                    </div>
+                </div>
+                <!-- frm Ananalizar Mazos -->
+                <!-- v1.0 -->
+                <div id="div_frm_ana_maz" style="display: none;">
+                    <form id="frm_ana_maz_ava" class="frm frm--primary">
+                        <h3 class="cs-color-GoldenYellow">¡Personaliza tu Análisis!</h3>
+                        <input type="hidden" name="type" value="intermediate">
+                        <input type="hidden" name="version" value="1.0">
+                        <div id="div_che_ana_evo">
+                            <input id="inp_ana_che" type="checkbox" value="AnaEvo"><label for="inp_ana_che">Analizar
+                                Evoluciones</label><br><br>
+                        </div>
+                        <!-- <div id="div_sel_est_ana">
+                            <label for="Estrategia">Estrategia</label><img class="cs-tooltip-image" src="./static/media/styles/icons/info-circle.svg" alt="inf" data-inf="Tipo de Estrategia a analizar"><br>
+                            <select name="Estrategias">
+                                <option value="Control" selected>Control</option>
+                                <option value="Ciclo">Ciclo</option>
+                                <option value="Push">Push</option>
+                                <option value="Split Push">Split Push</option>
+                            </select>
+                            <br><br>
+                        </div> -->
+                        <button class="cs-btn cs-btn--medium cs-btn--primary" type="submit">Analizar</button>
+                        <button id="btn_can_ana_maz_ava" class="cs-btn cs-btn--medium cs-btn--cancel"
+                            type="button">Cancelar</button>
+                    </form>
+                </div><br><br>
+                <!-- v1.1 -->
+                <form id="frm_ana_maz_ava_v1_1" style="display:none">
+                    <h3 class="cs-color-LightGrey">¡Analizador de Mazos! v1.1</h3>
+                    <input type="hidden" name="type" value="intermediate">
+                    <input type="hidden" name="version" value="1.1">
+                    <div id="div_che_ana_evo">
+                        <input id="inp_ana_che" type="checkbox" value="AnaEvo"><label for="inp_ana_che">Analizar
+                            Evoluciones</label><br><br>
+                    </div>
+
+                    <input id="inp_ana_est" type="checkbox" value="AnaEst"><label for="inp_ana_est">Analizar
+                        Estrategias</label><img class="cs-tooltip-image"
+                        src="./static/media/styles/icons/info-circle.svg" alt="inf"
+                        data-inf="Puede Elegir las Estrategias que desea analizar">&nbsp;<button
+                        class="btn_crear_est">Crear</button>&nbsp;<button type="button" class="btn_eleccion_est"
+                        data-type="analizar">Elegir..</button><br>
+                    <input type="hidden" name="idsEstrategias" value="[]">
+                    <div id="div_est_ana" class="div_estrategias_seleccionadas">
+                        <p>Estrategias seleccionadas:</p>
+                    </div>
+                    <button type="submit">Analizar</button>
+                    <button id="btn_cancelar_analisis_v1_1" type="button">Cancelar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Resultados de analisis de mazo -->
+        <div class="text-center w-100" id="div_res_ST">
+            <div id="div_res_ana_maz"></div><br>
+        </div>
+    </section>
+
+    <section class="section">
+        <center>
+            <h2>Todas Las Cartas</h2>
+        </center>
+        <button id="btn_Orden_cards" class="cs-btn cs-btn--medium cs-btn--primary" disabled>Por Defecto</button>
+        <!-- ordena avanzado -->
+        <button id="btn_Orden_cards_advanced" class="cs-btn cs-btn--medium cs-btn--primary">Orden Avanzado</button>
+        <div id="div_cards_all" class="w-100 text-center"><br><br><br><br></div><br><br><br><br><br><br><br><br><br>
+    </section>
+
+
+    <div id="div_card_info" class="div_toggle"></div>
+</main>

@@ -1,5 +1,8 @@
 export default class Card {
 
+    static stats = null;
+    static media = null;
+
     static cardsByArena = '';
     static cardsByElixir = '';
     static cardsByRarity = '';
@@ -142,19 +145,38 @@ export default class Card {
     }
 
     static setCards(res) {
-        Card.cardsByArena = res.data.html1;
-        $('#div_cards_all').html(Card.cardsByArena);
-        Cookie.setCookie('byOrdenCards', 1);
-        Card.cardsByElixir = res.data.html2;
-        Card.cardsByRarity = res.data.html3;
-        Card.cardsByEvolution = res.data.html4;
-        let TypeAcount = Cookie.getCookie('TypeAcount');
-        if (TypeAcount === 'invitado') {
-            let Mazos = Cookie.getCookie('Mazos');
-            if (!Mazos) Cookie.setCookie('Mazos', '["", "", "", "", "", "", "", "", "", ""]');
-        }
-        $('.cs-deck-collection__box-btns-option[data-nmazo=1]').click();
-        Cookie.setCookie('nmazo', 1);
+        Card.stats = res.data.stats;
+        Card.media = res.data.media;
+
+        let orderById = [...Object.values(res.data.stats.cards)].sort((a, b) => a.id - b.id);
+        let orderByElixir = [...Object.values(res.data.stats.cards)].sort((a, b) => a.elixirCost - b.elixirCost);
+        let valRarity = ['Common', 'Rare', 'Epic', 'Legendary', 'Champion'];
+        let orderByRarity = [...Object.values(res.data.stats.cards)].sort((a, b) => valRarity.indexOf(a.rarity) - valRarity.indexOf(b.rarity));
+        let valEvo = ['si', 'no'];
+        let orderByEvolution = [...Object.values(res.data.stats.cards)].sort((a, b) => valEvo.indexOf(a.evolution ? 'si' : 'no') - valEvo.indexOf(b.evolution ? 'si' : 'no'));
+
+        $.each([orderById, orderByElixir, orderByRarity, orderByEvolution], function (index, value) {
+            Config.renderTemplate("ShowCards", { stats: { cards: value, towerCards: res.data.stats.towerCards }, media: res.data.media }).then((html) => {
+                if (index == 0) {
+                    Card.cardsByArena = html;
+                    $('#div_cards_all').html(Card.cardsByArena);
+                    Cookie.setCookie('byOrdenCards', 1);
+                    let TypeAcount = Cookie.getCookie('TypeAcount');
+                    if (TypeAcount == 'invitado') {
+                        let Mazos = Cookie.getCookie('Mazos');
+                        if (!Mazos) Cookie.setCookie('Mazos', '["", "", "", "", "", "", "", "", "", ""]');
+                    }
+                    $('.cs-deck-collection__box-btns-option[data-nmazo=1]').click();
+                    Cookie.setCookie('nmazo', 1);
+                } else if (index == 1)
+                    Card.cardsByElixir = html;
+                else if (index == 2)
+                    Card.cardsByRarity = html;
+                else if (index == 3)
+                    Card.cardsByEvolution = html;
+            });
+        });
+
         $('#btn_Orden_cards').prop('disabled', false);
     }
 
@@ -328,14 +350,117 @@ export default class Card {
         const cardElement = buttonElement.closest('.cs-card'); // Usar closest para asegurar que encontramos el padre .card
         const cardName = cardElement.data('name');
         const cardType = cardElement.data('type');
+        let cardStats = cardType === 'tower' ? Object.values(Card.stats.towerCards).filter(card => card.name == cardName)[0] :
+            Object.values(Card.stats.cards).filter(card => card.name == cardName)[0];
+
+        // Definición de todas las estadísticas básicas
+        let statsInfo = {
+            basicStats: [
+                {
+                    label: 'Rareza',
+                    icon: './static/media/styles/icons/info-circle.svg',
+                    value: cardStats.rarity ?? 'Común',
+                    alt: 'rareza'
+                }
+                ,
+                {
+                    label: 'Costo de Elixir',
+                    icon: './static/media/styles/icons/card_stat_inf/icon_gota_elixir.webp',
+                    value: cardStats.elixirCost ?? 0,
+                    alt: 'elixir'
+                }
+                ,
+                {
+                    label: 'Unidades',
+                    icon: './static/media/styles/icons/card_stat_inf/count.webp',
+                    value: cardStats.units ?? 1,
+                    alt: 'unidades'
+                }
+                ,
+                {
+                    label: 'Evolución',
+                    icon: './static/media/styles/icons/card_stat_inf/evolution.webp',
+                    value: (cardStats.evolution ?? false) ? 'Si' : 'No',
+                    alt: 'evo'
+                }
+                ,
+                {
+                    label: 'Tipo',
+                    icon: './static/media/styles/icons/info-circle.svg',
+                    value: cardStats.type ?? 'Tropa',
+                    alt: 'tipo'
+                }
+                ,
+                {
+                    label: cardStats.range ? 'Alcance' : (cardStats.radius ? 'Radio' : 'Alcance/Radio'),
+                    icon: cardStats.radius ?
+                        './static/media/styles/icons/card_stat_inf/radius.webp' :
+                        './static/media/styles/icons/card_stat_inf/range.webp',
+                    value: cardStats.range ? cardStats.range :
+                        (cardStats.radius ? cardStats.radius : 'N/A'),
+                    alt: cardStats.radius ? 'radius' : 'range'
+                }
+                ,
+                {
+                    label: 'Velocidad',
+                    icon: './static/media/styles/icons/card_stat_inf/speed.webp',
+                    value: cardStats.speed ?? 'N/A',
+                    alt: 'speed'
+                }
+                ,
+                {
+                    label: 'Vlc. de Ataque',
+                    icon: './static/media/styles/icons/card_stat_inf/hit-speed.webp',
+                    value: cardStats.hitspeed ?? 'N/A',
+                    alt: 'hit-speed'
+                }
+            ],
+            // Estadísticas de niveles (11 y 15)
+            levelStats: [
+                {
+                    label: 'Vida',
+                    icon: './static/media/styles/icons/card_stat_inf/hitpoints.webp',
+                    property: 'hitpoints',
+                    alt: 'hitpoints'
+                },
+                {
+                    label: 'Daño',
+                    icon: './static/media/styles/icons/card_stat_inf/damage.webp',
+                    property: 'damage',
+                    alt: 'damage'
+                },
+                {
+                    label: 'DPS',
+                    icon: './static/media/styles/icons/card_stat_inf/damagepersec.webp',
+                    property: 'dps',
+                    alt: 'damagepersec'
+                },
+                {
+                    label: 'Daño Mortal',
+                    icon: './static/media/styles/icons/card_stat_inf/deathdamage.webp',
+                    property: 'FatalDamage',
+                    alt: 'deathdamage',
+                    conditional: true
+                },
+                {
+                    label: 'Daño a Torre',
+                    icon: './static/media/styles/icons/card_stat_inf/crowntowerdamage.webp',
+                    property: 'TowerDamage',
+                    alt: 'crowntowerdamage',
+                    conditional: true
+                }
+            ]
+        };
 
         $('#capa_contenido').fadeIn(250);
         $('#div_card_info').css({ height: '55%', top: '23%' }).fadeToggle(250);
         // Limpiar contenido anterior y mostrar loading
         $('#div_card_info').empty().append('<div class="div_loading_toggle" style="margin-top: 50%; margin-bottom: 50%;"></div>');
 
-        // Llamada a la API para obtener la información
-        api({ name: cardName, type: cardType, infcards: true }, 'inf-car', null, $('#div_card_info').children('.div_loading_toggle'));
+        Config.renderTemplate("StatsCardView", { card: { stats: cardStats, media: Card.media[cardName] }, statsInfo: statsInfo }).then(html => {
+            $('#div_card_info').html(html);
+            $('#div_card_info').scrollTop(0);
+        });
     }
 
     /**

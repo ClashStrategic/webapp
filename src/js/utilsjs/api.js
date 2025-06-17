@@ -2,8 +2,7 @@
  * API Configuration
  */
 const API_CONFIG = {
-    method: "POST",
-    baseUrl: () => localStorage.getItem('base_url_api') + "/App/Config/Routes.php",
+    baseUrl: () => localStorage.getItem('base_url_api'),
     dataType: "json",
     loadingGif: "./static/media/styles/icons/menu/logo_cargando.gif"
 };
@@ -26,20 +25,42 @@ const RESPONSE_HANDLERS = {
         'cam-pag': (res, data, options) => {
             const img = options.parents('.pagination-container').siblings('.gallery-container').find('.fg_img_pub');
             img.html(`<img data-idpub="${data.idpub}" class="pub_img" src="./static/media/styles/user/publicaciones/imagenes/${res.archivo}" alt="img_pub">`).fadeOut(0).fadeIn(250);
-        },
-        'inf-car': (res) => {
-            $('#div_card_info').html(res.data.html);
-            $('#div_card_info').scrollTop(0);
-        },
-        'get-sec': (res, _data, options) => {
-            $('#div_sections_content').html(res.data.res).fadeIn(500);
-            $("#cargando").fadeOut(250);
-            Section.afterGetSection({ id: options.id, body: options.body });
         }
     },
 
     // User and Profile Management
     user: {
+        'get-session': (res) => {
+            sessionStorage.setItem("session", JSON.stringify(res.data));
+            api("GET", "/v1/users", "get-user");
+        },
+        'get-user': (res) => {
+            sessionStorage.setItem("user", JSON.stringify(res.data));
+            Config.renderTemplate("HomeView", { user: res.data }).then(html => {
+                $(document.body).html(html);
+                User.toggleSounds(Cookie.getCookie("sound_effects"));
+                Cookie.setCookiesForSession();
+
+                // Bienvenida a un nuevo usuario
+                Config.urlParam.get("new_user") &&
+                    Cookie.getCookie("bienvenida") === "false" &&
+                    Config.showInfBox(
+                        "¡Bienvenido a Clash Strategic!",
+                        "reyes_bienvenida.webp",
+                        Config.msgInit,
+                        60
+                    );
+
+                // Bienvenida a los usuarios invitados
+                Cookie.getCookie("TypeAcount") == "invitado" &&
+                    (showDivToggle('showToggle'), Config.renderTemplate('PresentationCsView').then(html => {
+                        showDivToggle('loadContent', 'Bienvenido', html);
+                    }));
+
+                // Activa seccion de cartas
+                $("#a_menu_cartas").click();
+            });
+        },
         'ver-per': (res) => {
             $('#div_perfilusu').html(res.data.html);
             if (Cookie.getCookie('TypeAcount') !== 'invitado') {
@@ -51,24 +72,28 @@ const RESPONSE_HANDLERS = {
             Cookie.setCookie('dateBanHideAct', res.data.dateBanHideAct);
         },
         'cer-ses': (res) => {
-            Cookie.deleteAllCookies();
-            sessionStorage.clear();
-            res.data.cer_ses ? (location.href = './home') : alert(res.data.res);
-        },
-        'ini-gog': (res) => {
-            if (res.data.acount) {
-                res.data.new_user ?
-                    (Cookie.setCookie('bienvenida', false), location.href = './home?new_user=true') :
-                    (location.href = './home');
+            if (res.state == 'success') {
+                Cookie.deleteAllCookies();
+                sessionStorage.clear();
+                location.href = './home';
             } else {
-                alert(res.data.res);
+                alert("Error al cerrar sesión.");
             }
         },
-        'user-data': (res) => {
-            showDivToggle('loadContent', 'Mis Datos', res.data);
+        'login': (res) => {
+            if (Object.keys(res.data).length > 0) {
+                location.href = './home';
+            } else {
+                alert("Error al iniciar sesión.");
+            }
         },
-        'get-settings': (res) => {
-            showDivToggle('loadContent', 'Configuración', res.data);
+        'register': (res) => {
+            if (Object.keys(res.data).length > 0) {
+                Cookie.setCookie('bienvenida', false);
+                location.href = './home?new_user=true';
+            } else {
+                alert("Error al registrar el usuario.");
+            }
         }
     },
 
@@ -85,18 +110,19 @@ const RESPONSE_HANDLERS = {
             Deck.eliminarGifCargando();
             Card.setCards(res);
         },
-        'gua-maz': (res) => {
-            res.data.state == 'success' && (Cookie.setCookie('Mazos', res.data.Mazos), $('#main-deck-collection-alert').html(res.data.res));
+        'update-deck': (res) => {
+            Cookie.setCookie('Mazos', JSON.stringify(res.data.decks));
+            sessionStorage.setItem("user", JSON.stringify(res.data));
         },
         'det-maz': (res) => {
             $('#div_res_ST').fadeIn(125);
-            $('#div_res_ana_maz').html(res.data.view);
-            $('#span_gems').text(res.data.Gems);
-            if (res.data.alerts) {
-                let resAlerts = Object.values(res.data.alerts).join('<br>');
-                const alertMessages = Object.values(res.data.alerts);
-                $('#main-deck-collection-alert').html(resAlerts);
-                Config.showAlertSequentially(alertMessages);
+            Config.renderTemplate("DeckAnalysisView", { result: res.data.result }).then(html => {
+                $('#div_res_ana_maz').html(html);
+            });
+            $('#span_gems').text(res.data.balance.gems);
+            if (res.data.message) {
+                $('#main-deck-collection-alert').html(res.data.message);
+                Config.showAlert(res.data.message);
             }
             $('#div_analizar_mazo').slideUp(0);
             if (res.state === 'success') {
@@ -104,10 +130,9 @@ const RESPONSE_HANDLERS = {
             }
         },
         'ana-maz': (res) => {
-            $('#div_det_basic').html(res.data);
-        },
-        'deck-form': (res) => {
-            $('#div_frm_crear_mazo').html(res.data);
+            Config.renderTemplate("DeckAnalysisView", { result: res.data.result }).then(html => {
+                $('#div_det_basic').html(html);
+            });
         }
     },
 
@@ -123,36 +148,25 @@ const RESPONSE_HANDLERS = {
         },
         'get-gem': (res) => {
             if (res.data.state == "success") {
-                $('#span_gems').text(res.data.data.Gems);
-                $('#div_alert_shop_gems').append(res.data.alerts[0]);
+                $('#span_gems').text(res.data.balance.gems);
+                $('#span_coins').text(res.data.balance.coins);
+                $('#div_alert_shop_gems').append(res.data.message);
             } else {
-                $('#div_alert_shop_gems').append(res.data.alerts[0]);
+                $('#div_alert_shop_gems').append(res.data.message);
             }
-            Config.showAlert(res.data.alerts[0]);
+            Config.showAlert(res.data.message);
         },
-        'get-sho': (res) => {
-            showDivToggle('loadContent', "Tienda", res.data.res);
+        'get-products': (res) => {
+            Config.renderTemplate("ShopSectionView", { products: res.data }).then(html => {
+                showDivToggle('loadContent', 'Tienda', html);
+            });
         }
     },
 
     // Content and Information
     content: {
-        'show-pre': (res) => {
-            showDivToggle('showToggle');
-            showDivToggle('loadContent', res.data.inf.title, res.data.inf.content);
-        },
         'get-not': (res) => {
             showDivToggle('loadContent', 'Notificación', res.data.res);
-        },
-        'get-rl': (res) => {
-            console.log(res);
-            showDivToggle('loadContent', res.data.inf.title, res.data.inf.content);
-        },
-        'get-sb': (res) => {
-            showDivToggle('loadContent', 'SobreNosotros', res.data.content);
-        },
-        'get-inf': (res) => {
-            showDivToggle('loadContent', res.data.title, res.data.content);
         },
         'pub-usu': (res) => {
             $('#div_pubusu').html(res.data.html);
@@ -232,17 +246,6 @@ function handleBeforeSend(type, load) {
  * @param {Object} options - Request options
  */
 function handleSuccess(res, type, data, options) {
-    // Handle error responses
-    if (res.state === 'error') {
-        alert(Object.values(res.alerts).join('. <br>'));
-        return;
-    }
-
-    // Handle info responses
-    if (res.state === 'info') {
-        alert(Object.values(res.alerts).join('. '));
-    }
-
     // Find and execute the appropriate handler
     const handler = findHandler(type);
     if (handler) {
@@ -277,11 +280,18 @@ function findHandler(type) {
 /**
  * Handles API request errors
  * @param {Object} error - Error object
+ * @param {string} url - API endpoint URL
  * @param {string} type - API endpoint type
  */
-function handleError(error, type) {
-    console.error(`❌ API Error for ${type}:`, error);
-    alert('Hubo un problema al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.');
+function handleError(error, url, type) {
+    console.error(`❌ API Error for ${url} (${type})}:`, error);
+    let msgError;
+    if (error.responseJSON && error.responseJSON.message) {
+        msgError = error.responseJSON.message;
+    } else {
+        msgError = 'Hubo un problema al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.';
+    }
+    alert(msgError);
 }
 
 /**
@@ -302,21 +312,20 @@ function handleComplete(load) {
  * @param {Object} options - Additional options for the request
  * @param {jQuery} load - Loading element to show/hide loading indicator
  */
-export default function api(data, type, options = null, load = null) {
-    // Input validation
-    if (!type) {
-        console.error('API: type parameter is required');
+export default function api(method, url, type, data = {}, options = null, load = null) {
+    if (!method || !url || !type) {
+        console.error('API: method, url, and type are required');
         return;
     }
 
-    // Enhanced logging
-    console.log(`🌐 API Call: ${type}`, { data, options, hasLoadElement: !!load });
+    console.log(`🌐 API Call: ${type}`, { method, url, data, options, hasLoadElement: !!load });
 
     $.ajax({
-        type: API_CONFIG.method,
-        url: API_CONFIG.baseUrl(),
-        data: data,
-        dataType: API_CONFIG.dataType,
+        type: method,
+        url: API_CONFIG.baseUrl() + url,
+        data: JSON.stringify(data),
+        dataType: API_CONFIG.dataType || 'json',
+        contentType: 'application/json; charset=utf-8',
         beforeSend: function () {
             handleBeforeSend(type, load);
         },
@@ -324,10 +333,11 @@ export default function api(data, type, options = null, load = null) {
             handleSuccess(res, type, data, options);
         },
         error: function (error) {
-            handleError(error, type);
+            handleError(error, url, type);
         },
         complete: function () {
             handleComplete(load);
         }
     });
 }
+

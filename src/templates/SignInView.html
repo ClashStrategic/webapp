@@ -1,0 +1,39 @@
+<script src="https://accounts.google.com/gsi/client" async></script>
+
+<h3 class="cs-color-GoldenYellow">Inicia en Clash Strategic</h3>
+
+<div class="m-a text-center flex justify-content-center">
+    <div id="g_id_onload" data-client_id="638638911314-gqio8c2tjjsqhoo8dea7dmov2mft501o.apps.googleusercontent.com"
+        data-callback="loginByGoogle" data-auto_prompt="false"></div>
+    <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with"
+        data-logo_alignment="left" data-shape="rectangular">
+    </div>
+</div><br>
+
+<div id="div_frm_signip" class="m-1 text-center">
+    <!-- <form id="loginform" class="frm">
+                        <h3 class="cs-color-LightGrey">Entra a la Cominidad Estrategica</h3>
+                        <input type="hidden" id="userAgent" name="userAgent">
+                        <label class="cs-color-LightGrey">Usuario:</label>
+                        <input type="text" name="Nombre" maxlength="15" placeholder="Usuario o Nombre" required autocomplete="username">
+                        <label class="cs-color-LightGrey">Contraseña:</label>
+                        <input type="password" name="Contraseña" placeholder="********" required autocomplete="current-password">
+                        <p class="cs-color-LightGrey">Clash Strategic</p>
+                        <div id="alert_log"></div>
+                        <button id="btn_login" class="cs-btn cs-btn--medium cs-btn--primary cs-bg-color-1" type="submit">¡Entrar Ya!</button>
+                    </form>-->
+    <div>
+        <span>¿No tienes cuenta?</span>&nbsp;&nbsp;<a class="cs-link cs-link--default"
+            onclick="Config.renderTemplate('SignUpView').then((result) => {
+                showDivToggle('loadContent', 'Crear Cuenta', result);
+            });">Regístrate</a><br><br>
+        <p class="cs-color-LightGrey">Al acceder, aceptas nuestra <a class="cs-link cs-link--default m-0-25"
+                href='./PrivacyPolicy' target="_blank">Política de Privacidad</a> y nuestros
+            <a class="cs-link cs-link--default m-0-25" href='./TermsService' target="_blank">Términos de servicio</a>.
+        </p>
+    </div>
+</div>
+
+<script>
+    //$('#userAgent').val(navigator.userAgent); //insertar el useragent al form
+</script>

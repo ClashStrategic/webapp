@@ -1,0 +1,67 @@
+<div class="text-center">
+        <div class="m-1">
+                <h3 class="cs-color-GoldenYellow">Clash Strategic</h3>
+                <p class=" cs-color-GoldenYellow">Contacto: <a class="cs-link cs-link--default" 
+                        target="_blank" href="mailto:clashstrategictm@gmail.com">clashstrategictm@gmail.com</a>
+                </p>
+                <p class="cs-color-GoldenYellow">Versión: <span class="cs-color-LightGrey" id="webapp-version"></span>
+                </p>
+                <p class="cs-color-GoldenYellow">Actualizado el: <span class="cs-color-LightGrey" id="webapp-updated"></span>
+                </p>
+        </div><br>
+
+        <hr><br>
+        <div id="div_redes_sociales">
+                <a href="https://www.youtube.com/@ClashStrategic" target="_blank">
+                        <img class="img_red" title="Youtube" src="static/media/styles/icons/redes_sociales/youtube.webp"
+                                alt="youtube.webp"></a>
+                <a href="https://www.instagram.com/clashstrategic" target="_blank">
+                        <img class="img_red" title="Instagram"
+                                src="static/media/styles/icons/redes_sociales/instagram.webp" alt="instagram.webp"></a>
+                <a href="https://www.twitter.com/ClashStrategic" target="_blank">
+                        <img class="img_red" title="X" src="static/media/styles/icons/redes_sociales/x.webp"
+                                alt="x.webp"></a>
+                <a href="https://www.tiktok.com/@clashstrategic" target="_blank">
+                        <img class="img_red" title="TikTok" src="static/media/styles/icons/redes_sociales/tik-tok.webp"
+                                alt="tik-tok.webp"></a>
+        </div>
+
+        <div class="m-1">
+                <p>"Este material no es oficial y no está respaldado por Supercell. Para obtener más información,
+                        consulte la
+                        <a class="cs-link cs-link--default" target="_blank"
+                                href="https://supercell.com/en/fan-content-policy/es/">
+                                Política de contenidos de fans</a>."
+                </p>
+        </div><br>
+
+        <div class="m-0-25">
+                <a class="cs-link cs-link--default m-1" target="_blank"
+                        href="https://clashstrategic.notion.site/Versiones-de-Clash-Strategic-50f2587783d649bd97447e35a694e132?pvs=4">
+                        Historial de versiones.</a>
+                <a class="cs-link cs-link--default m-0-25" href='./PrivacyPolicy' target="_blank">Política de
+                        Privacidad.</a>
+                <a class="cs-link cs-link--default m-0-25" href='./TermsService' target="_blank">Términos de
+                        servicio</a>
+        </div>
+</div>
+<script>
+        (function () {
+                const swVersion = localStorage.getItem('sw_version') || 'N/A';
+                $('#webapp-version').prepend(swVersion + " ");
+
+                const dateTimeString = localStorage.getItem('sw_datetime');
+
+                if (dateTimeString) {
+                        const date = new Date(dateTimeString);
+                        const formattedDate = date.toLocaleDateString('en-GB', {
+                                day: '2-digit',
+                                month: 'long',
+                                year: 'numeric'
+                        });
+                        $('#webapp-updated').text(formattedDate);
+                } else {
+                        $('#webapp-updated').text('N/A');
+                }
+        })();
+</script>

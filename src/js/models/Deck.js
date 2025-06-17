@@ -60,7 +60,7 @@ export default class Deck {
     }
 
     static addDeleteCard(card, json, name) {
-        console.log('addDeleteCard(' + card + ', ' + json + ', ' + name + ')');
+        console.log('addDeleteCard(' + JSON.stringify(card) + ', ' + JSON.stringify(json) + ', ' + name + ')');
         if (card.data("inmazo") == 'no') { //si la carta no esta en el mazo, entonse añadirla
             if ($('#deck-slots-main').data('cards').filter(item => item.rarity == 'Champion').length == 1 && json.rarity == 'Champion') { //si existe un campeon en el mazo alertar y cerrar
                 alert('Ya Tienes un Campeón en el Mazo');
@@ -106,14 +106,13 @@ export default class Deck {
     static analyzeBasic(cards) {
         console.log('analyzeBasic(' + cards + ')');
         if (cards.length == 9) {
-            api({
-                analizarMazo: true,
+            api("POST", "/v1/deckanalyzer", 'ana-maz', {
                 version: '1.0',
                 type: 'basic',
                 namesCards: JSON.stringify(cards),
                 AnaEvo: 2,
                 Estrategia: 'Libre'
-            }, 'ana-maz', null, $('#div_det_basic'));
+            }, null, $('#div_det_basic'));
         } else {
             $('#div_det_basic').html(Deck.incompleteDeckMessage);
         }
@@ -131,7 +130,11 @@ export default class Deck {
         if (cardNames.length == 9) {
             let TypeAcount = Cookie.getCookie('TypeAcount');
             if (TypeAcount == 'invitado') {
-                Cookie.setCookie('Mazos', JSON.stringify(cardNames));
+                let Mazos = Cookie.getCookie('Mazos');
+                Mazos == null && Cookie.setCookie('Mazos', '["", "", "", "", "", "", "", "", "", ""]');
+                Mazos = JSON.parse(Mazos);
+                Mazos[(nmazo - 1)] = cardNames;
+                Cookie.setCookie('Mazos', JSON.stringify(Mazos));
                 $('#main-deck-collection-alert').html('<span class="cs-color-GoldenYellow text-center">Para guardar tu mazo de forma segura, crea una cuenta. Por ahora, se guardará temporalmente en tu navegador.</span>');
             } else {
                 let Mazos = JSON.parse(Cookie.getCookie('Mazos'));
@@ -144,7 +147,10 @@ export default class Deck {
                     return;
                 }
 
-                api({ mazo: JSON.stringify(cardNames), nmazo: nmazo, guardarMazo: true }, 'gua-maz');
+                let saveDecks = Mazos;
+                saveDecks[(nmazo - 1)] = cardNames;
+
+                api("PATCH", "/v1/users", 'update-deck', { data: { decks: saveDecks } });
             }
         } else {
             $('#main-deck-collection-alert').html('<span class="cs-color-IntenseOrange text-center">El mazo debe tener 9 cartas, no se puede guardar.</span>');
@@ -168,7 +174,7 @@ export default class Deck {
     }
 
     static setMazo(namesCardInMazo) {
-        console.log('setMazo(' + namesCardInMazo + ')');
+        console.log('setMazo(' + JSON.stringify(namesCardInMazo) + ')');
 
         $('.cs-deck__slot').each(function (index, element) { //eliminar el mazo
             $(element).data('lleno') == 'yes' && $(element).find('.cs-card__use-remove').click();
@@ -260,23 +266,23 @@ export default class Deck {
     }
 
     static setCreatedDecks(res) {
-        if (res.data.MazosOptions === undefined || res.data.MazosOptions === null) {
+        if (res.data.result.decks === undefined || res.data.result.decks === null) {
             $('#main-deck-collection-alert').html('<span class="cs-color-IntenseOrange text-center">No se pudieron cargar las opciones de mazos guardados.</span>');
         } else {
-            Deck.MazosOpcionsArray = res.data.MazosOptions;
+            Deck.MazosOpcionsArray = res.data.result.decks;
             $('#div_opc_cre_maz').fadeIn(250).html(`<span class="cs-color-LightGrey">Mazos Creados: </span>`);
-            for (let i = 0; i < Object.keys(res.data.MazosOptions).length; i++) {
-                if (Object.keys(res.data.MazosOptions[i]).length > 0) {
+            for (let i = 0; i < Object.keys(res.data.result.decks).length; i++) {
+                if (Object.keys(res.data.result.decks[i]).length > 0) {
                     let numMaz = i + 1;
                     $('#div_opc_cre_maz').append(`<button class="btn_opc_cre_maz" data-nmazo="${numMaz}">${numMaz}</button> `);
                 }
             }
             $('.btn_opc_cre_maz[data-nmazo=1]').click();
             $('#div_crear_mazo').fadeOut(250);
-            $('#div_log_maz').fadeIn(0).html(Object.entries(res.data.log).map(([key, value]) => `<span style="color: var(--cs-color-DeepBlue);">${key}</span>: ${JSON.stringify(value)}`).join('<br>')).fadeOut(0);
+            //$('#div_log_maz').fadeIn(0).html(Object.entries(res.data.log).map(([key, value]) => `<span style="color: var(--cs-color-DeepBlue);">${key}</span>: ${JSON.stringify(value)}`).join('<br>')).fadeOut(0);
         }
-        $('#span_gems').text(res.data.Gems);
-        $('#main-deck-collection-alert').html(res.data.res);
+        $('#span_gems').text(res.data.balance.gems);
+        $('#main-deck-collection-alert').html(res.data.message);
     }
 
     // --- Métodos Estáticos para Manejar Eventos de Click ---
@@ -447,7 +453,9 @@ export default class Deck {
     static deckBuilderRequest(level, version) {
         $('#div_btns_crear_mazo').fadeOut(0);
         $('#div_frm_crear_mazo').fadeIn(250);
-        api({ getDeckBuilderForms: true, level: level, version: version }, "deck-form", null, $('#div_frm_crear_mazo'))
+        Config.renderTemplate("DeckBuilderFormsView", { level: level, version: version }).then(html => {
+            $('#div_frm_crear_mazo').html(html);
+        });
     }
 
     /**
@@ -579,13 +587,12 @@ export default class Deck {
 
             const apiPayload = {
                 ...formData,
-                crearMazo: true,
                 winConditionName: winConditionChecked && winConditionCard ? winConditionCard.name : 'null'
             };
 
             // Asumiendo que 'api' es una función global o importada
             if (typeof api === 'function') {
-                api(apiPayload, 'cre-maz', null, $('#btn_crear'));
+                api("POST", "/v1/deckbuilder", 'cre-maz', apiPayload, null, $('#btn_crear'));
             } else {
                 console.error("La función 'api' no está definida.");
             }
@@ -626,17 +633,11 @@ export default class Deck {
 
                 const apiPayload = {
                     ...formData,
-                    analizarMazo: true,
                     namesCards: JSON.stringify(cardNames),
                     AnaEvo: analysisEvo
                 };
 
-                // Asumiendo que 'api' es una función global o importada
-                if (typeof api === 'function') {
-                    api(apiPayload, 'det-maz', null, $('#btn_analizar')); // Target es null, loader es el botón
-                } else {
-                    console.error("La función 'api' no está definida.");
-                }
+                api("POST", "/v1/deckanalyzer", 'det-maz', apiPayload, $('#btn_analizar'));
             }
         } else {
             $('#main-deck-collection-alert').html('<span class="cs-color-IntenseOrange text-center">El Mazo está incompleto</span>');

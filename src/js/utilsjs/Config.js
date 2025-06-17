@@ -3,6 +3,26 @@ export default class Config {
     static urlParam = new URLSearchParams(window.location.search);
     static msgInit = '¡Qué emoción que te hayas unido a nuestra comunidad estratégica! Aquí encontrarás todas las herramientas necesarias para mejorar tus habilidades en Clash Royale. Queremos que aproveches al máximo todas las secciones disponibles en Clash Strategic, diseñadas específicamente para que te sientas como en Clash Royale.';
 
+    static async renderTemplate(templateName, variables = {}) {
+        console.log(`renderTemplate(${templateName}, ${JSON.stringify(variables)})`);
+        try {
+            const response = await fetch(`./src/templates/${templateName}.html`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const htmlString = await response.text();
+
+            const keys = Object.keys(variables);
+            const values = Object.values(variables);
+            // Using Function constructor is generally safe here as template strings are controlled internally
+            const func = new Function(...keys, `return \`${htmlString}\`;`);
+
+            return func(...values);
+        } catch (error) {
+            console.error(`Error rendering template ${templateName}:`, error);
+        }
+    }
+
     static isMobile() {
         return /Mobi|Android/i.test(navigator.userAgent);
     }
@@ -298,13 +318,6 @@ export default class Config {
             });
         });
     };
-
-    //callback acceso con google
-    static handleCredentialResponse(res) {
-        console.log('handleCredentialResponse()');
-        Cookie.setCookiesForSession();
-        api(res, 'ini-gog'); //envia los datos al servidor
-    }
 
     // --- Métodos Estáticos para Manejar Eventos de Click ---
 
