@@ -148,7 +148,8 @@ const RESPONSE_HANDLERS = {
         },
         'get-gem': (res) => {
             if (res.data.state == "success") {
-                $('#span_gems').text(res.data.data.Gems);
+                $('#span_gems').text(res.data.balance.gems);
+                $('#span_coins').text(res.data.balance.coins);
                 $('#div_alert_shop_gems').append(res.data.message);
             } else {
                 $('#div_alert_shop_gems').append(res.data.message);
