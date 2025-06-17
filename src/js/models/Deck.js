@@ -266,13 +266,13 @@ export default class Deck {
     }
 
     static setCreatedDecks(res) {
-        if (res.data.result.MazosOptions === undefined || res.data.result.MazosOptions === null) {
+        if (res.data.result.decks === undefined || res.data.result.decks === null) {
             $('#main-deck-collection-alert').html('<span class="cs-color-IntenseOrange text-center">No se pudieron cargar las opciones de mazos guardados.</span>');
         } else {
-            Deck.MazosOpcionsArray = res.data.result.MazosOptions;
+            Deck.MazosOpcionsArray = res.data.result.decks;
             $('#div_opc_cre_maz').fadeIn(250).html(`<span class="cs-color-LightGrey">Mazos Creados: </span>`);
-            for (let i = 0; i < Object.keys(res.data.result.MazosOptions).length; i++) {
-                if (Object.keys(res.data.result.MazosOptions[i]).length > 0) {
+            for (let i = 0; i < Object.keys(res.data.result.decks).length; i++) {
+                if (Object.keys(res.data.result.decks[i]).length > 0) {
                     let numMaz = i + 1;
                     $('#div_opc_cre_maz').append(`<button class="btn_opc_cre_maz" data-nmazo="${numMaz}">${numMaz}</button> `);
                 }
