@@ -30,7 +30,10 @@ $dirs = [
     'src/js/events',
     // 'src/js/libraries',
     'src/js/models',
-    'src/js/utilsjs'
+    'src/js/utilsjs',
+
+    // html files templates
+    'src/templates'
 ];
 
 $allFiles = [];
