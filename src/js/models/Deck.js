@@ -389,11 +389,11 @@ export default class Deck {
         if (isCurrentlyVisible) {
             resultsDiv.prepend('<span id="span_msg_ana_deck">El Resultado del Analisis Esta Oculto</span>');
             div_res_ana_maz.fadeOut(125);
-            element.text('Mostrar Análisis');
+            element.text('Mostrar');
         } else {
             resultsDiv.find('#span_msg_ana_deck').remove();
             div_res_ana_maz.fadeIn(250);
-            element.text('Ocultar Análisis');
+            element.text('Ocultar');
         }
     }
 
@@ -401,8 +401,12 @@ export default class Deck {
      * Maneja el click en el botón "Analizar Mazo".
      */
     static handleAnalyzeButtonClick() {
-        $('#div_crear_mazo').slideUp(0); // Ocultar sección de creación
-        $('#div_analizar_mazo').slideToggle(250); // Mostrar/ocultar sección de análisis
+        $('#div_crear_mazo').fadeOut(0); // Ocultar sección de creación
+        $('#div_analizar_mazo').fadeToggle(0, function() {
+            if ($('#div_analizar_mazo').is(':visible')) {
+                $('html, body').animate({ scrollTop: $('#deck-tool-forms').offset().top + $('#deck-tool-forms').outerHeight() - $(window).height() + 16 }, 500);
+            }
+        }); // Mostrar/ocultar sección de análisis
     }
 
     /**
@@ -446,8 +450,12 @@ export default class Deck {
      * Maneja el click en el botón "Crear Mazo".
      */
     static handleCreateButtonClick() {
-        $('#div_analizar_mazo').slideUp(0); // Ocultar sección de análisis
-        $('#div_crear_mazo').slideToggle(250); // Mostrar/ocultar sección de creación
+        $('#div_analizar_mazo').fadeOut(0); // Ocultar sección de análisis
+        $('#div_crear_mazo').fadeToggle(0, function() {
+            if ($('#div_crear_mazo').is(':visible')) {
+                $('html, body').animate({ scrollTop: $('#deck-tool-forms').offset().top + $('#deck-tool-forms').outerHeight() - $(window).height() + 16 }, 500);
+            }
+        }); // Mostrar/ocultar sección de creación
     }
 
     static deckBuilderRequest(level, version) {

@@ -182,12 +182,19 @@
     color: var(--cs-color-DeepBlue);
 }
 
+#deck-tool-forms__logs {
+    background: var(--cs-color-DeepBlue);
+    text-align: center;
+    margin: 0.5rem 0;
+}
+
 #div_crear_mazo,
 #div_analizar_mazo {
+    background: var(--cs-color-DeepBlue);
+    text-align: center;
     display: inline-block;
     border: solid 1.5px var(--cs-color-LightGrey);
-    margin: 1em;
-    width: 90%;
+    width: 100%;
 }
 
 #div_opc_cre_maz {
@@ -495,10 +502,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
-}
-
-#btn_ocu_mos_res_ST {
-    display: flex;
 }
 
 #div_res_ST {
