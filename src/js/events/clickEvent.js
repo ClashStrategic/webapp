@@ -52,7 +52,7 @@ const CLICK_HANDLERS = {
         'btn_nom_usu': () => User.handleShowUserDataClick(),
         'btn-deck-information-toggle': () => 
             $('#div_inf_mazo').slideToggle(250, () => {
-            $('#btn-deck-information-toggle').text($('#div_inf_mazo').is(':visible') ? 'Ocultar Analisis' : 'Mostrar Analisis');
+            $('#btn-deck-information-toggle').html($('#div_inf_mazo').is(':visible') ? 'Ocultar Analisis ▲' : 'Mostrar Analisis ▼');
         })
     },
 
