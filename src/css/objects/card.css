@@ -157,6 +157,19 @@
 
 /* specific styles */
 
+#deck-data-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+#deck-data-info div {
+    display: flex;
+    align-items: center;
+}
+
 #div_btns_mazo {
     position: relative;
     width: 93%;
