@@ -386,10 +386,10 @@
 
 #btn_btns_opc_maz {
     position: absolute;
-    padding: 0.75em;
+    padding: 0.5rem;
     right: 0%;
     border: 1px solid var(--cs-color-DeepBlue);
-    top: 0.5em;
+    top: 0.25rem;
 }
 
 #div_sub_btns_mazo {
@@ -397,11 +397,11 @@
     box-shadow: 0 0 5px var(--cs-color-DeepBlue);
     position: absolute;
     display: inline;
-    right: 3.25em;
-    top: 0%;
+    right: 3.5rem;
+    top: 0.25rem;
     align-items: center;
     z-index: 80;
-    width: 9em;
+    width: 9rem;
 }
 
 #div_sub_btns_mazo::before {
