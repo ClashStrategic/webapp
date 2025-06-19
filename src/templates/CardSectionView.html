@@ -46,9 +46,12 @@
                 </div>
                 <div id="div_card_slot_tower" class="cs-deck__slot cs-deck__slot--default" data-lleno="no"></div>
             </div>
-            <div id="div_inf_mazo">
+            <button id="btn-deck-information-toggle" class="cs-btn cs-btn--medium cs-btn--primary">Mostrar Analisis</button>
+            <div id="div_inf_mazo" style="display: none;">
+                <h3 class="cs-color-GoldenYellow">Analisis Basico</h3>
                 <div id="div_det_basic"><br><br><br></div>
-            </div>
+            </div><br>
+            <hr>
             <div id="div_btns_mazo">
                 <div id="div_btns_pri"> <!-- btns principales -->
                     <button id="btn_analizar" class="cs-btn cs-btn--medium cs-btn--primary">Analizar (Beta)</button>
@@ -182,7 +185,7 @@
 
     <section class="section">
         <center>
-            <h2>Todas Las Cartas</h2>
+            <h3>Todas Las Cartas</h3>
         </center>
         <button id="btn_Orden_cards" class="cs-btn cs-btn--medium cs-btn--primary" disabled>Por Defecto</button>
         <!-- ordena avanzado -->
