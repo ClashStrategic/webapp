@@ -439,13 +439,6 @@
     margin: auto;
 }
 
-#div_data_view_quick {
-    display: flex;
-    align-items: center;
-    padding: 0.25rem;
-    justify-content: center;
-}
-
 .div_tricks_ana {
     display: flex;
     justify-content: center;
