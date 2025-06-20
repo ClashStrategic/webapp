@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/ClashStrategic/webapp/compare/v1.0.1...v1.1.0) (2025-06-20)
+
+
+### Bug Fixes
+
+* **ui:** correct Spanish text with proper accents and improve consistency ([263429c](https://github.com/ClashStrategic/webapp/commit/263429c9a523b70baf80f5b1139c71e518612aee))
+
+
+### Features
+
+* **ui:** add collapsible deck analysis section with toggle button ([f8909a0](https://github.com/ClashStrategic/webapp/commit/f8909a0f303937305321dbc5b2741e52baf65671))
+* **ui:** add deck statistics display to card section ([e2eed79](https://github.com/ClashStrategic/webapp/commit/e2eed795d6b8e74f8c9d4abfa07758de7c3ac1c4))
+
 ## [1.0.1](https://github.com/ClashStrategic/webapp/compare/v1.0.0...v1.0.1) (2025-06-17)
 
 
