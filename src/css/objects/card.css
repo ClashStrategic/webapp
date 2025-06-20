@@ -157,6 +157,19 @@
 
 /* specific styles */
 
+#deck-data-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+#deck-data-info div {
+    display: flex;
+    align-items: center;
+}
+
 #div_btns_mazo {
     position: relative;
     width: 93%;
@@ -182,12 +195,19 @@
     color: var(--cs-color-DeepBlue);
 }
 
+#deck-tool-forms__logs {
+    background: var(--cs-color-DeepBlue);
+    text-align: center;
+    margin: 0.5rem 0;
+}
+
 #div_crear_mazo,
 #div_analizar_mazo {
+    background: var(--cs-color-DeepBlue);
+    text-align: center;
     display: inline-block;
     border: solid 1.5px var(--cs-color-LightGrey);
-    margin: 1em;
-    width: 90%;
+    width: 100%;
 }
 
 #div_opc_cre_maz {
@@ -379,10 +399,10 @@
 
 #btn_btns_opc_maz {
     position: absolute;
-    padding: 0.75em;
+    padding: 0.5rem;
     right: 0%;
     border: 1px solid var(--cs-color-DeepBlue);
-    top: 0.5em;
+    top: 0.25rem;
 }
 
 #div_sub_btns_mazo {
@@ -390,11 +410,11 @@
     box-shadow: 0 0 5px var(--cs-color-DeepBlue);
     position: absolute;
     display: inline;
-    right: 3.25em;
-    top: 0%;
+    right: 3.5rem;
+    top: 0.25rem;
     align-items: center;
     z-index: 80;
-    width: 9em;
+    width: 9rem;
 }
 
 #div_sub_btns_mazo::before {
@@ -417,13 +437,6 @@
     border: solid 1.5px var(--cs-color-LightGrey);
     width: 95%;
     margin: auto;
-}
-
-#div_data_view_quick {
-    display: flex;
-    align-items: center;
-    padding: 0.25rem;
-    justify-content: center;
 }
 
 .div_tricks_ana {
@@ -495,10 +508,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
-}
-
-#btn_ocu_mos_res_ST {
-    display: flex;
 }
 
 #div_res_ST {

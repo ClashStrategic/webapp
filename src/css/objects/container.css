@@ -13,5 +13,5 @@
 .section {
     width: var(--width-section);
     margin: 0 auto;
-    margin-top: 2em;
+    margin-top: 1.5em;
 }

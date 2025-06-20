@@ -49,7 +49,11 @@ const CLICK_HANDLERS = {
         'btn_Orden_cards': () => Card.handleOrderButtonClick(),
         'btn_Orden_cards_advanced': () => Card.handleAdvancedOrderButtonClick(),
         'btn_com_clan': () => $('#div_com_clan').slideToggle(500),
-        'btn_nom_usu': () => User.handleShowUserDataClick()
+        'btn_nom_usu': () => User.handleShowUserDataClick(),
+        'btn-deck-information-toggle': () => 
+            $('#div_inf_mazo').slideToggle(250, () => {
+            $('#btn-deck-information-toggle').text($('#div_inf_mazo').is(':visible') ? 'Ocultar Análisis ▲' : 'Mostrar Análisis ▼');
+        })
     },
 
     // Multi-ID handlers (IDs that share the same logic)

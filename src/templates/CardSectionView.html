@@ -1,8 +1,8 @@
 <!-- analizador de mazo -->
 <main class="main">
     <section class="section">
-        <h1>¡Colección de Mazos!</h1>
-        <div id="main-deck-collection" class="cs-deck-collection"><br>
+        <h2>¡Colección de Mazos!</h2>
+        <div id="main-deck-collection" class="cs-deck-collection">
             <div id="main-deck-collection-box-btns" class="cs-deck-collection__box-btns" data-nmazo="1">
                 <div id="div_maz_1_5">
                     <div class="cs-deck-collection__box-btns-option" data-nmazo="1"><span>1</span></div>
@@ -40,16 +40,19 @@
                         id="cs-deck__slot-7" data-lleno="no"></div>
                     <div class="cs-deck__slot cs-deck__slot--default"
                         id="cs-deck__slot-8" data-lleno="no"></div>
+                <div id="deck-data-info" class="cs-card--medium"></div>
                 <div class="cs-card--medium"> <!-- King Tower Card -->
                     <img class="cs-card__image" src="./static/media/cards//towerCards/King Tower.webp" alt="King Tower">
                     <!-- <span class="cs-card__name">King Tower</span> -->
                 </div>
                 <div id="div_card_slot_tower" class="cs-deck__slot cs-deck__slot--default" data-lleno="no"></div>
             </div>
-            <div id="div_inf_mazo"> <!-- analisis intermediate-->
+            <button id="btn-deck-information-toggle" class="cs-btn cs-btn--medium cs-btn--primary">Mostrar Análisis ▼</button>
+            <div id="div_inf_mazo" style="display: none;">
                 <h3 class="cs-color-GoldenYellow">Análisis Básico</h3>
                 <div id="div_det_basic"><br><br><br></div>
-            </div>
+            </div><br>
+            <hr>
             <div id="div_btns_mazo">
                 <div id="div_btns_pri"> <!-- btns principales -->
                     <button id="btn_analizar" class="cs-btn cs-btn--medium cs-btn--primary">Analizar (Beta)</button>
@@ -74,54 +77,52 @@
                             Eliminar</p></button>
                 </div>
             </div>
-            <div id="main-deck-collection-alert" class="cs-deck-collection__alert"></div> <!-- alertas -->
-            <div id="div_opc_cre_maz" style="display: none;"></div>
-            <div id="div_log_maz" style="display: none;"></div>
+        </div><br><br>
 
-            <!-- ver/ocultar resultados de analisis -->
-            <button id="btn_ocu_mos_res_ST" class="cs-btn cs-btn--medium cs-btn--primary" style="display: none;">Ocultar
-                Análisis</button>
+        <div id="deck-tool-forms">
+            <div id="deck-tool-forms__logs">
+                <div id="main-deck-collection-alert" class="cs-deck-collection__alert"></div>
+                <div id="div_opc_cre_maz" style="display: none;"></div>
+                <div id="div_log_maz" style="display: none;"></div>
+            </div>
 
-            <!-- Crear mazos -->
             <div id="div_crear_mazo" style="display: none;">
+                <h2 class="cs-color-GoldenYellow">¡Creador de Mazos!</h2>
                 <div id="div_btns_crear_mazo">
-                    <h3 class="cs-color-LightGrey">¡Creador de Mazos!</h3>
                     <!-- <label>Version:</label><br> -->
                     <select id="sel_version_creador" class="select" style="display: none;">
                         <option value="1.0" selected>1.0</option>
                         <option value="1.1" disabled>1.1</option>
                     </select>
+                    <p class="cs-color-GoldenYellow">Selecciona el nivel de creación:</p>
                     <button class="cs-btn cs-btn--medium cs-btn--primary"
-                        onclick="Deck.deckBuilderRequest('basic', 1.0)">Crear Basico (Gratis)</button><br>
+                        onclick="Deck.deckBuilderRequest('basic', 1.0)">Crear Básico (Gratis)</button><br>
                     <button class="cs-btn cs-btn--medium cs-btn--primary"
                         onclick="Deck.deckBuilderRequest('intermediate', 1.0)">Crear Intermedio (6 Gemas)</button><br>
                     <button class="cs-btn cs-btn--medium cs-btn--primary"
-                        onclick="Deck.deckBuilderRequest('advanced', 1.0)">Crear Avanzado (12 Gemas)</button><br>
+                        onclick="Deck.deckBuilderRequest('advanced', 1.0)">Crear Avanzado (12 Gemas)</button><br><br>
                 </div>
-                <div id="div_frm_crear_mazo"><br><br><br></div>
-            </div><br>
+                <div id="div_frm_crear_mazo"></div>
+            </div>
 
-            <!-- analizar mazos -->
             <div id="div_analizar_mazo" style="display: none;">
-                <h3 class="cs-color-GoldenYellow">¡Analizador de Mazos!</h3>
+                <h2 class="cs-color-GoldenYellow">¡Analizador de Mazos!</h2>
                 <select id="sel_version_analizador" class="select" style="display: none;">
                     <option value="1.0" selected>1.0</option>
                     <option value="1.1" disabled>1.1</option>
                 </select>
                 <div id="div_btns_analizar_mazo">
                     <!-- <label>Version:</label><br> -->
-                    <div>
-                        <p class="cs-color-LightGrey">Selecciona el nivel de análisis deseado:</p>
-                        <button id="btn_analizar_mazo_basico" class="cs-btn cs-btn--medium cs-btn--primary">Analisis
-                            Normal (Gratis)</button><img class="cs-tooltip-image"
-                            src="./static/media/styles/icons/info-circle.svg" alt="inf"
-                            data-inf="Analiza un Mazo de forma Basica"><br>
-                        <button id="btn_analizar_mazo_avanzado" class="cs-btn cs-btn--medium cs-btn--primary">Analisis
-                            Avanzado x 3<img class="cs-icon cs-icon--medium"
-                                src="./static/media/styles/icons/icon_gema.webp" alt="gema"></button><img
-                            class="cs-tooltip-image" src="./static/media/styles/icons/info-circle.svg" alt="inf"
-                            data-inf="Analiza un Mazo de forma Avanzada"><br>
-                    </div>
+                    <p class="cs-color-GoldenYellow">Selecciona el nivel de análisis:</p>
+                    <button id="btn_analizar_mazo_basico" class="cs-btn cs-btn--medium cs-btn--primary">Análisis
+                        Normal (Gratis)</button><img class="cs-tooltip-image"
+                        src="./static/media/styles/icons/info-circle.svg" alt="inf"
+                        data-inf="Analiza un Mazo de forma Básica"><br>
+                    <button id="btn_analizar_mazo_avanzado" class="cs-btn cs-btn--medium cs-btn--primary">Análisis 
+                        Avanzado x 3<img class="cs-icon cs-icon--medium"
+                            src="./static/media/styles/icons/icon_gema.webp" alt="gema"></button><img
+                        class="cs-tooltip-image" src="./static/media/styles/icons/info-circle.svg" alt="inf"
+                        data-inf="Analiza un Mazo de forma Avanzada"><br><br>
                 </div>
                 <!-- frm Ananalizar Mazos -->
                 <!-- v1.0 -->
@@ -148,7 +149,7 @@
                         <button id="btn_can_ana_maz_ava" class="cs-btn cs-btn--medium cs-btn--cancel"
                             type="button">Cancelar</button>
                     </form>
-                </div><br><br>
+                </div>
                 <!-- v1.1 -->
                 <form id="frm_ana_maz_ava_v1_1" style="display:none">
                     <h3 class="cs-color-LightGrey">¡Analizador de Mazos! v1.1</h3>
@@ -177,13 +178,15 @@
 
         <!-- Resultados de analisis de mazo -->
         <div class="text-center w-100" id="div_res_ST">
-            <div id="div_res_ana_maz"></div><br>
+            <button id="btn_ocu_mos_res_ST" class="cs-btn cs-btn--medium cs-btn--primary" style="display: none;">
+            Ocultar</button>
+            <div id="div_res_ana_maz"></div>
         </div>
     </section>
 
     <section class="section">
         <center>
-            <h2>Todas Las Cartas</h2>
+            <h3>Todas Las Cartas</h3>
         </center>
         <button id="btn_Orden_cards" class="cs-btn cs-btn--medium cs-btn--primary" disabled>Por Defecto</button>
         <!-- ordena avanzado -->
