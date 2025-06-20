@@ -276,11 +276,12 @@ export default class Card {
 
         // --- Ejecución del Movimiento/Intercambio ---
 
-        // Actualizar el array de cartas en el DOM
-        let newDeckData = []; // Array para almacenar las cartas del mazo
-        // Recorrer los slots del mazo y agregar las cartas al array
+        let newDeckData = []; // Array para almacenar las cartas del mazo (excluyendo torre)
+        // Recorrer los slots del mazo y agregar las cartas al array, excluyendo el slot de torre
         $('#deck-slots-main .cs-deck__slot').each(function (index, element) {
-            $(element).find('.cs-card').length > 0 ? newDeckData.push($(element).find('.cs-card').data('json')) : newDeckData.push({ name: 'null' });
+            if ($(element).attr('id') !== 'div_card_slot_tower') {
+                $(element).find('.cs-card').length > 0 ? newDeckData.push($(element).find('.cs-card').data('json')) : newDeckData.push({ name: 'null' });
+            }
         });
 
         // Verificar si el slot destino está lleno y si la carta a mover es diferente a la carta en el slot destino
@@ -313,6 +314,9 @@ export default class Card {
 
         console.log("Move/Swap successful.");
         //User.userInteracted && $('#audio_move_card')[0]?.play(); // Sonido de movimiento (si existe)
+
+        // Guardar los cambios en el mazo después del movimiento/intercambio
+        Deck.save();
 
         // Limpiar selección después del movimiento/intercambio exitoso
         Card.cancelCardMoveSelection();
