@@ -144,6 +144,8 @@ export default class Deck {
             mazos = JSON.parse(mazos);
         }
 
+        let mazoAntiguo = mazos[deckIndex - 1];
+
         // Actualizar el mazo en la lista de mazos y guardar en cookie
         mazos[deckIndex - 1] = cardNames;
         Cookie.setCookie('Mazos', JSON.stringify(mazos));
@@ -155,8 +157,13 @@ export default class Deck {
             return;
         }
 
-        // Guardar en base de datos si no es invitado y el mazo está completo
-        api("PATCH", "/v1/users", 'update-deck', { data: { decks: mazos } });
+        // Verificar si el mazo ha cambiado antes de guardar
+        if (JSON.stringify(mazoAntiguo) != JSON.stringify(cardNames)) {
+            api("PATCH", "/v1/users", 'update-deck', { data: { decks: mazos } });
+        } else {
+            console.log('El Mazo no ha cambiado, no se guardará en la base de datos.');
+            return;
+        }
     }
 
     static update(deckCollection__boxbtnsOption) {
