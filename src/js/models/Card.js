@@ -233,6 +233,13 @@ export default class Card {
             return;
         }
 
+        // Evitar mover cartas al slot de la torre
+        if (targetSlot.attr('id') === 'div_card_slot_tower') {
+            Config.showAlert('<span class="cs-color-IntenseOrange text-center">No puedes mover cartas al slot de la torre.</span>');
+            Card.cancelCardMoveSelection();
+            return;
+        }
+
         console.log("Attempting to move", Card.selectedCardToMove.data('name'), "from", Card.sourceSlot.attr('id'), "to", targetSlot.attr('id'));
 
         const sourceCardData = Card.selectedCardToMove.data('json');
