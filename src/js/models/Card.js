@@ -513,9 +513,9 @@ export default class Card {
      * Realiza un scroll hacia la sección de selección de cartas.
      * @param {jQuery} slotElement - El elemento jQuery del slot clickeado.
      */
-    static handleEmptySlotClick(slotElement) {
+    static handleEmptySlotClick(slotElement, event) {
         // Verifica si el slot está realmente vacío, si el click fue directamente en el slot y si no se está actualizando un mazo
-        if (slotElement.data('lleno') === 'no' && !Deck.isUpdating) {
+        if (slotElement.data('lleno') === 'no' && !Deck.isUpdating && event.target.id === slotElement.attr('id')) {
             const nextSection = slotElement.closest('section').next('section');
             if (nextSection.length) {
                 $('html, body').animate({ scrollTop: nextSection.offset().top }, 500);
