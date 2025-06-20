@@ -122,40 +122,49 @@ export default class Deck {
     static save() {
         console.log('save()');
 
-        const nmazo = $('#main-deck-collection-box-btns').data('nmazo');
+        // Obtener datos del mazo actual
+        const deckIndex = $('#main-deck-collection-box-btns').data('nmazo');
         const cards = $('#deck-slots-main').data('cards') || [];
         const towerCard = $('#deck-slots-main').data('towercard')[0] ?? null;
-        let cardNames = cards.map(c => c.name).concat(towerCard ? [towerCard.name] : []);
-        cardNames = cardNames.filter(name => name != null && name != undefined);
+        const cardNames = cards.map(c => c.name)
+            .concat(towerCard ? [towerCard.name] : [])
+            .filter(name => name != null && name != undefined);
 
-        if (cardNames.length == 9) {
-            let TypeAcount = Cookie.getCookie('TypeAcount');
-            if (TypeAcount == 'invitado') {
-                let Mazos = Cookie.getCookie('Mazos');
-                Mazos == null && Cookie.setCookie('Mazos', '["", "", "", "", "", "", "", "", "", ""]');
-                Mazos = JSON.parse(Mazos);
-                Mazos[(nmazo - 1)] = cardNames;
-                Cookie.setCookie('Mazos', JSON.stringify(Mazos));
-                $('#main-deck-collection-alert').html('<span class="cs-color-GoldenYellow text-center">Para guardar tu mazo de forma segura, crea una cuenta. Por ahora, se guardará temporalmente en tu navegador.</span>');
-            } else {
-                let Mazos = JSON.parse(Cookie.getCookie('Mazos'));
-                let MazoSave = Mazos[(nmazo - 1)];
-                let MazosCards = MazoSave.filter(name => name != null && name != undefined);
-                console.log('El mazo a guardar es:', cardNames, ' y el mazo a en cookie es:', MazoSave, ' y el nmazo es:', nmazo);
-
-                if (cardNames.length == MazosCards.length && cardNames.every((value, index) => value == MazosCards[index])) {
-                    console.log('El mazo no ha cambiado, no se guardará.');
-                    return;
-                }
-
-                let saveDecks = Mazos;
-                saveDecks[(nmazo - 1)] = cardNames;
-
-                api("PATCH", "/v1/users", 'update-deck', { data: { decks: saveDecks } });
-            }
-        } else {
+        // Validar si el mazo está completo (9 cartas)
+        if (cardNames.length !== 9) {
             $('#main-deck-collection-alert').html('<span class="cs-color-IntenseOrange text-center">El mazo debe tener 9 cartas, no se puede guardar.</span>');
+            return;
         }
+
+        // Inicializar o recuperar mazos desde cookie
+        let mazos = Cookie.getCookie('Mazos');
+        if (mazos == null) {
+            mazos = ["", "", "", "", "", "", "", "", "", ""];
+        } else {
+            mazos = JSON.parse(mazos);
+        }
+
+        // Actualizar el mazo en la lista de mazos y guardar en cookie
+        mazos[deckIndex - 1] = cardNames;
+        Cookie.setCookie('Mazos', JSON.stringify(mazos));
+
+        // Verificar tipo de cuenta para decidir si guardar en BD
+        const typeAccount = Cookie.getCookie('TypeAcount');
+        if (typeAccount === 'invitado') {
+            $('#main-deck-collection-alert').html('<span class="cs-color-GoldenYellow text-center">Para guardar tu mazo de forma segura, crea una cuenta. Por ahora, se guardará temporalmente en tu navegador.</span>');
+            return;
+        }
+
+        // Comparar si el mazo ha cambiado antes de guardar en BD
+        const currentMazo = mazos[deckIndex - 1].filter(name => name != null && name != undefined);
+        console.log('El mazo a guardar es:', cardNames, ' y el mazo en cookie es:', currentMazo, ' y el nmazo es:', deckIndex);
+        if (cardNames.length === currentMazo.length && cardNames.every((value, index) => value === currentMazo[index])) {
+            console.log('El mazo no ha cambiado, no se guardará en la base de datos.');
+            return;
+        }
+
+        // Guardar en base de datos solo si no es invitado y el mazo cambió
+        api("PATCH", "/v1/users", 'update-deck', { data: { decks: mazos } });
     }
 
     static update(deckCollection__boxbtnsOption) {
@@ -405,7 +414,7 @@ export default class Deck {
      */
     static handleAnalyzeButtonClick() {
         $('#div_crear_mazo').fadeOut(0); // Ocultar sección de creación
-        $('#div_analizar_mazo').fadeToggle(0, function() {
+        $('#div_analizar_mazo').fadeToggle(0, function () {
             if ($('#div_analizar_mazo').is(':visible')) {
                 $('html, body').animate({ scrollTop: $('#deck-tool-forms').offset().top + $('#deck-tool-forms').outerHeight() - $(window).height() + 16 }, 500);
             }
@@ -454,7 +463,7 @@ export default class Deck {
      */
     static handleCreateButtonClick() {
         $('#div_analizar_mazo').fadeOut(0); // Ocultar sección de análisis
-        $('#div_crear_mazo').fadeToggle(0, function() {
+        $('#div_crear_mazo').fadeToggle(0, function () {
             if ($('#div_crear_mazo').is(':visible')) {
                 $('html, body').animate({ scrollTop: $('#deck-tool-forms').offset().top + $('#deck-tool-forms').outerHeight() - $(window).height() + 16 }, 500);
             }
