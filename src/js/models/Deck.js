@@ -155,15 +155,7 @@ export default class Deck {
             return;
         }
 
-        // Comparar si el mazo ha cambiado antes de guardar en BD
-        const currentMazo = mazos[deckIndex - 1].filter(name => name != null && name != undefined);
-        console.log('El mazo a guardar es:', cardNames, ' y el mazo en cookie es:', currentMazo, ' y el nmazo es:', deckIndex);
-        if (cardNames.length === currentMazo.length && cardNames.every((value, index) => value === currentMazo[index])) {
-            console.log('El mazo no ha cambiado, no se guardará en la base de datos.');
-            return;
-        }
-
-        // Guardar en base de datos solo si no es invitado y el mazo cambió
+        // Guardar en base de datos si no es invitado y el mazo está completo
         api("PATCH", "/v1/users", 'update-deck', { data: { decks: mazos } });
     }
 
