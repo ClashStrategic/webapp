@@ -3,7 +3,6 @@ export default class Deck {
     static MazosOpcionsArray = [];
     static incompleteDeckMessage = "<span class='cs-color-GoldenYellow text-center'>Completa los espacios de cartas para ver las estadísticas.</span>";
     static isBatchOperation = false; // Bandera para operaciones por lotes
-    static isUpdating = false; // Bandera para operaciones de actualización de mazo
 
     static extractIdsLink(link) {
         const startIndex = link.indexOf("deck=") + 5;
@@ -176,9 +175,7 @@ export default class Deck {
         deckCollection__boxbtnsOption.addClass('selectmaz').css({ 'position': 'relative' }).append('<img class="img_loading" src="./static/media/styles/icons/menu/logo_cargando.gif">'); //cargando mazo
         deckCollection__boxbtnsOption.find('.img_loading').remove(); // Remove loading image before proceeding
         $('#main-deck-collection-box-btns').data('nmazo', nmazo); //cambiar el numero de mazo en el que esta
-        Deck.isUpdating = true;
         mazocamb ? Deck.setMazo(mazocamb) : Deck.eliminarMazo();
-        Deck.isUpdating = false;
         $('#main-deck-collection-alert').empty(); //limpiar los mensajes de alerta
         //$('#div_result_ana').fadeOut(250); //ocultar los resultados del analisis si las hay
         Cookie.setCookie('nmazo', nmazo);
