@@ -182,6 +182,12 @@ export default class Card {
 
     // Selecciona una carta para moverla
     static selectCardForMove(cardElement) {
+        // Prevent tower cards from being selected for move
+        if (cardElement.data('type') === 'tower') {
+            Config.showAlert('<span class="cs-color-IntenseOrange text-center">No puedes mover cartas de la torre.</span>');
+            return;
+        }
+
         if (Card.selectedCardToMove && Card.selectedCardToMove[0] === cardElement[0]) {
             // Deseleccionar si se vuelve a seleccionar la misma carta
             cardElement.removeClass('card--selected-move');
