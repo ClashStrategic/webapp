@@ -503,8 +503,8 @@ export default class Card {
      * @param {jQuery} slotElement - El elemento jQuery del slot clickeado.
      */
     static handleEmptySlotClick(slotElement) {
-        // Verifica si el slot está realmente vacío y si el click fue directamente en el slot
-        if (slotElement.data('lleno') === 'no' && slotElement.is(event.target)) {
+        // Verifica si el slot está realmente vacío, si el click fue directamente en el slot y si no se está actualizando un mazo
+        if (slotElement.data('lleno') === 'no' && !Deck.isUpdating) {
             const nextSection = slotElement.closest('section').next('section');
             if (nextSection.length) {
                 $('html, body').animate({ scrollTop: nextSection.offset().top }, 500);
