@@ -182,6 +182,12 @@ export default class Card {
 
     // Selecciona una carta para moverla
     static selectCardForMove(cardElement) {
+        // Prevent tower cards from being selected for move
+        if (cardElement.data('type') === 'tower') {
+            Config.showAlert('<span class="cs-color-IntenseOrange text-center">No puedes mover cartas de la torre.</span>');
+            return;
+        }
+
         if (Card.selectedCardToMove && Card.selectedCardToMove[0] === cardElement[0]) {
             // Deseleccionar si se vuelve a seleccionar la misma carta
             cardElement.removeClass('card--selected-move');
@@ -223,6 +229,13 @@ export default class Card {
 
         if (Card.sourceSlot[0] === targetSlot[0]) {
             // Si se selecciona el mismo slot de origen, cancelar
+            Card.cancelCardMoveSelection();
+            return;
+        }
+
+        // Evitar mover cartas al slot de la torre
+        if (targetSlot.attr('id') === 'div_card_slot_tower') {
+            Config.showAlert('<span class="cs-color-IntenseOrange text-center">No puedes mover cartas al slot de la torre.</span>');
             Card.cancelCardMoveSelection();
             return;
         }
@@ -270,11 +283,12 @@ export default class Card {
 
         // --- Ejecución del Movimiento/Intercambio ---
 
-        // Actualizar el array de cartas en el DOM
-        let newDeckData = []; // Array para almacenar las cartas del mazo
-        // Recorrer los slots del mazo y agregar las cartas al array
+        let newDeckData = []; // Array para almacenar las cartas del mazo (excluyendo torre)
+        // Recorrer los slots del mazo y agregar las cartas al array, excluyendo el slot de torre
         $('#deck-slots-main .cs-deck__slot').each(function (index, element) {
-            $(element).find('.cs-card').length > 0 ? newDeckData.push($(element).find('.cs-card').data('json')) : newDeckData.push({ name: 'null' });
+            if ($(element).attr('id') !== 'div_card_slot_tower') {
+                $(element).find('.cs-card').length > 0 ? newDeckData.push($(element).find('.cs-card').data('json')) : newDeckData.push({ name: 'null' });
+            }
         });
 
         // Verificar si el slot destino está lleno y si la carta a mover es diferente a la carta en el slot destino
@@ -307,6 +321,9 @@ export default class Card {
 
         console.log("Move/Swap successful.");
         //User.userInteracted && $('#audio_move_card')[0]?.play(); // Sonido de movimiento (si existe)
+
+        // Guardar los cambios en el mazo después del movimiento/intercambio
+        Deck.save();
 
         // Limpiar selección después del movimiento/intercambio exitoso
         Card.cancelCardMoveSelection();
@@ -496,9 +513,9 @@ export default class Card {
      * Realiza un scroll hacia la sección de selección de cartas.
      * @param {jQuery} slotElement - El elemento jQuery del slot clickeado.
      */
-    static handleEmptySlotClick(slotElement) {
-        // Verifica si el slot está realmente vacío y si el click fue directamente en el slot
-        if (slotElement.data('lleno') === 'no' && slotElement.is(event.target)) {
+    static handleEmptySlotClick(slotElement, event) {
+        // Verifica si el slot está realmente vacío, si el click fue directamente en el slot y si no se está actualizando un mazo
+        if (slotElement.data('lleno') === 'no' && event.target.id === slotElement.attr('id')) {
             const nextSection = slotElement.closest('section').next('section');
             if (nextSection.length) {
                 $('html, body').animate({ scrollTop: nextSection.offset().top }, 500);

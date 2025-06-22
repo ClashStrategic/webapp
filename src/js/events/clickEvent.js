@@ -50,10 +50,10 @@ const CLICK_HANDLERS = {
         'btn_Orden_cards_advanced': () => Card.handleAdvancedOrderButtonClick(),
         'btn_com_clan': () => $('#div_com_clan').slideToggle(500),
         'btn_nom_usu': () => User.handleShowUserDataClick(),
-        'btn-deck-information-toggle': () => 
+        'btn-deck-information-toggle': () =>
             $('#div_inf_mazo').slideToggle(250, () => {
-            $('#btn-deck-information-toggle').text($('#div_inf_mazo').is(':visible') ? 'Ocultar Análisis ▲' : 'Mostrar Análisis ▼');
-        })
+                $('#btn-deck-information-toggle').text($('#div_inf_mazo').is(':visible') ? 'Ocultar Análisis ▲' : 'Mostrar Análisis ▼');
+            })
     },
 
     // Multi-ID handlers (IDs that share the same logic)
@@ -127,11 +127,11 @@ const SPECIAL_HANDLERS = {
     },
 
     // Deck slot click handler
-    'cs-deck__slot': (element) => {
+    'cs-deck__slot': (element, e) => {
         if (Card.selectedCardToMove) {
             Card.handleMoveTargetSlotClick(element);
         } else {
-            Card.handleEmptySlotClick(element);
+            Card.handleEmptySlotClick(element, e);
         }
     },
 
@@ -255,7 +255,7 @@ function handleClickEvent(element, e) {
     // Check special handlers first (complex logic cases)
     for (const className of elementClasses) {
         if (SPECIAL_HANDLERS[className]) {
-            SPECIAL_HANDLERS[className](element);
+            SPECIAL_HANDLERS[className](element, e);
             return true;
         }
     }
