@@ -1,3 +1,16 @@
+## [1.1.1](https://github.com/ClashStrategic/webapp/compare/v1.1.0...v1.1.1) (2025-06-22)
+
+
+### Bug Fixes
+
+* **cards:** exclude tower slot from deck data and save changes after move ([d9a647c](https://github.com/ClashStrategic/webapp/commit/d9a647c174d7992697f07a1c2452d1c101ee9c6f))
+* **cards:** prevent empty slot clicks during deck updates ([8263e6f](https://github.com/ClashStrategic/webapp/commit/8263e6f2ea037b672938f4906a716590d3808884))
+* **Cards:** Prevent moving cards to tower slot in Card.js ([eec2b7e](https://github.com/ClashStrategic/webapp/commit/eec2b7e945af3427a1a0734e0aa56f779a0c0721))
+* **cards:** prevent tower cards from being selected for move ([8d43606](https://github.com/ClashStrategic/webapp/commit/8d43606f4b3368df38b604e04a91ff42be5b7922))
+* **Cards:** Update deck saving logic to check for completeness ([f377816](https://github.com/ClashStrategic/webapp/commit/f3778166c8482074879014b59190f47d63c2ad4e))
+* **deck:** optimize database saves by checking for actual changes ([02f065d](https://github.com/ClashStrategic/webapp/commit/02f065d96168f94e742677c765ff31833d817e96))
+* **events:** improve click event handling with proper event parameter passing ([8ca499e](https://github.com/ClashStrategic/webapp/commit/8ca499e52c88dbc72d7c0cee83feab02d5453723))
+
 # [1.1.0](https://github.com/ClashStrategic/webapp/compare/v1.0.1...v1.1.0) (2025-06-20)
 
 
