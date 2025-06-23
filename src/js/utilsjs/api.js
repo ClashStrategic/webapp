@@ -79,6 +79,7 @@ const RESPONSE_HANDLERS = {
             }
         },
         'login': (res) => {
+            localStorage.setItem("session", JSON.stringify(res.data));
             if (Object.keys(res.data).length > 0) {
                 location.href = './home';
             } else {
@@ -86,6 +87,7 @@ const RESPONSE_HANDLERS = {
             }
         },
         'register': (res) => {
+            localStorage.setItem("user", JSON.stringify(res.data));
             if (Object.keys(res.data).length > 0) {
                 localStorage.setItem('bienvenida', "false");
                 location.href = './home?new_user=true';
