@@ -136,19 +136,12 @@ export default class Deck {
             return;
         }
 
-        // Inicializar o recuperar mazos desde cookie
-        let mazos = Cookie.getCookie('Mazos');
-        if (mazos == null) {
-            mazos = ["", "", "", "", "", "", "", "", "", ""];
-        } else {
-            mazos = JSON.parse(mazos);
-        }
-
+        // Inicializar o recuperar mazos
+        let mazos = user.decks;
         let mazoAntiguo = mazos[deckIndex - 1];
 
-        // Actualizar el mazo en la lista de mazos y guardar en cookie
+        // Actualizar el mazo en la lista de mazos
         mazos[deckIndex - 1] = cardNames;
-        Cookie.setCookie('Mazos', JSON.stringify(mazos));
 
         // Verificar tipo de cuenta para decidir si guardar en BD
         if (user.authProvider === 'invitado') {
@@ -167,7 +160,9 @@ export default class Deck {
 
     static update(deckCollection__boxbtnsOption) {
         console.log('update(' + deckCollection__boxbtnsOption + ')');
-        let Mazos = JSON.parse(Cookie.getCookie('Mazos'));
+
+        const user = JSON.parse(localStorage.getItem('user'));
+        let Mazos = user.decks;
         let nmazo = deckCollection__boxbtnsOption.data('nmazo');
         let mazocamb = Mazos[(nmazo - 1)];
         console.warn('El mazo seleccionado es:', mazocamb);

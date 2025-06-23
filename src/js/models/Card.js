@@ -148,7 +148,6 @@ export default class Card {
         Card.stats = res.data.stats;
         Card.media = res.data.media;
 
-        const user = JSON.parse(localStorage.getItem('user'));
         let orderById = [...Object.values(res.data.stats.cards)].sort((a, b) => a.id - b.id);
         let orderByElixir = [...Object.values(res.data.stats.cards)].sort((a, b) => a.elixirCost - b.elixirCost);
         let valRarity = ['Common', 'Rare', 'Epic', 'Legendary', 'Champion'];
@@ -162,10 +161,6 @@ export default class Card {
                     Card.cardsByArena = html;
                     $('#div_cards_all').html(Card.cardsByArena);
                     Cookie.setCookie('byOrdenCards', 1);
-                    if (user.authProvider == 'invitado') {
-                        let Mazos = Cookie.getCookie('Mazos');
-                        if (!Mazos) Cookie.setCookie('Mazos', '["", "", "", "", "", "", "", "", "", ""]');
-                    }
                     $('.cs-deck-collection__box-btns-option[data-nmazo=1]').click();
                     Cookie.setCookie('nmazo', 1);
                 } else if (index == 1)

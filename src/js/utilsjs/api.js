@@ -113,7 +113,6 @@ const RESPONSE_HANDLERS = {
             Card.setCards(res);
         },
         'update-deck': (res) => {
-            Cookie.setCookie('Mazos', JSON.stringify(res.data.decks));
             localStorage.setItem("user", JSON.stringify(res.data));
         },
         'det-maz': (res) => {
