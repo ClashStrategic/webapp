@@ -32,13 +32,14 @@ const RESPONSE_HANDLERS = {
     user: {
         'get-session': (res) => {
             localStorage.setItem("session", JSON.stringify(res.data));
+            localStorage.setItem("sound_effects", "true");
             api("GET", "/v1/users", "get-user");
         },
         'get-user': (res) => {
             localStorage.setItem("user", JSON.stringify(res.data));
             Config.renderTemplate("HomeView", { user: res.data }).then(html => {
                 $(document.body).html(html);
-                User.toggleSounds(Cookie.getCookie("sound_effects"));
+                User.toggleSounds(localStorage.getItem("sound_effects"));
                 Cookie.setCookiesForSession();
 
                 // Bienvenida a un nuevo usuario

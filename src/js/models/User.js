@@ -155,7 +155,7 @@ export default class User {
     static handleShowSettingsClick() {
         if (typeof showDivToggle === 'function' && typeof api === 'function') {
             showDivToggle('showToggle');
-            Config.renderTemplate("SettingsView", { sound_effects: Cookie.getCookie("sound_effects") }).then(html => {
+            Config.renderTemplate("SettingsView", { sound_effects: localStorage.getItem("sound_effects") }).then(html => {
                 showDivToggle('loadContent', 'Configuración', html);
             });
         } else {
