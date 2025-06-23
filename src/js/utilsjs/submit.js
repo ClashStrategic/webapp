@@ -71,7 +71,7 @@ const SUCCESS_HANDLERS = {
         'ins-reg': (res, _data, _frmSubmit, load) => {
             if (res.data.login) {
                 $('#frm_registro input').val('');
-                Cookie.setCookie('bienvenida', false);
+                localStorage.setItem('bienvenida', "false");
                 location.href = './home?new_user=true';
             } else {
                 $('#alert_reg').html(res.data.res);

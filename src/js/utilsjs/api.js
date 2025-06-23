@@ -43,7 +43,7 @@ const RESPONSE_HANDLERS = {
 
                 // Bienvenida a un nuevo usuario
                 Config.urlParam.get("new_user") &&
-                    Cookie.getCookie("bienvenida") === "false" &&
+                    localStorage.getItem("bienvenida") === "false" &&
                     Config.showInfBox(
                         "¡Bienvenido a Clash Strategic!",
                         "reyes_bienvenida.webp",
@@ -87,7 +87,7 @@ const RESPONSE_HANDLERS = {
         },
         'register': (res) => {
             if (Object.keys(res.data).length > 0) {
-                Cookie.setCookie('bienvenida', false);
+                localStorage.setItem('bienvenida', "false");
                 location.href = './home?new_user=true';
             } else {
                 alert("Error al registrar el usuario.");
