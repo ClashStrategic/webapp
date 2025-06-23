@@ -31,11 +31,11 @@ const RESPONSE_HANDLERS = {
     // User and Profile Management
     user: {
         'get-session': (res) => {
-            sessionStorage.setItem("session", JSON.stringify(res.data));
+            localStorage.setItem("session", JSON.stringify(res.data));
             api("GET", "/v1/users", "get-user");
         },
         'get-user': (res) => {
-            sessionStorage.setItem("user", JSON.stringify(res.data));
+            localStorage.setItem("user", JSON.stringify(res.data));
             Config.renderTemplate("HomeView", { user: res.data }).then(html => {
                 $(document.body).html(html);
                 User.toggleSounds(Cookie.getCookie("sound_effects"));
@@ -134,7 +134,7 @@ const RESPONSE_HANDLERS = {
             <div><img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/card_stat_inf/icon_gota_elixir.webp"
                 alt="cycle"><span class="color-elixir">${res.data.result.data.averageElixirCost}</span></div>
             <div><img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/icon_cycle.webp"
-                alt="shortCycle">&nbsp;<span class="color-elixir">${res.data.result.data.shortCycle}</span></div>`); 
+                alt="shortCycle">&nbsp;<span class="color-elixir">${res.data.result.data.shortCycle}</span></div>`);
             Config.renderTemplate("DeckAnalysisView", { result: res.data.result }).then(html => {
                 $('#div_det_basic').html(html);
             });
