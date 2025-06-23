@@ -68,10 +68,6 @@ const RESPONSE_HANDLERS = {
                 api({ publicaciones: true, idpubusu: res.data.idpubusu, typePub: 'pubUsu' }, 'pub-usu');
             }
         },
-        'ses-js': (res) => {
-            Cookie.setCookie('id', res.data.id);
-            Cookie.setCookie('dateBanHideAct', res.data.dateBanHideAct);
-        },
         'cer-ses': (res) => {
             if (res.state == 'success') {
                 Cookie.deleteAllCookies();

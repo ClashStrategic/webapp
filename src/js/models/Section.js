@@ -17,10 +17,10 @@ export default class Section {
                 Card.cardsByArena == '' && api("GET", "/v1/cards", 'sho-car', {}, null, $('#div_cards_all'));//cargar cartar solo la primera vez
                 if (Card.cardsByArena) { //si ya se cargaron las cartas
                     $('#div_cards_all').html(Card.cardsByArena); //si ya cargo las cartas solo insertarlas al div
-                    let byOrdenCardsOld = Cookie.getCookie('byOrdenCards'); //guardar la cookie en la variable
-                    Cookie.setCookie('byOrdenCards', 1);
-                    Cookie.getCookie('nmazo') > 5 && $('#btn_cam_mazos').click(); //click para mistrar los botones del 6 al 10
-                    $('.cs-deck-collection__box-btns-option[data-nmazo=' + Cookie.getCookie('nmazo') + ']').click(); //click al en el que se guardo en la cookie
+                    let byOrdenCardsOld = localStorage.getItem('byOrdenCards'); //guardar la cookie en la variable
+                    localStorage.setItem('byOrdenCards', 1);
+                    localStorage.getItem('nmazo') > 5 && $('#btn_cam_mazos').click(); //click para mistrar los botones del 6 al 10
+                    $('.cs-deck-collection__box-btns-option[data-nmazo=' + localStorage.getItem('nmazo') + ']').click(); //click al en el que se guardo en la cookie
                     $('#btn_Orden_cards').prop('disabled', false); //se activa el boton de orden
                     for (let i = 1; i < (byOrdenCardsOld == 0 ? 4 : byOrdenCardsOld); i++) {
                         $("#btn_Orden_cards").click();

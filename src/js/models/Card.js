@@ -19,7 +19,7 @@ export default class Card {
 
     static orderCards() {
         console.log('orderCards()');
-        let numbyOrdenCards = parseInt(Cookie.getCookie('byOrdenCards'));
+        let numbyOrdenCards = parseInt(localStorage.getItem('byOrdenCards'));
         numbyOrdenCards++;
         if (numbyOrdenCards == 1) {
             $('#btn_Orden_cards').text('Por Defecto');
@@ -47,7 +47,7 @@ export default class Card {
             $.inArray($(this).data('name'), namesCardInMazo) != -1 && $(this).remove();
         });
         numbyOrdenCards == 4 && (numbyOrdenCards = 0);
-        Cookie.setCookie('byOrdenCards', numbyOrdenCards);
+        localStorage.setItem('byOrdenCards', numbyOrdenCards);
     }
 
     static setAdvancedOrder(dataOrder, order) {
@@ -160,9 +160,9 @@ export default class Card {
                 if (index == 0) {
                     Card.cardsByArena = html;
                     $('#div_cards_all').html(Card.cardsByArena);
-                    Cookie.setCookie('byOrdenCards', 1);
+                    localStorage.setItem('byOrdenCards', 1);
                     $('.cs-deck-collection__box-btns-option[data-nmazo=1]').click();
-                    Cookie.setCookie('nmazo', 1);
+                    localStorage.setItem('nmazo', 1);
                 } else if (index == 1)
                     Card.cardsByElixir = html;
                 else if (index == 2)

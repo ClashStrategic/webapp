@@ -173,7 +173,7 @@ export default class Deck {
         mazocamb ? Deck.setMazo(mazocamb) : Deck.eliminarMazo();
         $('#main-deck-collection-alert').empty(); //limpiar los mensajes de alerta
         //$('#div_result_ana').fadeOut(250); //ocultar los resultados del analisis si las hay
-        Cookie.setCookie('nmazo', nmazo);
+        localStorage.setItem('nmazo', nmazo);
     }
 
     static setMazo(namesCardInMazo) {
