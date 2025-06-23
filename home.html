@@ -55,7 +55,7 @@
 
       function initialWebApp() {
         console.log("initialWebApp()");
-        if (sessionStorage.getItem("session")) {
+        if (localStorage.getItem("session")) {
           console.log("Session encontrada, cargando usuario...");
           api("GET", "/v1/users", "get-user");
         } else {

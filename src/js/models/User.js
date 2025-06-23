@@ -199,7 +199,7 @@ export default class User {
     static handleShowUserDataClick() {
         if (typeof showDivToggle === 'function' && typeof api === 'function') {
             showDivToggle('showToggle');
-            Config.renderTemplate("UserDataView", { user: JSON.parse(sessionStorage.getItem('user')) }).then(html => {
+            Config.renderTemplate("UserDataView", { user: JSON.parse(localStorage.getItem('user')) }).then(html => {
                 showDivToggle('loadContent', 'Mis Datos', html);
             });
         } else {

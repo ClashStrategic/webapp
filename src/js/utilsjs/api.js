@@ -76,6 +76,7 @@ const RESPONSE_HANDLERS = {
             if (res.state == 'success') {
                 Cookie.deleteAllCookies();
                 sessionStorage.clear();
+                localStorage.clear();
                 location.href = './home';
             } else {
                 alert("Error al cerrar sesión.");
@@ -113,7 +114,7 @@ const RESPONSE_HANDLERS = {
         },
         'update-deck': (res) => {
             Cookie.setCookie('Mazos', JSON.stringify(res.data.decks));
-            sessionStorage.setItem("user", JSON.stringify(res.data));
+            localStorage.setItem("user", JSON.stringify(res.data));
         },
         'det-maz': (res) => {
             $('#div_res_ST').fadeIn(125);
