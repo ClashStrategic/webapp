@@ -32,7 +32,6 @@ const RESPONSE_HANDLERS = {
     user: {
         'get-session': (res) => {
             localStorage.setItem("session", JSON.stringify(res.data));
-            localStorage.setItem("sound_effects", "true");
             api("GET", "/v1/users", "get-user");
         },
         'get-user': (res) => {

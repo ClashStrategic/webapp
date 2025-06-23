@@ -55,6 +55,8 @@
 
       function initialWebApp() {
         console.log("initialWebApp()");
+        localStorage.setItem("sound_effects", "true");
+
         if (localStorage.getItem("session")) {
           console.log("Session encontrada, cargando usuario...");
           api("GET", "/v1/users", "get-user");
