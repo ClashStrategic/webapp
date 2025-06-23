@@ -121,6 +121,7 @@ export default class Deck {
     static save() {
         console.log('save()');
 
+        const user = JSON.parse(localStorage.getItem('user'));
         // Obtener datos del mazo actual
         const deckIndex = $('#main-deck-collection-box-btns').data('nmazo');
         const cards = $('#deck-slots-main').data('cards') || [];
@@ -135,23 +136,15 @@ export default class Deck {
             return;
         }
 
-        // Inicializar o recuperar mazos desde cookie
-        let mazos = Cookie.getCookie('Mazos');
-        if (mazos == null) {
-            mazos = ["", "", "", "", "", "", "", "", "", ""];
-        } else {
-            mazos = JSON.parse(mazos);
-        }
-
+        // Inicializar o recuperar mazos
+        let mazos = user.decks;
         let mazoAntiguo = mazos[deckIndex - 1];
 
-        // Actualizar el mazo en la lista de mazos y guardar en cookie
+        // Actualizar el mazo en la lista de mazos
         mazos[deckIndex - 1] = cardNames;
-        Cookie.setCookie('Mazos', JSON.stringify(mazos));
 
         // Verificar tipo de cuenta para decidir si guardar en BD
-        const typeAccount = Cookie.getCookie('TypeAcount');
-        if (typeAccount === 'invitado') {
+        if (user.authProvider === 'invitado') {
             $('#main-deck-collection-alert').html('<span class="cs-color-GoldenYellow text-center">Para guardar tu mazo de forma segura, crea una cuenta. Por ahora, se guardará temporalmente en tu navegador.</span>');
             return;
         }
@@ -167,7 +160,9 @@ export default class Deck {
 
     static update(deckCollection__boxbtnsOption) {
         console.log('update(' + deckCollection__boxbtnsOption + ')');
-        let Mazos = JSON.parse(Cookie.getCookie('Mazos'));
+
+        const user = JSON.parse(localStorage.getItem('user'));
+        let Mazos = user.decks;
         let nmazo = deckCollection__boxbtnsOption.data('nmazo');
         let mazocamb = Mazos[(nmazo - 1)];
         console.warn('El mazo seleccionado es:', mazocamb);
@@ -178,7 +173,7 @@ export default class Deck {
         mazocamb ? Deck.setMazo(mazocamb) : Deck.eliminarMazo();
         $('#main-deck-collection-alert').empty(); //limpiar los mensajes de alerta
         //$('#div_result_ana').fadeOut(250); //ocultar los resultados del analisis si las hay
-        Cookie.setCookie('nmazo', nmazo);
+        localStorage.setItem('nmazo', nmazo);
     }
 
     static setMazo(namesCardInMazo) {

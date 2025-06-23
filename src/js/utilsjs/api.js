@@ -31,19 +31,19 @@ const RESPONSE_HANDLERS = {
     // User and Profile Management
     user: {
         'get-session': (res) => {
-            sessionStorage.setItem("session", JSON.stringify(res.data));
+            localStorage.setItem("session", JSON.stringify(res.data));
             api("GET", "/v1/users", "get-user");
         },
         'get-user': (res) => {
-            sessionStorage.setItem("user", JSON.stringify(res.data));
+            localStorage.setItem("user", JSON.stringify(res.data));
             Config.renderTemplate("HomeView", { user: res.data }).then(html => {
                 $(document.body).html(html);
-                User.toggleSounds(Cookie.getCookie("sound_effects"));
+                User.toggleSounds(localStorage.getItem("sound_effects"));
                 Cookie.setCookiesForSession();
 
                 // Bienvenida a un nuevo usuario
                 Config.urlParam.get("new_user") &&
-                    Cookie.getCookie("bienvenida") === "false" &&
+                    localStorage.getItem("bienvenida") === "false" &&
                     Config.showInfBox(
                         "¡Bienvenido a Clash Strategic!",
                         "reyes_bienvenida.webp",
@@ -52,7 +52,7 @@ const RESPONSE_HANDLERS = {
                     );
 
                 // Bienvenida a los usuarios invitados
-                Cookie.getCookie("TypeAcount") == "invitado" &&
+                res.data.authProvider == "invitado" &&
                     (showDivToggle('showToggle'), Config.renderTemplate('PresentationCsView').then(html => {
                         showDivToggle('loadContent', 'Bienvenido', html);
                     }));
@@ -62,25 +62,24 @@ const RESPONSE_HANDLERS = {
             });
         },
         'ver-per': (res) => {
+            const user = JSON.parse(localStorage.getItem("user"));
             $('#div_perfilusu').html(res.data.html);
-            if (Cookie.getCookie('TypeAcount') !== 'invitado') {
+            if (user.authProvider !== 'invitado') {
                 api({ publicaciones: true, idpubusu: res.data.idpubusu, typePub: 'pubUsu' }, 'pub-usu');
             }
-        },
-        'ses-js': (res) => {
-            Cookie.setCookie('id', res.data.id);
-            Cookie.setCookie('dateBanHideAct', res.data.dateBanHideAct);
         },
         'cer-ses': (res) => {
             if (res.state == 'success') {
                 Cookie.deleteAllCookies();
                 sessionStorage.clear();
+                localStorage.clear();
                 location.href = './home';
             } else {
                 alert("Error al cerrar sesión.");
             }
         },
         'login': (res) => {
+            localStorage.setItem("session", JSON.stringify(res.data));
             if (Object.keys(res.data).length > 0) {
                 location.href = './home';
             } else {
@@ -88,8 +87,9 @@ const RESPONSE_HANDLERS = {
             }
         },
         'register': (res) => {
+            localStorage.setItem("user", JSON.stringify(res.data));
             if (Object.keys(res.data).length > 0) {
-                Cookie.setCookie('bienvenida', false);
+                localStorage.setItem('bienvenida', "false");
                 location.href = './home?new_user=true';
             } else {
                 alert("Error al registrar el usuario.");
@@ -111,8 +111,7 @@ const RESPONSE_HANDLERS = {
             Card.setCards(res);
         },
         'update-deck': (res) => {
-            Cookie.setCookie('Mazos', JSON.stringify(res.data.decks));
-            sessionStorage.setItem("user", JSON.stringify(res.data));
+            localStorage.setItem("user", JSON.stringify(res.data));
         },
         'det-maz': (res) => {
             $('#div_res_ST').fadeIn(125);
@@ -134,7 +133,7 @@ const RESPONSE_HANDLERS = {
             <div><img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/card_stat_inf/icon_gota_elixir.webp"
                 alt="cycle"><span class="color-elixir">${res.data.result.data.averageElixirCost}</span></div>
             <div><img class="cs-icon cs-icon--medium" src="./static/media/styles/icons/icon_cycle.webp"
-                alt="shortCycle">&nbsp;<span class="color-elixir">${res.data.result.data.shortCycle}</span></div>`); 
+                alt="shortCycle">&nbsp;<span class="color-elixir">${res.data.result.data.shortCycle}</span></div>`);
             Config.renderTemplate("DeckAnalysisView", { result: res.data.result }).then(html => {
                 $('#div_det_basic').html(html);
             });

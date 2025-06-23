@@ -154,7 +154,7 @@ const SPECIAL_HANDLERS = {
     'btn_mod': () => {
         $('#capa_contenido').fadeOut(250);
         $('#div_modal').fadeOut(250);
-        Cookie.setCookie('bienvenida', true);
+        localStorage.setItem('bienvenida', "true");
     }
 };
 
