@@ -52,7 +52,7 @@ const RESPONSE_HANDLERS = {
                     );
 
                 // Bienvenida a los usuarios invitados
-                Cookie.getCookie("TypeAcount") == "invitado" &&
+                res.data.authProvider == "invitado" &&
                     (showDivToggle('showToggle'), Config.renderTemplate('PresentationCsView').then(html => {
                         showDivToggle('loadContent', 'Bienvenido', html);
                     }));
@@ -62,8 +62,9 @@ const RESPONSE_HANDLERS = {
             });
         },
         'ver-per': (res) => {
+            const user = JSON.parse(localStorage.getItem("user"));
             $('#div_perfilusu').html(res.data.html);
-            if (Cookie.getCookie('TypeAcount') !== 'invitado') {
+            if (user.authProvider !== 'invitado') {
                 api({ publicaciones: true, idpubusu: res.data.idpubusu, typePub: 'pubUsu' }, 'pub-usu');
             }
         },

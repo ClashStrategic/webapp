@@ -121,6 +121,7 @@ export default class Deck {
     static save() {
         console.log('save()');
 
+        const user = JSON.parse(localStorage.getItem('user'));
         // Obtener datos del mazo actual
         const deckIndex = $('#main-deck-collection-box-btns').data('nmazo');
         const cards = $('#deck-slots-main').data('cards') || [];
@@ -150,8 +151,7 @@ export default class Deck {
         Cookie.setCookie('Mazos', JSON.stringify(mazos));
 
         // Verificar tipo de cuenta para decidir si guardar en BD
-        const typeAccount = Cookie.getCookie('TypeAcount');
-        if (typeAccount === 'invitado') {
+        if (user.authProvider === 'invitado') {
             $('#main-deck-collection-alert').html('<span class="cs-color-GoldenYellow text-center">Para guardar tu mazo de forma segura, crea una cuenta. Por ahora, se guardará temporalmente en tu navegador.</span>');
             return;
         }
