@@ -1,5 +1,5 @@
-const VERSION = '1.1.1';
-const DATETIME = '2025-06-22T12:40:28.705Z';
+const VERSION = '1.1.2';
+const DATETIME = '2025-06-23T19:29:41.642Z';
 const CACHE_NAME = `clash-strategic-webapp-${VERSION}`;
 const urlsToCache = [
   'src/js/main.js',

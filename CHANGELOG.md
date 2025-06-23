@@ -1,3 +1,11 @@
+## [1.1.2](https://github.com/ClashStrategic/webapp/compare/v1.1.1...v1.1.2) (2025-06-23)
+
+
+### Bug Fixes
+
+* Persist user and session data in local storage ([6dc7300](https://github.com/ClashStrategic/webapp/commit/6dc73008edb97ba2236fd067d09fd2a0889598fe))
+* **sound_effects:** Initialize sound effects setting in home.html ([cc90f9c](https://github.com/ClashStrategic/webapp/commit/cc90f9cfb73f415657a79c924b56b3b04a5bba4b))
+
 ## [1.1.1](https://github.com/ClashStrategic/webapp/compare/v1.1.0...v1.1.1) (2025-06-22)
 
 
