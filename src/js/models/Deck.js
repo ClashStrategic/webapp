@@ -99,6 +99,11 @@ export default class Deck {
             return;
         }
 
+        if (cardElement.data('type') == 'tower') {
+            console.warn('replaceCard: No se puede reemplazar una carta de torre.');
+            return;
+        }
+
         Deck.isBatchOperation = true; // Iniciar operación por lotes
         $('html, body').animate({ scrollTop: $('#main-deck-collection').offset().top }, 500);
         $('#main-deck-collection-alert').html('<span class="cs-color-GoldenYellow text-center">"El mazo está lleno. Selecciona la carta a reemplazar."</span><button id="btn_cam_card_no" class="cs-btn cs-btn--medium cs-btn--cancel">Cancelar</button>').fadeIn(250);
