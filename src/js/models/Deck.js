@@ -78,26 +78,55 @@ export default class Deck {
         $('.cs-card-space[data-id="div_card_' + name + '"]').show().html(cardElement.data("inmazo", "no"));
     }
 
-    static addDeleteCard(cardElement, json, name) {
-        console.log('addDeleteCard(' + JSON.stringify(cardElement) + ', ' + JSON.stringify(json) + ', ' + name + ')');
+    static addDeleteCard(cardElement, json, name, index = -1) {
+        console.log('addDeleteCard(' + JSON.stringify(cardElement) + ', ' + JSON.stringify(json) + ', ' + name + ', ' + index + ')');
 
         if (cardElement.data("inmazo") == 'no') { //si la carta no esta en el mazo, entonse añadirla
             if ($('#deck-slots-main').data('cards').filter(item => item.rarity == 'Champion').length == 1 && json.rarity == 'Champion') { //si existe un campeon en el mazo alertar y cerrar
                 alert('Ya Tienes un Campeón en el Mazo');
                 return; //cerrar la ejecucion
             }
-            for (let i = 1; i <= 8; i++) { //itera todo el slot
-                let slot = $("#cs-deck__slot-" + i);
-                if (slot.data("lleno") == 'no') { //si el slot esta vacio
-                    ((slot.attr('id') == 'cs-deck__slot-1' || slot.attr('id') == 'cs-deck__slot-2') && json.evolution) && cardElement.find('.cs-card__image').attr('src', json.iconUrls.evolutionMedium); //añadir la img de evo
-                    cardElement.parent('.cs-card-space').hide();
-                    $('#deck-slots-main').data('cards').splice((i - 1), 0, json); //inserta los datos a data-cards
-                    slot.data("lleno", "yes").css({ 'background': 'transparent', 'border': 'none', 'box-shadow': 'none' }).html(cardElement.data("inmazo", "yes")); //inserta la carta al slot
-                    break; //al encontrar el slot vacio y poner la carta en el pues deja de iterar a los slots
-                } else { continue; } //si el slot esta lleno pasa a la siguiente
+
+            let targetSlot = null;
+            let targetIndex = -1;
+
+            if (index !== -1 && index >= 0 && index < 8) { // Si se proporciona un índice válido
+                let slot = $("#cs-deck__slot-" + (index + 1));
+                if (slot.data("lleno") == 'no') {
+                    targetSlot = slot;
+                    targetIndex = index;
+                } else {
+                    // Si el slot en el índice especificado está lleno, buscar el primer slot vacío
+                    for (let i = 1; i <= 8; i++) {
+                        let currentSlot = $("#cs-deck__slot-" + i);
+                        if (currentSlot.data("lleno") == 'no') {
+                            targetSlot = currentSlot;
+                            targetIndex = i - 1;
+                            break;
+                        }
+                    }
+                }
+            } else { // Si no se proporciona índice o es inválido, buscar el primer slot vacío
+                for (let i = 1; i <= 8; i++) {
+                    let slot = $("#cs-deck__slot-" + i);
+                    if (slot.data("lleno") == 'no') {
+                        targetSlot = slot;
+                        targetIndex = i - 1;
+                        break;
+                    }
+                }
             }
-            if ($('#deck-slots-main').data('cards').length == 8 && cardElement.data('inmazo') == 'no' && cardElement.data('type') != 'tower') { //si el mazo esta lleno cambia la carta por otra
-                Deck.replaceCard(cardElement);
+
+            if (targetSlot) {
+                ((targetSlot.attr('id') == 'cs-deck__slot-1' || targetSlot.attr('id') == 'cs-deck__slot-2') && json.evolution) && cardElement.find('.cs-card__image').attr('src', json.iconUrls.evolutionMedium); //añadir la img de evo
+                cardElement.parent('.cs-card-space').hide();
+                $('#deck-slots-main').data('cards').splice(targetIndex, 0, json); //inserta los datos a data-cards
+                targetSlot.data("lleno", "yes").css({ 'background': 'transparent', 'border': 'none', 'box-shadow': 'none' }).html(cardElement.data("inmazo", "yes")); //inserta la carta al slot
+            } else {
+                // Si no se encontró ningún slot vacío (el mazo está lleno)
+                if ($('#deck-slots-main').data('cards').length == 8 && cardElement.data('inmazo') == 'no' && cardElement.data('type') != 'tower') { //si el mazo esta lleno cambia la carta por otra
+                    Deck.replaceCard(cardElement);
+                }
             }
         } else { //la carta esta en el mazo, entonses quitarla
             Deck.removeCardFromSlot(cardElement, json, name, 'card');
