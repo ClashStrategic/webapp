@@ -122,39 +122,49 @@ export default class Deck {
         console.log('save()');
 
         const user = JSON.parse(localStorage.getItem('user'));
-        // Obtener datos del mazo actual
-        const deckIndex = $('#main-deck-collection-box-btns').data('nmazo');
-        const cards = $('#deck-slots-main').data('cards') || [];
-        const towerCard = $('#deck-slots-main').data('towercard')[0] ?? null;
-        const cardNames = cards.map(c => c.name)
-            .concat(towerCard ? [towerCard.name] : [])
-            .filter(name => name != null && name != undefined);
+        if (!user) { return; }
 
-        // Validar si el mazo está completo (9 cartas)
-        if (cardNames.length !== 9) {
-            $('#main-deck-collection-alert').html('<span class="cs-color-IntenseOrange text-center">El mazo debe tener 9 cartas, no se puede guardar.</span>');
-            return;
+        const deckIndex = $('#main-deck-collection-box-btns').data('nmazo');
+        if (!deckIndex) { return; }
+
+        // Construir el array del mazo con 9 posiciones, usando "" para slots vacíos
+        const cardNames = [];
+        for (let i = 1; i <= 8; i++) {
+            const slot = $(`#cs-deck__slot-${i}`);
+            if (slot.data('lleno') === 'yes' && slot.find('.cs-card').length > 0) {
+                cardNames.push(slot.find('.cs-card').data('name'));
+            } else {
+                cardNames.push("");
+            }
         }
 
-        // Inicializar o recuperar mazos
+        const towerSlot = $('#div_card_slot_tower');
+        if (towerSlot.data('lleno') === 'yes' && towerSlot.find('.cs-card').length > 0) {
+            cardNames.push(towerSlot.find('.cs-card').data('name'));
+        } else {
+            cardNames.push("");
+        }
+
+        // Inicializar o recuperar mazos del usuario
         let mazos = user.decks;
-        let mazoAntiguo = mazos[deckIndex - 1];
+        const mazoAntiguo = mazos[deckIndex - 1] || [];
 
         // Actualizar el mazo en la lista de mazos
         mazos[deckIndex - 1] = cardNames;
 
-        // Verificar tipo de cuenta para decidir si guardar en BD
+        // Guardado para invitados (solo en localStorage)
         if (user.authProvider === 'invitado') {
             $('#main-deck-collection-alert').html('<span class="cs-color-GoldenYellow text-center">Para guardar tu mazo de forma segura, crea una cuenta. Por ahora, se guardará temporalmente en tu navegador.</span>');
+            user.decks = mazos;
+            localStorage.setItem('user', JSON.stringify(user));
             return;
         }
 
-        // Verificar si el mazo ha cambiado antes de guardar
-        if (JSON.stringify(mazoAntiguo) != JSON.stringify(cardNames)) {
+        // Verificar si el mazo ha cambiado antes de guardar en la BD
+        if (JSON.stringify(mazoAntiguo) !== JSON.stringify(cardNames)) {
             api("PATCH", "/v1/users", 'update-deck', { data: { decks: mazos } });
         } else {
             console.log('El Mazo no ha cambiado, no se guardará en la base de datos.');
-            return;
         }
     }
 
