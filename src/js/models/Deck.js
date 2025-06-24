@@ -175,8 +175,12 @@ export default class Deck {
         });
     }
 
-    static analyzeBasic(cards) {
-        console.log('analyzeBasic(' + cards + ')');
+    static analyzeBasic() {
+        console.log('analyzeBasic()');
+
+        let cards = $('#deck-slots-main').data('cards').map(card => card.name);
+        cards.push($('#deck-slots-main').data('towercard')[0].name);
+
         if (cards.length == 9) {
             api("POST", "/v1/deckanalyzer", 'ana-maz', {
                 version: '1.0',

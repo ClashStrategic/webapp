@@ -495,9 +495,7 @@ export default class Card {
 
         // Analiza el mazo si está completo después de la acción
         if ($('#deck-slots-main').data('cards')?.length === 8 && $('#deck-slots-main').data('towercard')?.length === 1) {
-            let cardsNames = $('#deck-slots-main').data('cards').map(card => card.name);
-            cardsNames.push($('#deck-slots-main').data('towercard')[0].name);
-            Deck.analyzeBasic(cardsNames);
+            Deck.analyzeBasic();
         } else {
             $('#div_det_basic').html(Deck.incompleteDeckMessage);
         }
