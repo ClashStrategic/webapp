@@ -266,9 +266,8 @@ export default class Deck {
         $.each(namesCardInMazo, function (index, value) { //seleccionar cartas del mazo
             $(".cs-card").each(function (index2, element) {
                 if ($(element).data('name') == value) {
-                    $(element).find('.cs-card__use-remove').click();
-                    $(element).children('.cs-card__options').stop(true, true);
-                    $(element).removeClass('card--show-opt');
+                    index < 8 ? Deck.addDeleteCard($(element), $(element).data("json"), value, index) :
+                        Deck.addDeleteTowerCard($(element), $(element).data("json"), value);
                     return;
                 }
             });
