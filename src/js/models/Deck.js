@@ -179,6 +179,7 @@ export default class Deck {
     static setMazo(namesCardInMazo) {
         console.log('setMazo(' + JSON.stringify(namesCardInMazo) + ')');
 
+        Deck.isBatchOperation = true; // Iniciar operación por lotes
         $('.cs-deck__slot').each(function (index, element) { //eliminar el mazo
             $(element).data('lleno') == 'yes' && $(element).find('.cs-card__use-remove').click();
         });
@@ -193,6 +194,7 @@ export default class Deck {
                 }
             });
         });
+        Deck.isBatchOperation = false;
     }
 
     static pegarMazo(arr) {
