@@ -94,6 +94,7 @@ export default class Deck {
     static replaceCard(cardElement) {
         console.log('replaceCard(' + JSON.stringify(cardElement) + ')');
 
+        Deck.isBatchOperation = true; // Iniciar operación por lotes
         $('html, body').animate({ scrollTop: $('#main-deck-collection').offset().top }, 500);
         $('#main-deck-collection-alert').html('<span class="cs-color-GoldenYellow text-center">"El mazo está lleno. Selecciona la carta a reemplazar."</span><button id="btn_cam_card_no" class="cs-btn cs-btn--medium cs-btn--cancel">Cancelar</button>').fadeIn(250);
         $('.cs-card').find('button').prop('disabled', true).css({ opacity: 0.75 }); //desabilitar todos los botones en div card
@@ -108,6 +109,8 @@ export default class Deck {
             $('#main-deck-collection-alert').html("<span class='cs-color-VibrantTurquoise text-center'>Carta Reemplazada</span>");
             Config.showAlert('<span class="cs-color-VibrantTurquoise text-center">Carta Reemplazada</span>');
             $(this).click();
+            Deck.isBatchOperation = false;
+            Deck.save(); // Guardar el mazo después de reemplazar la carta
         });
     }
 
