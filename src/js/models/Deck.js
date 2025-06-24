@@ -293,6 +293,7 @@ export default class Deck {
             });
         });
         Deck.isBatchOperation = false;
+        Deck.analyzeBasic();
     }
 
     static pegarMazo(arr) {
