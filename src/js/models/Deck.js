@@ -78,21 +78,7 @@ export default class Deck {
                 } else { continue; } //si el slot esta lleno pasa a la siguiente
             }
             if ($('#deck-slots-main').data('cards').length == 8 && cardElement.data('inmazo') == 'no' && cardElement.data('type') != 'tower') { //si el mazo esta lleno cambia la carta por otra
-                $('html, body').animate({ scrollTop: $('#main-deck-collection').offset().top }, 500);
-                $('#main-deck-collection-alert').html('<span class="cs-color-GoldenYellow text-center">"El mazo está lleno. Selecciona la carta a reemplazar."</span><button id="btn_cam_card_no" class="cs-btn cs-btn--medium cs-btn--cancel">Cancelar</button>').fadeIn(250);
-                $('.cs-card').find('button').prop('disabled', true).css({ opacity: 0.75 }); //desabilitar todos los botones en div card
-                $('#main-deck-collection-box-btns').find('div, button').prop('disabled', true).css({ opacity: 0.75 }); //desabilitar todos los botones en div card
-                Card.selCardEvent = $('#deck-slots-main .cs-card').on('click', function () { //al hacer click en la carta que quiere cambiar
-                    Card.selCardEvent.off('click');
-                    Card.selCardEvent = null;
-                    $('.cs-card').find('button').prop("disabled", false).css({ opacity: 1 });
-                    $('#main-deck-collection-box-btns').find('div, button').prop('disabled', false).css({ opacity: 1 }); //desabilitar todos los botones en div card
-                    $(this).find('.cs-card__use-remove').click();
-                    cardElement.find('.cs-card__use-remove').click();
-                    $('#main-deck-collection-alert').html("<span class='cs-color-VibrantTurquoise text-center'>Carta Reemplazada</span>");
-                    Config.showAlert('<span class="cs-color-VibrantTurquoise text-center">Carta Reemplazada</span>');
-                    $(this).click();
-                });
+                Deck.replaceCard(cardElement);
             }
         } else { //la carta esta en el mazo, entonses quitarla
             $('#deck-slots-main').data('cards', $('#deck-slots-main').data('cards').filter(item => item.name != name)); //elimina del json el objeto con con el nombre del data card
@@ -103,6 +89,26 @@ export default class Deck {
             $('#deck-slots-main').data('cards', $('#deck-slots-main').data('cards').filter(item => item.name != name)); //inserta los datos de solo las cartas que quedaron en el mazo
         }
         !Deck.isBatchOperation && Deck.save();
+    }
+
+    static replaceCard(cardElement) {
+        console.log('replaceCard(' + JSON.stringify(cardElement) + ')');
+
+        $('html, body').animate({ scrollTop: $('#main-deck-collection').offset().top }, 500);
+        $('#main-deck-collection-alert').html('<span class="cs-color-GoldenYellow text-center">"El mazo está lleno. Selecciona la carta a reemplazar."</span><button id="btn_cam_card_no" class="cs-btn cs-btn--medium cs-btn--cancel">Cancelar</button>').fadeIn(250);
+        $('.cs-card').find('button').prop('disabled', true).css({ opacity: 0.75 }); //desabilitar todos los botones en div card
+        $('#main-deck-collection-box-btns').find('div, button').prop('disabled', true).css({ opacity: 0.75 }); //desabilitar todos los botones en div card
+        Card.selCardEvent = $('#deck-slots-main .cs-card').on('click', function () { //al hacer click en la carta que quiere cambiar
+            Card.selCardEvent.off('click');
+            Card.selCardEvent = null;
+            $('.cs-card').find('button').prop("disabled", false).css({ opacity: 1 });
+            $('#main-deck-collection-box-btns').find('div, button').prop('disabled', false).css({ opacity: 1 }); //desabilitar todos los botones en div card
+            $(this).find('.cs-card__use-remove').click();
+            cardElement.find('.cs-card__use-remove').click();
+            $('#main-deck-collection-alert').html("<span class='cs-color-VibrantTurquoise text-center'>Carta Reemplazada</span>");
+            Config.showAlert('<span class="cs-color-VibrantTurquoise text-center">Carta Reemplazada</span>');
+            $(this).click();
+        });
     }
 
     static analyzeBasic(cards) {
