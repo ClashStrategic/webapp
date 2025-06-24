@@ -236,6 +236,12 @@ function handleBeforeSend(type, load) {
         load.append(`<img class="img_loading" src="${API_CONFIG.loadingGif}">`);
     }
 
+    // Set isSavingDeck flag for 'update-deck' API calls
+    if (type === 'update-deck' && typeof Deck !== 'undefined') {
+        Deck.isSavingDeck = true;
+        Deck.saveRetryCount = 0; // Reset retry count at the start of a new request
+    }
+
     // Execute specific beforeSend handler if exists
     if (BEFORE_SEND_HANDLERS[type]) {
         BEFORE_SEND_HANDLERS[type]();
@@ -260,6 +266,12 @@ function handleSuccess(res, type, data, options) {
         }
     } else {
         console.warn(`No handler found for API type: ${type}`);
+    }
+
+    // Reset isSavingDeck flag for 'update-deck' API calls on success
+    if (type === 'update-deck' && typeof Deck !== 'undefined') {
+        Deck.isSavingDeck = false;
+        Deck.saveRetryCount = 0; // Reset retry count on successful completion
     }
 
     // Enhanced response logging
@@ -296,6 +308,12 @@ function handleError(error, url, type) {
         msgError = 'Hubo un problema al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.';
     }
     alert(msgError);
+
+    // Reset isSavingDeck flag for 'update-deck' API calls on error
+    if (type === 'update-deck' && typeof Deck !== 'undefined') {
+        Deck.isSavingDeck = false;
+        Deck.saveRetryCount = 0; // Reset retry count on error
+    }
 }
 
 /**
@@ -344,4 +362,3 @@ export default function api(method, url, type, data = {}, options = null, load =
         }
     });
 }
-
