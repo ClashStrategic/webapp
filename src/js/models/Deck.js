@@ -64,6 +64,8 @@ export default class Deck {
      * @param {string} type - El tipo de carta ('card' o 'tower').
      */
     static removeCardFromSlot(cardElement, json, name, type) {
+        console.log('removeCardFromSlot(' + JSON.stringify(cardElement) + ', ' + JSON.stringify(json) + ', ' + name + ', ' + type + ')');
+
         if (type === 'tower') {
             $('#deck-slots-main').data('towercard', []);
             cardElement.parent('#div_card_slot_tower').data("lleno", "no").removeAttr('style');
