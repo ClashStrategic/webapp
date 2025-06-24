@@ -89,6 +89,7 @@ export default class Deck {
                     $('#main-deck-collection-box-btns').find('div, button').prop('disabled', false).css({ opacity: 1 }); //desabilitar todos los botones en div card
                     $(this).find('.cs-card__use-remove').click();
                     cardElement.find('.cs-card__use-remove').click();
+                    $('#main-deck-collection-alert').html("<span class='cs-color-VibrantTurquoise text-center'>Carta Reemplazada</span>");
                     Config.showAlert('<span class="cs-color-VibrantTurquoise text-center">Carta Reemplazada</span>');
                     $(this).click();
                 });
