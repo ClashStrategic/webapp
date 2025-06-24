@@ -59,9 +59,10 @@ export default class Deck {
         !Deck.isBatchOperation && Deck.save();
     }
 
-    static addDeleteCard(card, json, name) {
-        console.log('addDeleteCard(' + JSON.stringify(card) + ', ' + JSON.stringify(json) + ', ' + name + ')');
-        if (card.data("inmazo") == 'no') { //si la carta no esta en el mazo, entonse añadirla
+    static addDeleteCard(cardElement, json, name) {
+        console.log('addDeleteCard(' + JSON.stringify(cardElement) + ', ' + JSON.stringify(json) + ', ' + name + ')');
+
+        if (cardElement.data("inmazo") == 'no') { //si la carta no esta en el mazo, entonse añadirla
             if ($('#deck-slots-main').data('cards').filter(item => item.rarity == 'Champion').length == 1 && json.rarity == 'Champion') { //si existe un campeon en el mazo alertar y cerrar
                 alert('Ya Tienes un Campeón en el Mazo');
                 return; //cerrar la ejecucion
@@ -69,14 +70,14 @@ export default class Deck {
             for (let i = 1; i <= 8; i++) { //itera todo el slot
                 let slot = $("#cs-deck__slot-" + i);
                 if (slot.data("lleno") == 'no') { //si el slot esta vacio
-                    ((slot.attr('id') == 'cs-deck__slot-1' || slot.attr('id') == 'cs-deck__slot-2') && json.evolution) && card.find('.cs-card__image').attr('src', json.iconUrls.evolutionMedium); //añadir la img de evo
-                    card.parent('.cs-card-space').hide();
+                    ((slot.attr('id') == 'cs-deck__slot-1' || slot.attr('id') == 'cs-deck__slot-2') && json.evolution) && cardElement.find('.cs-card__image').attr('src', json.iconUrls.evolutionMedium); //añadir la img de evo
+                    cardElement.parent('.cs-card-space').hide();
                     $('#deck-slots-main').data('cards').splice((i - 1), 0, json); //inserta los datos a data-cards
-                    slot.data("lleno", "yes").css({ 'background': 'transparent', 'border': 'none', 'box-shadow': 'none' }).html(card.data("inmazo", "yes")); //inserta la carta al slot
+                    slot.data("lleno", "yes").css({ 'background': 'transparent', 'border': 'none', 'box-shadow': 'none' }).html(cardElement.data("inmazo", "yes")); //inserta la carta al slot
                     break; //al encontrar el slot vacio y poner la carta en el pues deja de iterar a los slots
                 } else { continue; } //si el slot esta lleno pasa a la siguiente
             }
-            if ($('#deck-slots-main').data('cards').length == 8 && card.data('inmazo') == 'no' && card.data('type') != 'tower') { //si el mazo esta lleno cambia la carta por otra
+            if ($('#deck-slots-main').data('cards').length == 8 && cardElement.data('inmazo') == 'no' && cardElement.data('type') != 'tower') { //si el mazo esta lleno cambia la carta por otra
                 $('html, body').animate({ scrollTop: $('#main-deck-collection').offset().top }, 500);
                 $('#main-deck-collection-alert').html('<span class="cs-color-GoldenYellow text-center">"El mazo está lleno. Selecciona la carta a reemplazar."</span><button id="btn_cam_card_no" class="cs-btn cs-btn--medium cs-btn--cancel">Cancelar</button>').fadeIn(250);
                 $('.cs-card').find('button').prop('disabled', true).css({ opacity: 0.75 }); //desabilitar todos los botones en div card
@@ -87,17 +88,17 @@ export default class Deck {
                     $('.cs-card').find('button').prop("disabled", false).css({ opacity: 1 });
                     $('#main-deck-collection-box-btns').find('div, button').prop('disabled', false).css({ opacity: 1 }); //desabilitar todos los botones en div card
                     $(this).find('.cs-card__use-remove').click();
-                    card.find('.cs-card__use-remove').click();
+                    cardElement.find('.cs-card__use-remove').click();
                     Config.showAlert('<span class="cs-color-VibrantTurquoise text-center">Carta Reemplazada</span>');
                     $(this).click();
                 });
             }
         } else { //la carta esta en el mazo, entonses quitarla
             $('#deck-slots-main').data('cards', $('#deck-slots-main').data('cards').filter(item => item.name != name)); //elimina del json el objeto con con el nombre del data card
-            json.evolution && card.find('.cs-card__image').attr('src', json.iconUrls.medium); //cambia la img de evo a normal
-            card.parent('.cs-deck__slot').data("lleno", "no").css({ 'border': '1px solid var(--cs-color-LightGrey)' }); //slot vacio
-            card.parent('#cs-deck__slot-1, #cs-deck__slot-2').attr('style', '');
-            $('.cs-card-space[data-id="div_card_' + name + '"]').show().html(card.data("inmazo", "no")); //volver a añadir al div_card_containers
+            json.evolution && cardElement.find('.cs-card__image').attr('src', json.iconUrls.medium); //cambia la img de evo a normal
+            cardElement.parent('.cs-deck__slot').data("lleno", "no").css({ 'border': '1px solid var(--cs-color-LightGrey)' }); //slot vacio
+            cardElement.parent('#cs-deck__slot-1, #cs-deck__slot-2').attr('style', '');
+            $('.cs-card-space[data-id="div_card_' + name + '"]').show().html(cardElement.data("inmazo", "no")); //volver a añadir al div_card_containers
             $('#deck-slots-main').data('cards', $('#deck-slots-main').data('cards').filter(item => item.name != name)); //inserta los datos de solo las cartas que quedaron en el mazo
         }
         !Deck.isBatchOperation && Deck.save();
