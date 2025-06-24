@@ -3,6 +3,9 @@ export default class Deck {
     static MazosOpcionsArray = [];
     static incompleteDeckMessage = "<span class='cs-color-GoldenYellow text-center'>Completa los espacios de cartas para ver las estadísticas.</span>";
     static isBatchOperation = false; // Bandera para operaciones por lotes
+    static isSavingDeck = false; // Bandera para solicitudes de guardado de mazo pendientes
+    static saveRetryCount = 0; // Contador de reintentos para guardar el mazo
+    static MAX_SAVE_RETRIES = 3; // Número máximo de reintentos para guardar el mazo
 
     static extractIdsLink(link) {
         const startIndex = link.indexOf("deck=") + 5;
@@ -189,6 +192,19 @@ export default class Deck {
 
     static save() {
         console.log('save()');
+
+        if (Deck.isSavingDeck) {
+            if (Deck.saveRetryCount < Deck.MAX_SAVE_RETRIES) {
+                Deck.saveRetryCount++;
+                console.log(`Guardado de mazo pospuesto: una solicitud de API está pendiente. Reintentando en 500ms (Intento ${Deck.saveRetryCount}/${Deck.MAX_SAVE_RETRIES}).`);
+                setTimeout(() => Deck.save(), 500); // Reintentar después de 500ms
+            } else {
+                console.error('No se pudo guardar el mazo: demasiados reintentos debido a una solicitud de API pendiente.');
+                Config.showAlert('<span class="cs-color-IntenseOrange text-center">No se pudo guardar el mazo. Por favor, inténtalo de nuevo.</span>');
+                Deck.saveRetryCount = 0; // Resetear el contador de reintentos
+            }
+            return;
+        }
 
         const user = JSON.parse(localStorage.getItem('user'));
         if (!user) { return; }
