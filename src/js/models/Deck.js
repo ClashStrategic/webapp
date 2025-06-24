@@ -59,6 +59,26 @@ export default class Deck {
         !Deck.isBatchOperation && Deck.save();
     }
 
+    /**
+     * Elimina una carta de un slot del mazo y la devuelve a su posición original.
+     * @param {jQuery} cardElement - El elemento jQuery de la carta a eliminar.
+     * @param {Object} json - El objeto JSON de la carta.
+     * @param {string} name - El nombre de la carta.
+     * @param {string} type - El tipo de carta ('card' o 'tower').
+     */
+    static removeCardFromSlot(cardElement, json, name, type) {
+        if (type === 'tower') {
+            $('#deck-slots-main').data('towercard', []);
+            cardElement.parent('#div_card_slot_tower').data("lleno", "no").removeAttr('style');
+        } else {
+            $('#deck-slots-main').data('cards', $('#deck-slots-main').data('cards').filter(item => item.name !== name));
+            json.evolution && cardElement.find('.cs-card__image').attr('src', json.iconUrls.medium);
+            cardElement.parent('.cs-deck__slot').data("lleno", "no").css({ 'border': '1px solid var(--cs-color-LightGrey)' });
+            cardElement.parent('#cs-deck__slot-1, #cs-deck__slot-2').attr('style', '');
+        }
+        $('.cs-card-space[data-id="div_card_' + name + '"]').show().html(cardElement.data("inmazo", "no"));
+    }
+
     static addDeleteCard(cardElement, json, name) {
         console.log('addDeleteCard(' + JSON.stringify(cardElement) + ', ' + JSON.stringify(json) + ', ' + name + ')');
 
@@ -81,12 +101,7 @@ export default class Deck {
                 Deck.replaceCard(cardElement);
             }
         } else { //la carta esta en el mazo, entonses quitarla
-            $('#deck-slots-main').data('cards', $('#deck-slots-main').data('cards').filter(item => item.name != name)); //elimina del json el objeto con con el nombre del data card
-            json.evolution && cardElement.find('.cs-card__image').attr('src', json.iconUrls.medium); //cambia la img de evo a normal
-            cardElement.parent('.cs-deck__slot').data("lleno", "no").css({ 'border': '1px solid var(--cs-color-LightGrey)' }); //slot vacio
-            cardElement.parent('#cs-deck__slot-1, #cs-deck__slot-2').attr('style', '');
-            $('.cs-card-space[data-id="div_card_' + name + '"]').show().html(cardElement.data("inmazo", "no")); //volver a añadir al div_card_containers
-            $('#deck-slots-main').data('cards', $('#deck-slots-main').data('cards').filter(item => item.name != name)); //inserta los datos de solo las cartas que quedaron en el mazo
+            Deck.removeCardFromSlot(cardElement, json, name, 'card');
         }
         !Deck.isBatchOperation && Deck.save();
     }
