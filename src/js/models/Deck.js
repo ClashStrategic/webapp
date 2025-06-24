@@ -43,14 +43,11 @@ export default class Deck {
     static addDeleteTowerCard(card, json, name) {
         console.log('addDeleteTowerCard(' + card + ', ' + json + ', ' + name + ')');
         if (card.data('inmazo') == 'yes') { //si ya esta en el mazo quitarla
-            card.parent('#div_card_slot_tower').data("lleno", "no").removeAttr('style'); //slot vacio
-            $('.cs-card-space[data-id="div_card_' + name + '"]').show().html(card.data('inmazo', 'no')); //muestra el space e inserta el div card a su posicion original
-            $('#deck-slots-main').data('towercard', '[]');
+            Deck.removeCardFromSlot(card, json, name, 'tower');
         } else { //si no esta en el mazo añadirla
             if ($('#div_card_slot_tower').data('lleno') == 'yes') { //si hay una carta en el slot vaciarla
                 const div_card_old = $('#div_card_slot_tower').children('.cs-card'); //card que se quiere sacar
-                card.parent('#div_card_slot_tower').data("lleno", "no").css({ 'border': '1px solid black' }); //slot vacio
-                $('.cs-card-space[data-id="div_card_' + div_card_old.data('name') + '"]').show().html(div_card_old.data('inmazo', 'no')); //muestra el space e inserta el div card a su posicion original
+                Deck.removeCardFromSlot(div_card_old, {}, div_card_old.data('name'), 'tower'); // Usar removeCardFromSlot para la carta antigua
             }
             card.parent('.cs-card-space').hide();
             $('#deck-slots-main').data('towercard', [json]);
