@@ -1,3 +1,11 @@
+## [1.2.1](https://github.com/ClashStrategic/webapp/compare/v1.2.0...v1.2.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* **config:** change default sound effects setting to disabled ([c4bc7ff](https://github.com/ClashStrategic/webapp/commit/c4bc7ff72d886de27bdcb64efc92df7580177b0d))
+* **config:** prevent overwriting existing sound effects setting ([796165e](https://github.com/ClashStrategic/webapp/commit/796165edd1ac36acf0e3772caf0cf798f52dfb02))
+
 # [1.2.0](https://github.com/ClashStrategic/webapp/compare/v1.1.2...v1.2.0) (2025-06-25)
 
 
