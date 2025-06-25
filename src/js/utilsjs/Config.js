@@ -24,7 +24,7 @@ export default class Config {
     }
 
     static setConfig() {
-        localStorage.setItem("sound_effects", "true");
+        !localStorage.getItem("sound_effects") && localStorage.setItem("sound_effects", "true");
     }
 
     static isMobile() {
