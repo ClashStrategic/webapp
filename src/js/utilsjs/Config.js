@@ -23,6 +23,10 @@ export default class Config {
         }
     }
 
+    static setConfig() {
+        localStorage.setItem("sound_effects", "true");
+    }
+
     static isMobile() {
         return /Mobi|Android/i.test(navigator.userAgent);
     }
