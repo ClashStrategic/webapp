@@ -23,6 +23,16 @@ export default class Config {
         }
     }
 
+    static setConfig() {
+        console.log('setConfig()');
+        !localStorage.getItem("sound_effects") && localStorage.setItem("sound_effects", "false");
+    }
+
+    static applyConfig() {
+        console.log('applyConfig()');
+        User.toggleSounds(localStorage.getItem("sound_effects"));
+    }
+
     static isMobile() {
         return /Mobi|Android/i.test(navigator.userAgent);
     }

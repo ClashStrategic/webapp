@@ -41,7 +41,34 @@
     <script src="installsw.js"></script>
   </head>
 
-  <body></body>
+  <body>
+    <div class="line_diamond"></div>
+
+    <div id="capa_contenido" class="cs-layer cs-layer--default"></div>
+
+    <div id="cargando" class="cs-layer cs-layer--light">
+      <img
+        class="cs-layer__icon cs-layer__icon--medium"
+        src="./static/media/styles/icons/menu/logo_cargando.gif"
+        alt="Cargando..."
+      />
+    </div>
+
+    <audio
+      id="audio_button"
+      src="./static/media/styles/audio/clickboton.mp3"
+      style="display: none"
+    ></audio>
+    <audio
+      id="audio_tap_card"
+      src="./static/media/styles/audio/Tap card.mp3"
+      style="display: none"
+    ></audio>
+
+    <div id="div_modal" style="display: none">
+      <div id="conten_modal"></div>
+    </div>
+  </body>
   <script>
     installSW(() => {
       if (window.location.hostname === "localhost") {
@@ -55,7 +82,8 @@
 
       function initialWebApp() {
         console.log("initialWebApp()");
-        localStorage.setItem("sound_effects", "true");
+        Config.setConfig();
+        Config.applyConfig();
 
         if (localStorage.getItem("session")) {
           console.log("Session encontrada, cargando usuario...");

@@ -37,8 +37,7 @@ const RESPONSE_HANDLERS = {
         'get-user': (res) => {
             localStorage.setItem("user", JSON.stringify(res.data));
             Config.renderTemplate("HomeView", { user: res.data }).then(html => {
-                $(document.body).html(html);
-                User.toggleSounds(localStorage.getItem("sound_effects"));
+                $(document.body).append(html);
                 Cookie.setCookiesForSession();
 
                 // Bienvenida a un nuevo usuario
