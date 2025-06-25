@@ -1,3 +1,24 @@
+# [1.2.0](https://github.com/ClashStrategic/webapp/compare/v1.1.2...v1.2.0) (2025-06-25)
+
+
+### Bug Fixes
+
+* **deck:** add batch operation flag to prevent interruptions during deck operations ([48afddd](https://github.com/ClashStrategic/webapp/commit/48afdddeb532bad865f805965bf24f1bc9e8cf0c))
+
+
+### Features
+
+* Allow specific slot placement for cards in deck ([cf6967e](https://github.com/ClashStrategic/webapp/commit/cf6967eca7c6ac6ddbb96a4d77e7008207aba967))
+* **api:** add deck saving state management for update-deck operations ([7f0ca3e](https://github.com/ClashStrategic/webapp/commit/7f0ca3e27d638abbcba3b414067e966650996186))
+* **deck:** add batch operation control and auto-save for card replacement ([23d4c2b](https://github.com/ClashStrategic/webapp/commit/23d4c2bceb546721db24e12626e39910f57ecae1))
+* **deck:** add retry mechanism for concurrent save operations ([c8013f9](https://github.com/ClashStrategic/webapp/commit/c8013f9c1bbc6c89a4d421143d97aa887ffcb472))
+* **deck:** add validation to prevent card replacement in incomplete decks ([196b8ba](https://github.com/ClashStrategic/webapp/commit/196b8ba02c60de81171bd54610aa192f221b5c26))
+* **deck:** add validation to prevent replacement of cards already in deck ([7edef9a](https://github.com/ClashStrategic/webapp/commit/7edef9a11a2ac557aed0f7f59556d72678d320ad))
+* **deck:** add validation to prevent tower card replacement ([eba6776](https://github.com/ClashStrategic/webapp/commit/eba67760d7c5819c7a73eee2d45ecafed3af5c37))
+* **deck:** add visual feedback for card replacement in main deck collection ([56ed238](https://github.com/ClashStrategic/webapp/commit/56ed2382c5783fd552468a549339080ea839f93c))
+* **deck:** allows you to save the incomplete deck in the database ([7cc68aa](https://github.com/ClashStrategic/webapp/commit/7cc68aa1d8c07e5ae16e6236e7992f1c371d8152))
+* **deck:** trigger analysis after batch operations complete ([b93fe38](https://github.com/ClashStrategic/webapp/commit/b93fe3847e65890cd996a47818ccdb0d9413da5c))
+
 ## [1.1.2](https://github.com/ClashStrategic/webapp/compare/v1.1.1...v1.1.2) (2025-06-23)
 
 
