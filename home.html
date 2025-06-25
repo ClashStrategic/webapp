@@ -83,6 +83,7 @@
       function initialWebApp() {
         console.log("initialWebApp()");
         Config.setConfig();
+        Config.applyConfig();
 
         if (localStorage.getItem("session")) {
           console.log("Session encontrada, cargando usuario...");
