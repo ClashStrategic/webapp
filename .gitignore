@@ -2,3 +2,4 @@
 .vscode/
 .clinerules/
 node_modules/
+coverage/
