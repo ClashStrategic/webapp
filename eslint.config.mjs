@@ -5,9 +5,13 @@ import pluginJs from "@eslint/js";
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
+    files: ['**/*.js'],
     languageOptions: {
       globals: {
         ...globals.browser,
+        ...globals.node,
+        ...globals.jest,
+        ...globals.jquery,
         jQuery: 'readonly',
         $: 'readonly',
         Card: 'readonly',
@@ -25,12 +29,10 @@ export default [
         handleCredentialResponse: 'readonly',
         addSlick: 'readonly'
       }
-    }
-  },
-  pluginJs.configs.recommended,
-  {
+    },
     rules: {
-      "no-case-declarations": "off"
-    }
-  }
+      'no-unused-vars': 'warn',
+      'no-undef': 'warn',
+    },
+  },
 ];
