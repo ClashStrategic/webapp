@@ -3,6 +3,9 @@ export default class Deck {
     static MazosOpcionsArray = [];
     static incompleteDeckMessage = "<span class='cs-color-GoldenYellow text-center'>Completa los espacios de cartas para ver las estadísticas.</span>";
     static isBatchOperation = false; // Bandera para operaciones por lotes
+    static isSavingDeck = false; // Bandera para solicitudes de guardado de mazo pendientes
+    static saveRetryCount = 0; // Contador de reintentos para guardar el mazo
+    static MAX_SAVE_RETRIES = 3; // Número máximo de reintentos para guardar el mazo
 
     static extractIdsLink(link) {
         const startIndex = link.indexOf("deck=") + 5;
@@ -43,14 +46,11 @@ export default class Deck {
     static addDeleteTowerCard(card, json, name) {
         console.log('addDeleteTowerCard(' + card + ', ' + json + ', ' + name + ')');
         if (card.data('inmazo') == 'yes') { //si ya esta en el mazo quitarla
-            card.parent('#div_card_slot_tower').data("lleno", "no").removeAttr('style'); //slot vacio
-            $('.cs-card-space[data-id="div_card_' + name + '"]').show().html(card.data('inmazo', 'no')); //muestra el space e inserta el div card a su posicion original
-            $('#deck-slots-main').data('towercard', '[]');
+            Deck.removeCardFromSlot(card, json, name, 'tower');
         } else { //si no esta en el mazo añadirla
             if ($('#div_card_slot_tower').data('lleno') == 'yes') { //si hay una carta en el slot vaciarla
                 const div_card_old = $('#div_card_slot_tower').children('.cs-card'); //card que se quiere sacar
-                card.parent('#div_card_slot_tower').data("lleno", "no").css({ 'border': '1px solid black' }); //slot vacio
-                $('.cs-card-space[data-id="div_card_' + div_card_old.data('name') + '"]').show().html(div_card_old.data('inmazo', 'no')); //muestra el space e inserta el div card a su posicion original
+                Deck.removeCardFromSlot(div_card_old, {}, div_card_old.data('name'), 'tower'); // Usar removeCardFromSlot para la carta antigua
             }
             card.parent('.cs-card-space').hide();
             $('#deck-slots-main').data('towercard', [json]);
@@ -59,52 +59,128 @@ export default class Deck {
         !Deck.isBatchOperation && Deck.save();
     }
 
-    static addDeleteCard(card, json, name) {
-        console.log('addDeleteCard(' + JSON.stringify(card) + ', ' + JSON.stringify(json) + ', ' + name + ')');
-        if (card.data("inmazo") == 'no') { //si la carta no esta en el mazo, entonse añadirla
+    /**
+     * Elimina una carta de un slot del mazo y la devuelve a su posición original.
+     * @param {jQuery} cardElement - El elemento jQuery de la carta a eliminar.
+     * @param {Object} json - El objeto JSON de la carta.
+     * @param {string} name - El nombre de la carta.
+     * @param {string} type - El tipo de carta ('card' o 'tower').
+     */
+    static removeCardFromSlot(cardElement, json, name, type) {
+        console.log('removeCardFromSlot(' + JSON.stringify(cardElement) + ', ' + JSON.stringify(json) + ', ' + name + ', ' + type + ')');
+
+        if (type === 'tower') {
+            $('#deck-slots-main').data('towercard', []);
+            cardElement.parent('#div_card_slot_tower').data("lleno", "no").removeAttr('style');
+        } else {
+            $('#deck-slots-main').data('cards', $('#deck-slots-main').data('cards').filter(item => item.name !== name));
+            json.evolution && cardElement.find('.cs-card__image').attr('src', json.iconUrls.medium);
+            cardElement.parent('.cs-deck__slot').data("lleno", "no").css({ 'border': '1px solid var(--cs-color-LightGrey)' });
+            cardElement.parent('#cs-deck__slot-1, #cs-deck__slot-2').attr('style', '');
+        }
+        $('.cs-card-space[data-id="div_card_' + name + '"]').show().html(cardElement.data("inmazo", "no"));
+    }
+
+    static addDeleteCard(cardElement, json, name, index = -1) {
+        console.log('addDeleteCard(' + JSON.stringify(cardElement) + ', ' + JSON.stringify(json) + ', ' + name + ', ' + index + ')');
+
+        if (cardElement.data("inmazo") == 'no') { //si la carta no esta en el mazo, entonse añadirla
             if ($('#deck-slots-main').data('cards').filter(item => item.rarity == 'Champion').length == 1 && json.rarity == 'Champion') { //si existe un campeon en el mazo alertar y cerrar
                 alert('Ya Tienes un Campeón en el Mazo');
                 return; //cerrar la ejecucion
             }
-            for (let i = 1; i <= 8; i++) { //itera todo el slot
-                let slot = $("#cs-deck__slot-" + i);
-                if (slot.data("lleno") == 'no') { //si el slot esta vacio
-                    ((slot.attr('id') == 'cs-deck__slot-1' || slot.attr('id') == 'cs-deck__slot-2') && json.evolution) && card.find('.cs-card__image').attr('src', json.iconUrls.evolutionMedium); //añadir la img de evo
-                    card.parent('.cs-card-space').hide();
-                    $('#deck-slots-main').data('cards').splice((i - 1), 0, json); //inserta los datos a data-cards
-                    slot.data("lleno", "yes").css({ 'background': 'transparent', 'border': 'none', 'box-shadow': 'none' }).html(card.data("inmazo", "yes")); //inserta la carta al slot
-                    break; //al encontrar el slot vacio y poner la carta en el pues deja de iterar a los slots
-                } else { continue; } //si el slot esta lleno pasa a la siguiente
+
+            let targetSlot = null;
+            let targetIndex = -1;
+
+            if (index !== -1 && index >= 0 && index < 8) { // Si se proporciona un índice válido
+                let slot = $("#cs-deck__slot-" + (index + 1));
+                if (slot.data("lleno") == 'no') {
+                    targetSlot = slot;
+                    targetIndex = index;
+                } else {
+                    // Si el slot en el índice especificado está lleno, buscar el primer slot vacío
+                    for (let i = 1; i <= 8; i++) {
+                        let currentSlot = $("#cs-deck__slot-" + i);
+                        if (currentSlot.data("lleno") == 'no') {
+                            targetSlot = currentSlot;
+                            targetIndex = i - 1;
+                            break;
+                        }
+                    }
+                }
+            } else { // Si no se proporciona índice o es inválido, buscar el primer slot vacío
+                for (let i = 1; i <= 8; i++) {
+                    let slot = $("#cs-deck__slot-" + i);
+                    if (slot.data("lleno") == 'no') {
+                        targetSlot = slot;
+                        targetIndex = i - 1;
+                        break;
+                    }
+                }
             }
-            if ($('#deck-slots-main').data('cards').length == 8 && card.data('inmazo') == 'no' && card.data('type') != 'tower') { //si el mazo esta lleno cambia la carta por otra
-                $('html, body').animate({ scrollTop: $('#main-deck-collection').offset().top }, 500);
-                $('#main-deck-collection-alert').html('<span class="cs-color-GoldenYellow text-center">"El mazo está lleno. Selecciona la carta a reemplazar."</span><button id="btn_cam_card_no" class="cs-btn cs-btn--medium cs-btn--cancel">Cancelar</button>').fadeIn(250);
-                $('.cs-card').find('button').prop('disabled', true).css({ opacity: 0.75 }); //desabilitar todos los botones en div card
-                $('#main-deck-collection-box-btns').find('div, button').prop('disabled', true).css({ opacity: 0.75 }); //desabilitar todos los botones en div card
-                Card.selCardEvent = $('#deck-slots-main .cs-card').on('click', function () { //al hacer click en la carta que quiere cambiar
-                    Card.selCardEvent.off('click');
-                    Card.selCardEvent = null;
-                    $('.cs-card').find('button').prop("disabled", false).css({ opacity: 1 });
-                    $('#main-deck-collection-box-btns').find('div, button').prop('disabled', false).css({ opacity: 1 }); //desabilitar todos los botones en div card
-                    $(this).find('.cs-card__use-remove').click();
-                    card.find('.cs-card__use-remove').click();
-                    Config.showAlert('<span class="cs-color-VibrantTurquoise text-center">Carta Reemplazada</span>');
-                    $(this).click();
-                });
+
+            if (targetSlot) {
+                ((targetSlot.attr('id') == 'cs-deck__slot-1' || targetSlot.attr('id') == 'cs-deck__slot-2') && json.evolution) && cardElement.find('.cs-card__image').attr('src', json.iconUrls.evolutionMedium); //añadir la img de evo
+                cardElement.parent('.cs-card-space').hide();
+                $('#deck-slots-main').data('cards').splice(targetIndex, 0, json); //inserta los datos a data-cards
+                targetSlot.data("lleno", "yes").css({ 'background': 'transparent', 'border': 'none', 'box-shadow': 'none' }).html(cardElement.data("inmazo", "yes")); //inserta la carta al slot
+            } else {
+                // Si no se encontró ningún slot vacío (el mazo está lleno)
+                if ($('#deck-slots-main').data('cards').length == 8 && cardElement.data('inmazo') == 'no' && cardElement.data('type') != 'tower') { //si el mazo esta lleno cambia la carta por otra
+                    Deck.replaceCard(cardElement);
+                }
             }
         } else { //la carta esta en el mazo, entonses quitarla
-            $('#deck-slots-main').data('cards', $('#deck-slots-main').data('cards').filter(item => item.name != name)); //elimina del json el objeto con con el nombre del data card
-            json.evolution && card.find('.cs-card__image').attr('src', json.iconUrls.medium); //cambia la img de evo a normal
-            card.parent('.cs-deck__slot').data("lleno", "no").css({ 'border': '1px solid var(--cs-color-LightGrey)' }); //slot vacio
-            card.parent('#cs-deck__slot-1, #cs-deck__slot-2').attr('style', '');
-            $('.cs-card-space[data-id="div_card_' + name + '"]').show().html(card.data("inmazo", "no")); //volver a añadir al div_card_containers
-            $('#deck-slots-main').data('cards', $('#deck-slots-main').data('cards').filter(item => item.name != name)); //inserta los datos de solo las cartas que quedaron en el mazo
+            Deck.removeCardFromSlot(cardElement, json, name, 'card');
         }
         !Deck.isBatchOperation && Deck.save();
     }
 
-    static analyzeBasic(cards) {
-        console.log('analyzeBasic(' + cards + ')');
+    static replaceCard(cardElement) {
+        console.log('replaceCard(' + JSON.stringify(cardElement) + ')');
+
+        if ($('#deck-slots-main').data('cards').length < 8) {
+            console.warn('replaceCard: El mazo no está lleno, no se puede reemplazar una carta.');
+            return;
+        }
+
+        if (cardElement.data('type') == 'tower') {
+            console.warn('replaceCard: No se puede reemplazar una carta de torre.');
+            return;
+        }
+
+        if (cardElement.data('inmazo') == 'yes') {
+            console.warn('replaceCard: La carta ya está en el mazo, no se puede reemplazar.');
+            return;
+        }
+
+        Deck.isBatchOperation = true; // Iniciar operación por lotes
+        $('html, body').animate({ scrollTop: $('#main-deck-collection').offset().top }, 500);
+        $('#main-deck-collection-alert').html('<span class="cs-color-GoldenYellow text-center">"El mazo está lleno. Selecciona la carta a reemplazar."</span><button id="btn_cam_card_no" class="cs-btn cs-btn--medium cs-btn--cancel">Cancelar</button>').fadeIn(250);
+        $('.cs-card').find('button').prop('disabled', true).css({ opacity: 0.75 }); //desabilitar todos los botones en div card
+        $('#main-deck-collection-box-btns').find('div, button').prop('disabled', true).css({ opacity: 0.75 }); //desabilitar todos los botones en div card
+        Card.selCardEvent = $('#deck-slots-main .cs-card').on('click', function () { //al hacer click en la carta que quiere cambiar
+            Card.selCardEvent.off('click');
+            Card.selCardEvent = null;
+            $('.cs-card').find('button').prop("disabled", false).css({ opacity: 1 });
+            $('#main-deck-collection-box-btns').find('div, button').prop('disabled', false).css({ opacity: 1 }); //desabilitar todos los botones en div card
+            $(this).find('.cs-card__use-remove').click();
+            cardElement.find('.cs-card__use-remove').click();
+            $('#main-deck-collection-alert').html("<span class='cs-color-VibrantTurquoise text-center'>Carta Reemplazada</span>");
+            Config.showAlert('<span class="cs-color-VibrantTurquoise text-center">Carta Reemplazada</span>');
+            $(this).click();
+            Deck.isBatchOperation = false;
+            Deck.save(); // Guardar el mazo después de reemplazar la carta
+        });
+    }
+
+    static analyzeBasic() {
+        console.log('analyzeBasic()');
+
+        let cards = $('#deck-slots-main').data('cards').map(card => card.name);
+        cards.push($('#deck-slots-main').data('towercard')[0].name);
+
         if (cards.length == 9) {
             api("POST", "/v1/deckanalyzer", 'ana-maz', {
                 version: '1.0',
@@ -121,40 +197,63 @@ export default class Deck {
     static save() {
         console.log('save()');
 
-        const user = JSON.parse(localStorage.getItem('user'));
-        // Obtener datos del mazo actual
-        const deckIndex = $('#main-deck-collection-box-btns').data('nmazo');
-        const cards = $('#deck-slots-main').data('cards') || [];
-        const towerCard = $('#deck-slots-main').data('towercard')[0] ?? null;
-        const cardNames = cards.map(c => c.name)
-            .concat(towerCard ? [towerCard.name] : [])
-            .filter(name => name != null && name != undefined);
-
-        // Validar si el mazo está completo (9 cartas)
-        if (cardNames.length !== 9) {
-            $('#main-deck-collection-alert').html('<span class="cs-color-IntenseOrange text-center">El mazo debe tener 9 cartas, no se puede guardar.</span>');
+        if (Deck.isSavingDeck) {
+            if (Deck.saveRetryCount < Deck.MAX_SAVE_RETRIES) {
+                Deck.saveRetryCount++;
+                console.log(`Guardado de mazo pospuesto: una solicitud de API está pendiente. Reintentando en 500ms (Intento ${Deck.saveRetryCount}/${Deck.MAX_SAVE_RETRIES}).`);
+                setTimeout(() => Deck.save(), 500); // Reintentar después de 500ms
+            } else {
+                console.error('No se pudo guardar el mazo: demasiados reintentos debido a una solicitud de API pendiente.');
+                Config.showAlert('<span class="cs-color-IntenseOrange text-center">No se pudo guardar el mazo. Por favor, inténtalo de nuevo.</span>');
+                Deck.saveRetryCount = 0; // Resetear el contador de reintentos
+            }
             return;
         }
 
-        // Inicializar o recuperar mazos
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) { return; }
+
+        const deckIndex = $('#main-deck-collection-box-btns').data('nmazo');
+        if (!deckIndex) { return; }
+
+        // Construir el array del mazo con 9 posiciones, usando "" para slots vacíos
+        const cardNames = [];
+        for (let i = 1; i <= 8; i++) {
+            const slot = $(`#cs-deck__slot-${i}`);
+            if (slot.data('lleno') === 'yes' && slot.find('.cs-card').length > 0) {
+                cardNames.push(slot.find('.cs-card').data('name'));
+            } else {
+                cardNames.push("");
+            }
+        }
+
+        const towerSlot = $('#div_card_slot_tower');
+        if (towerSlot.data('lleno') === 'yes' && towerSlot.find('.cs-card').length > 0) {
+            cardNames.push(towerSlot.find('.cs-card').data('name'));
+        } else {
+            cardNames.push("");
+        }
+
+        // Inicializar o recuperar mazos del usuario
         let mazos = user.decks;
-        let mazoAntiguo = mazos[deckIndex - 1];
+        const mazoAntiguo = mazos[deckIndex - 1] || [];
 
         // Actualizar el mazo en la lista de mazos
         mazos[deckIndex - 1] = cardNames;
 
-        // Verificar tipo de cuenta para decidir si guardar en BD
+        // Guardado para invitados (solo en localStorage)
         if (user.authProvider === 'invitado') {
             $('#main-deck-collection-alert').html('<span class="cs-color-GoldenYellow text-center">Para guardar tu mazo de forma segura, crea una cuenta. Por ahora, se guardará temporalmente en tu navegador.</span>');
+            user.decks = mazos;
+            localStorage.setItem('user', JSON.stringify(user));
             return;
         }
 
-        // Verificar si el mazo ha cambiado antes de guardar
-        if (JSON.stringify(mazoAntiguo) != JSON.stringify(cardNames)) {
+        // Verificar si el mazo ha cambiado antes de guardar en la BD
+        if (JSON.stringify(mazoAntiguo) !== JSON.stringify(cardNames)) {
             api("PATCH", "/v1/users", 'update-deck', { data: { decks: mazos } });
         } else {
             console.log('El Mazo no ha cambiado, no se guardará en la base de datos.');
-            return;
         }
     }
 
@@ -179,6 +278,7 @@ export default class Deck {
     static setMazo(namesCardInMazo) {
         console.log('setMazo(' + JSON.stringify(namesCardInMazo) + ')');
 
+        Deck.isBatchOperation = true; // Iniciar operación por lotes
         $('.cs-deck__slot').each(function (index, element) { //eliminar el mazo
             $(element).data('lleno') == 'yes' && $(element).find('.cs-card__use-remove').click();
         });
@@ -186,13 +286,14 @@ export default class Deck {
         $.each(namesCardInMazo, function (index, value) { //seleccionar cartas del mazo
             $(".cs-card").each(function (index2, element) {
                 if ($(element).data('name') == value) {
-                    $(element).find('.cs-card__use-remove').click();
-                    $(element).children('.cs-card__options').stop(true, true);
-                    $(element).removeClass('card--show-opt');
+                    index < 8 ? Deck.addDeleteCard($(element), $(element).data("json"), value, index) :
+                        Deck.addDeleteTowerCard($(element), $(element).data("json"), value);
                     return;
                 }
             });
         });
+        Deck.isBatchOperation = false;
+        Deck.analyzeBasic();
     }
 
     static pegarMazo(arr) {
