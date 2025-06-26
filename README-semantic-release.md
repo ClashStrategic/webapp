@@ -62,9 +62,7 @@ git commit -m "feat: adds new notification functionality"
 # For major release (0.4.1 → 1.0.0)
 git commit -m "feat!: completely changes API"
 # or
-git commit -m "feat: new API
-
-BREAKING CHANGE: The old API is no longer compatible"
+git commit -m "feat: new API" -m "BREAKING CHANGE: The old API is no longer compatible"
 ```
 
 ### Run Release
