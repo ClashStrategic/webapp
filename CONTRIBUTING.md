@@ -149,23 +149,16 @@ For detailed information about our semantic release setup, see [README-semantic-
 
 ### PR Template
 
-```
-## Description
-Brief description of changes
+We suggest using a simple structure for your Pull Requests.
 
-## Type of Change
-- [ ] Bug fix
-- [ ] New feature
-- [ ] Documentation update
-- [ ] Performance improvement
+```markdown
+### Description
 
-## Testing
-- [ ] Unit tests pass
-- [ ] E2E tests pass
-- [ ] Manual testing completed
+A brief summary of the changes in this PR.
 
-## Screenshots (if applicable)
-Add screenshots for UI changes
+### Related Issues
+
+Link any relevant issues (e.g., "Fixes #123", "Closes #456").
 ```
 
 ## Getting Help
