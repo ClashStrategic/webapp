@@ -3,10 +3,10 @@
 <div align="center">
   <img src="./static/media/styles/logo/logo_banner.webp" alt="Clash Strategic Logo" width="400">
   
-  [![Version](https://img.shields.io/badge/version-1.2.1-blue.svg)](https://github.com/ClashStrategic/webapp)
-  [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](#license)
-  [![PWA](https://img.shields.io/badge/PWA-enabled-purple.svg)](https://web.dev/progressive-web-apps/)
-  [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](#contributing)
+  [![Latest Release](https://img.shields.io/github/v/release/ClashStrategic/webapp)](https://github.com/ClashStrategic/webapp/releases)
+  [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/ClashStrategic/webapp/blob/main/LICENSE)
+  [![PWA](https://img.shields.io/badge/PWA-developed-purple.svg)](https://web.dev/progressive-web-apps/)
+  [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/ClashStrategic/webapp/blob/main/CONTRIBUTING.md)
 </div>
 
 ## 📱 About
