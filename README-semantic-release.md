@@ -1,113 +1,113 @@
 # Semantic Release Configuration
 
-Este proyecto utiliza **semantic-release** para automatizar el proceso de versionado y release. La configuración incluye un plugin personalizado que actualiza automáticamente el service worker.
+This project uses **semantic-release** to automate the versioning and release process. The configuration includes a custom plugin that automatically updates the service worker.
 
-## Configuración Actual
+## Current Configuration
 
-### Plugins Configurados (en orden de ejecución):
+### Configured Plugins (in execution order):
 
-1. **@semantic-release/commit-analyzer** - Analiza los commits para determinar el tipo de release
-2. **@semantic-release/release-notes-generator** - Genera las notas de release
-3. **@semantic-release/npm** - Actualiza `package.json` y `package-lock.json` (sin publicar)
-4. **@semantic-release/changelog** - Genera/actualiza el CHANGELOG.md
-5. **./update-sw-version.js** - **Plugin personalizado** que actualiza el service worker
-6. **@semantic-release/git** - Commitea los cambios de archivos
-7. **@semantic-release/github** - Crea el release en GitHub
+1. **@semantic-release/commit-analyzer** - Analyzes commits to determine the release type
+2. **@semantic-release/release-notes-generator** - Generates release notes
+3. **@semantic-release/npm** - Updates `package.json` and `package-lock.json` (without publishing)
+4. **@semantic-release/changelog** - Generates/updates CHANGELOG.md
+5. **./update-sw-version.js** - **Custom plugin** that updates the service worker
+6. **@semantic-release/git** - Commits file changes
+7. **@semantic-release/github** - Creates the release on GitHub
 
-## Plugin Personalizado: update-sw-version.js
+## Custom Plugin: update-sw-version.js
 
-### Funcionalidad
+### Functionality
 
-El plugin personalizado `update-sw-version.js` actualiza automáticamente dos constantes en el archivo `sw.js`:
+The custom plugin `update-sw-version.js` automatically updates two constants in the `sw.js` file:
 
-- **VERSION**: Se actualiza con la nueva versión del release
-- **DATETIME**: Se actualiza con la fecha y hora actual en formato ISO
+- **VERSION**: Updated with the new release version
+- **DATETIME**: Updated with the current date and time in ISO format
 
-### Archivos Afectados
+### Affected Files
 
-Durante un release, se actualizan automáticamente:
+During a release, the following are automatically updated:
 
-- `package.json` - Nueva versión
-- `package-lock.json` - Nueva versión
-- `sw.js` - Nueva VERSION y DATETIME
-- `CHANGELOG.md` - Nuevas notas de release
+- `package.json` - New version
+- `package-lock.json` - New version
+- `sw.js` - New VERSION and DATETIME
+- `CHANGELOG.md` - New release notes
 
-### Ejemplo de Cambios en sw.js
+### Example Changes in sw.js
 
-**Antes del release:**
+**Before release:**
 ```javascript
 const VERSION = '0.4.1';
 const DATETIME = '2024-01-01T00:00:00.000Z';
 ```
 
-**Después del release (ejemplo v1.2.3):**
+**After release (e.g., v1.2.3):**
 ```javascript
 const VERSION = '1.2.3';
 const DATETIME = '2025-05-26T14:08:27.271Z';
 ```
 
-## Uso
+## Usage
 
-### Commits Convencionales
+### Conventional Commits
 
-Para que semantic-release funcione correctamente, usa commits convencionales:
+For semantic-release to work correctly, use conventional commits:
 
 ```bash
-# Para patch release (0.4.1 → 0.4.2)
-git commit -m "fix: corrige problema en el cache del service worker"
+# For patch release (0.4.1 → 0.4.2)
+git commit -m "fix: fixes service worker cache issue"
 
-# Para minor release (0.4.1 → 0.5.0)
-git commit -m "feat: añade nueva funcionalidad de notificaciones"
+# For minor release (0.4.1 → 0.5.0)
+git commit -m "feat: adds new notification functionality"
 
-# Para major release (0.4.1 → 1.0.0)
-git commit -m "feat!: cambia API completamente"
-# o
-git commit -m "feat: nueva API
+# For major release (0.4.1 → 1.0.0)
+git commit -m "feat!: completely changes API"
+# or
+git commit -m "feat: new API
 
-BREAKING CHANGE: La API anterior ya no es compatible"
+BREAKING CHANGE: The old API is no longer compatible"
 ```
 
-### Ejecutar Release
+### Run Release
 
 ```bash
-# Release automático (en CI/CD)
+# Automatic release (in CI/CD)
 npx semantic-release
 
-# Release en modo dry-run (para probar)
+# Dry-run release (for testing)
 npx semantic-release --dry-run
 ```
 
 ## Testing
 
-Para probar el plugin personalizado:
+To test the custom plugin:
 
 ```bash
 node test-sw-update.js
 ```
 
-Este script:
-1. Simula un release con versión de prueba
-2. Verifica que VERSION y DATETIME se actualicen correctamente
-3. Restaura el contenido original
+This script:
+1. Simulates a release with a test version
+2. Verifies that VERSION and DATETIME are updated correctly
+3. Restores the original content
 
-## Configuración de CI/CD
+## CI/CD Configuration
 
-Asegúrate de tener configuradas las siguientes variables de entorno:
+Ensure the following environment variables are configured:
 
-- `GITHUB_TOKEN` - Token de GitHub con permisos de escritura
-- `NPM_TOKEN` - Token de npm (si planeas publicar)
+- `GITHUB_TOKEN` - GitHub token with write permissions
+- `NPM_TOKEN` - npm token (if planning to publish)
 
 ## Troubleshooting
 
-### El plugin no encuentra sw.js
-- Verifica que el archivo `sw.js` existe en la raíz del proyecto
-- Verifica que contiene las constantes `VERSION` y `DATETIME`
+### Plugin cannot find sw.js
+- Verify that the `sw.js` file exists in the project root
+- Verify that it contains the `VERSION` and `DATETIME` constants
 
-### Los cambios no se commitean
-- Verifica que `sw.js` está incluido en los `assets` del plugin `@semantic-release/git`
-- Verifica que no hay errores en el plugin personalizado
+### Changes are not committed
+- Verify that `sw.js` is included in the `assets` of the `@semantic-release/git` plugin
+- Verify that there are no errors in the custom plugin
 
-### El service worker no se actualiza en el navegador
-- El service worker debería detectar automáticamente la nueva versión
-- Verifica los logs del navegador para ver si se está instalando la nueva versión
-- El DATETIME ayuda a identificar cuándo se compiló la versión actual
+### Service worker does not update in the browser
+- The service worker should automatically detect the new version
+- Check browser logs to see if the new version is being installed
+- DATETIME helps identify when the current version was compiled
