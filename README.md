@@ -10,6 +10,22 @@
   [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-A8E6CF.svg?style=flat-square)](https://github.com/ClashStrategic/webapp/blob/main/CONTRIBUTING.md)
 </div>
 
+## 📑 Table of Contents
+
+- [About](#-about)
+- [Key Features](#-key-features)
+- [Live Demo](#-live-demo)
+- [Technology Stack](#-technology-stack)
+- [Prerequisites](#-prerequisites)
+- [Installation & Setup](#-installation--setup)
+- [Usage](#-usage)
+- [Project Structure](#-project-structure)
+- [Testing](#-testing)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Support & Contact](#-support--contact)
+- [Acknowledgments](#-acknowledgments)
+
 ## 📱 About
 
 **Clash Strategic™** is a comprehensive Progressive Web Application (PWA) designed for the Clash Royale community. It provides strategic tools, deck building capabilities, card analysis, and community features to help players improve their gameplay and connect with other strategists.
