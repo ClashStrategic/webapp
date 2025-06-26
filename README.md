@@ -230,7 +230,7 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 - **Discussions**: [GitHub Discussions](https://github.com/ClashStrategic/webapp/discussions)
 - **Website**: [https://clashstrategic.great-site.net](https://clashstrategic.great-site.net)
 
-## 🙏 publish
+## 🙏 Acknowledgments
 
 - **Clash Royale** by Supercell for the amazing game
 - **Community Contributors** who help improve the application
@@ -239,7 +239,7 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 ---
 
 <div align="center">
-  <p>Thank you for being part of the Clash Strategic community</p>
+  <p>💖 Thank you for being part of the Clash Strategic community</p>
   <p>
     <a href="#top">Back to Top ⬆️</a>
   </p>
