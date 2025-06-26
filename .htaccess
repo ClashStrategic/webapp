@@ -10,11 +10,6 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME}\.html -f
     RewriteRule ^(.+?)/?$ $1.html [L]
-
-    # Modo Mantenimiento
-    #RewriteCond %{REQUEST_URI} !^/maintenance\.html$
-    #RewriteCond %{REMOTE_ADDR} !^158\.172\.227\.100$
-    #RewriteRule ^(.*)$ /maintenance.html [R=307,L]
 </IfModule>
 
 ### configuracion servidor online
