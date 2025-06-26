@@ -5,7 +5,7 @@ Thank you for your interest in contributing to Clash Strategic™! We welcome co
 ## Quick Start
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/ClashStrategic/webapp.git`
+2. Clone your fork: `git clone https://github.com/YOUR_USERNAME/webapp.git`
 3. Create a branch: `git checkout -b feature/your-feature-name`
 4. Make your changes
 5. Test your changes
@@ -25,7 +25,7 @@ Thank you for your interest in contributing to Clash Strategic™! We welcome co
 
 ```bash
 # Clone and install
-git clone https://github.com/ClashStrategic/webapp.git
+git clone https://github.com/YOUR_USERNAME/webapp.git
 cd webapp
 npm install
 
