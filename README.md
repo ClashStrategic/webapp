@@ -187,38 +187,25 @@ npm test -- --coverage
 
 ## 🤝 Contributing
 
-We welcome contributions from the community! Here's how you can help:
+We welcome contributions from developers of all skill levels!
 
-### Getting Started
+### Quick Start
 
-1. **Fork the repository** on GitHub
-2. **Clone your fork** locally
-3. **Create a feature branch**: `git checkout -b feature/amazing-feature`
-4. **Make your changes** and test thoroughly
-5. **Commit your changes**: `git commit -m 'Add amazing feature'`
-6. **Push to your branch**: `git push origin feature/amazing-feature`
-7. **Open a Pull Request** with a clear description
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a Pull Request
 
-### Development Guidelines
+### What You Can Contribute
 
-- **Code Style**: Follow the existing code style and use ESLint
-- **Testing**: Add tests for new features and ensure all tests pass
-- **Documentation**: Update documentation for any new features
-- **Commits**: Use conventional commit messages for semantic releases
+- 🐛 Bug fixes
+- ✨ New features
+- 📚 Documentation
+- 🧪 Tests
+- 🎨 UI improvements
 
-### Areas for Contribution
-
-- 🐛 **Bug Fixes**: Help identify and fix issues
-- ✨ **New Features**: Add new strategic tools and features
-- 🎨 **UI/UX**: Improve the user interface and experience
-- 📚 **Documentation**: Enhance documentation and guides
-- 🧪 **Testing**: Improve test coverage and quality
-- 🌐 **Localization**: Add support for more languages
-- ⚡ **Performance**: Optimize loading times and responsiveness
-
-### Code of Conduct
-
-Please be respectful and constructive in all interactions. We're building a positive community for Clash Royale strategists.
+For detailed guidelines, setup instructions, and development tips, see our [**Contributing Guide**](CONTRIBUTING.md).
 
 ## 📄 License
 
