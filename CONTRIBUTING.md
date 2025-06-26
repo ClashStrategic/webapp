@@ -83,13 +83,6 @@ cp -r . /path/to/xampp/htdocs/clash-strategic-webapp/
 - Maintain responsive design
 - Keep styles modular
 
-### PHP
-
-- Follow PSR standards
-- Validate all inputs
-- Use prepared statements
-- Handle errors properly
-
 ## Testing
 
 ```bash

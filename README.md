@@ -56,10 +56,10 @@ Visit the live application: [https://clashstrategic.great-site.net](https://clas
 - **jQuery** - DOM manipulation and AJAX requests
 - **Progressive Web App** - Service worker, manifest, offline support
 
-### Backend
+### Backend (clash Strategic API)
+The clash strategic api is the server that is requested with webapp to retrieve and store information.
 
-- **PHP** - Server-side logic and API endpoints
-- **RESTful API** - Clean API architecture
+- **RESTful API** - Clean API architecture [Documentation (pending)](https://github.com/ClashStrategic/webapp/blob/main/API_ENDPOINTS.md)
 
 ### Development Tools
 
