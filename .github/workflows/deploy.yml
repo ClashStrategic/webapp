@@ -14,7 +14,7 @@ on:
 jobs:
   ftp-deploy:
     runs-on: ubuntu-latest
-    # Only deploy if the release workflow succeeded or if manually triggered
+    # Only deploy if the Release workflow succeeded or if manually triggered
     if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
 
     steps:

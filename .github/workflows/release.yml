@@ -7,36 +7,22 @@ on:
 
 jobs:
   release:
-    name: Release
     runs-on: ubuntu-latest
-    # Estas permissions son importantes para que semantic-release pueda:
-    # - Escribir en 'contents' (crear tags, commits, releases en GitHub)
-    # - Escribir en 'issues' y 'pull-requests' (comentar en issues/PRs relacionados con la release)
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
-      # id-token es para OIDC, útil si publicaras a npm con provenance
-      id-token: write
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Necesario para que semantic-release analice todo el historial
-          persist-credentials: false # semantic-release gestionará su propia autenticación Git
-
+          fetch-depth: 0
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "lts/*" # Usa la versión LTS de Node, o especifica la tuya
-
+          node-version: "lts/*"
       - name: Install dependencies
-        run: npm ci # Asume que usas npm y tienes package-lock.json. Si usas yarn, sería yarn install --frozen-lockfile
-
-      - name: Release
+        run: npm ci
+      - name: Run Playwright tests
+        run: npx playwright test
+      - name: Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Si fueras a publicar en npm y tuvieras npmPublish: true en .releaserc
           # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
