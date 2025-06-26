@@ -80,6 +80,7 @@ jobs:
             **/babel.config.js
             **/jest.config.js
             **/playwright.config.js
+            **/LICENSE
 
       - name: Verificar despliegue
         run: |
