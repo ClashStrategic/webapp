@@ -16,11 +16,13 @@ Thank you for your interest in contributing to Clash Strategic™! We welcome co
 ## Development Setup
 
 ### Prerequisites
+
 - XAMPP (Apache + PHP + MySQL)
 - Node.js (v16+)
 - Git
 
 ### Local Setup
+
 ```bash
 # Clone and install
 git clone https://github.com/ClashStrategic/webapp.git
@@ -37,12 +39,14 @@ cp -r . /path/to/xampp/htdocs/clash-strategic-webapp/
 ## What Can You Contribute?
 
 ### 🐛 Bug Fixes
+
 - Check [Issues](https://github.com/ClashStrategic/webapp/issues) for bugs
 - Reproduce the issue locally
 - Fix and test the solution
 - Submit a PR with clear description
 
 ### ✨ New Features
+
 - Deck analysis improvements
 - New card statistics
 - UI/UX enhancements
@@ -50,12 +54,14 @@ cp -r . /path/to/xampp/htdocs/clash-strategic-webapp/
 - Mobile responsiveness
 
 ### 📚 Documentation
+
 - Improve README
 - Add code comments
 - Create user guides
 - API documentation
 
 ### 🧪 Testing
+
 - Add unit tests (Jest)
 - Add E2E tests (Playwright)
 - Improve test coverage
@@ -64,18 +70,21 @@ cp -r . /path/to/xampp/htdocs/clash-strategic-webapp/
 ## Code Guidelines
 
 ### JavaScript
+
 - Use ES6+ features
 - Follow existing code style
 - Add JSDoc comments for functions
 - Use meaningful variable names
 
 ### CSS
+
 - Follow BEM methodology
 - Use CSS custom properties
 - Maintain responsive design
 - Keep styles modular
 
 ### PHP
+
 - Follow PSR standards
 - Validate all inputs
 - Use prepared statements
@@ -96,11 +105,39 @@ npm test -- --coverage
 
 ## Commit Messages
 
-Use conventional commits:
+**⚠️ IMPORTANT**: This project uses **Semantic Release** for automated versioning and releases.
+
+### Commit Format Requirements
+
+Your commits **MUST** follow conventional commit format:
+
+```
+<type>(<scope>): <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+### Examples
+
 - `feat: add new deck analysis feature`
 - `fix: resolve card loading issue`
 - `docs: update installation guide`
 - `test: add deck builder tests`
+- `feat(deck): add elixir cost calculator`
+- `fix(api): handle timeout errors properly`
+
+### Why This Matters
+
+- **Automatic Releases**: Proper commits trigger automatic version bumps
+- **Changelog Generation**: Creates beautiful release notes
+- **Version Control**: `feat` = minor version, `fix` = patch version
+- **Breaking Changes**: `feat!` or `fix!` = major version
+
+### Learn More
+
+For detailed information about our semantic release setup, see [README-semantic-release.md](README-semantic-release.md)
 
 ## Pull Request Process
 
@@ -111,6 +148,7 @@ Use conventional commits:
 5. **Link Issues** - Reference related issues
 
 ### PR Template
+
 ```
 ## Description
 Brief description of changes
@@ -146,6 +184,7 @@ Add screenshots for UI changes
 ## Recognition
 
 Contributors will be:
+
 - Listed in the README
 - Mentioned in release notes
 - Invited to join the core team (for regular contributors)
@@ -153,6 +192,7 @@ Contributors will be:
 ## First Time Contributors
 
 Look for issues labeled:
+
 - `good first issue`
 - `help wanted`
 - `documentation`
