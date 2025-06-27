@@ -25,9 +25,11 @@ describe('Config.isMobile()', () => {
     expect(Config.isMobile()).toBe(false);
   });
 
-  // Restore original user agent
-  Object.defineProperty(navigator, 'userAgent', {
-    value: originalUserAgent,
-    configurable: true,
+  // Restore original user agent after all tests
+  afterAll(() => {
+    Object.defineProperty(navigator, 'userAgent', {
+      value: originalUserAgent,
+      configurable: true,
+    });
   });
 });
