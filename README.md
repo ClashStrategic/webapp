@@ -45,7 +45,7 @@
 
 ## 🚀 Live Demo
 
-Visit the live application: [https://clashstrategic.great-site.net](https://clashstrategic.great-site.net)
+Visit the live application: <a href="https://clashstrategic.great-site.net" target="_blank" rel="noopener noreferrer">https://clashstrategic.great-site.net</a>
 
 ## 🛠️ Technology Stack
 
@@ -56,10 +56,10 @@ Visit the live application: [https://clashstrategic.great-site.net](https://clas
 - **jQuery** - DOM manipulation and AJAX requests
 - **Progressive Web App** - Service worker, manifest, offline support
 
-### Backend (clash Strategic API)
+### Backend (Clash Strategic API)
 The clash strategic api is the server that is requested with webapp to retrieve and store information.
 
-- **RESTful API** - Clean API architecture [Documentation (pending)](https://github.com/ClashStrategic/webapp/blob/main/API_ENDPOINTS.md)
+- **RESTful API** - A dedicated backend API handles all data retrieval and storage. [API Documentation (pending)](https://github.com/ClashStrategic/webapp/blob/main/API_ENDPOINTS.md)
 
 ### Development Tools
 
@@ -72,7 +72,6 @@ The clash strategic api is the server that is requested with webapp to retrieve 
 ### Build & Deployment
 
 - **Service Worker** - Caching and offline functionality
-- **Webpack/Rollup** - Module bundling
 - **XAMPP** - Local development environment
 
 ## 📋 Prerequisites
@@ -111,20 +110,7 @@ npm install
    cp -r . /Applications/XAMPP/htdocs/clash-strategic-webapp/
    ```
 
-### 4. Database Configuration
-
-1. Open **phpMyAdmin** (http://localhost/phpmyadmin)
-2. Create a new database for the application
-3. Configure your database connection in the API configuration files
-
-### 5. Environment Configuration
-
-The application automatically detects the environment:
-
-- **Local**: `http://localhost/clash-strategic-webapp`
-- **Production**: `https://clashstrategic.great-site.net`
-
-### 6. Access the Application
+### 4. Access the Application
 
 Open your browser and navigate to:
 
@@ -147,12 +133,6 @@ http://localhost/clash-strategic-webapp
 3. **Analyze Deck**: Get instant analysis with elixir cost and cycle information
 4. **Save Deck**: Store your deck for future reference
 5. **Copy to Game**: Export your deck directly to Clash Royale
-
-### Community Features
-
-- **Publications**: Share strategies and deck ideas
-- **Chat**: Communicate with other community members
-- **User Profiles**: Customize your profile and track statistics
 
 ## 📁 Project Structure
 
