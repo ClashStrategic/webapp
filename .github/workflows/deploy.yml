@@ -14,40 +14,40 @@ on:
 jobs:
   ftp-deploy:
     runs-on: ubuntu-latest
-    # Only deploy if the release workflow succeeded or if manually triggered
+    # Only deploy if the Release workflow succeeded or if manually triggered
     if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
 
     steps:
-      - name: Checkout del código
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1 # Solo trae el último commit, evita traer .git/
+          fetch-depth: 1 # Only fetch the latest commit, avoids bringing .git/
 
-      - name: Verificar archivos requeridos
+      - name: Verify required files
         run: |
-          echo "Verificando archivos críticos..."
+          echo "Checking critical files..."
           if [ ! -f "index.html" ]; then
-            echo "❌ Error: index.html no encontrado"
+            echo "❌ Error: index.html not found"
             exit 1
           fi
           if [ ! -f "sw.js" ]; then
-            echo "❌ Error: sw.js no encontrado"
+            echo "❌ Error: sw.js not found"
             exit 1
           fi
           if [ ! -f "manifest.json" ]; then
-            echo "❌ Error: manifest.json no encontrado"
+            echo "❌ Error: manifest.json not found"
             exit 1
           fi
-          echo "✅ Todos los archivos críticos están presentes"
+          echo "✅ All critical files are present"
 
-      - name: Mostrar información de despliegue
+      - name: Show deployment information
         run: |
-          echo "🚀 Iniciando despliegue..."
+          echo "🚀 Starting deployment..."
           echo "Commit: ${{ github.sha }}"
           echo "Branch: ${{ github.ref_name }}"
           echo "Workflow: ${{ github.workflow }}"
 
-      - name: Desplegar por FTP
+      - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -80,8 +80,9 @@ jobs:
             **/babel.config.js
             **/jest.config.js
             **/playwright.config.js
+            **/LICENSE
 
-      - name: Verificar despliegue
+      - name: Verify deployment
         run: |
-          echo "✅ Despliegue completado exitosamente"
-          echo "🌐 Sitio web: https://clashstrategic.great-site.net/"
+          echo "✅ Deployment completed successfully"
+          echo "🌐 Website: https://clashstrategic.great-site.net/"
