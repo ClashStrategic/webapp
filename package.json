@@ -13,13 +13,17 @@
     "eslint-config-jquery": "^3.0.2",
     "eslint-plugin-jquery": "^1.5.1",
     "globals": "^16.0.0",
+    "http-server": "^14.1.1",
     "jest": "^30.0.3",
     "jest-environment-jsdom": "^30.0.2",
     "jquery": "^3.7.1",
     "semantic-release": "^24.2.4"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:local": "PLAYWRIGHT_BASE_URL=http://localhost/clash-strategic-webapp playwright test"
   },
   "version": "1.2.1"
 }
