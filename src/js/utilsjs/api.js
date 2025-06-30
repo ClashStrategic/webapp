@@ -347,6 +347,9 @@ export default function api(method, url, type, data = {}, options = null, load =
         data: JSON.stringify(data),
         dataType: API_CONFIG.dataType || 'json',
         contentType: 'application/json; charset=utf-8',
+        xhrFields: {
+            withCredentials: true
+        },
         beforeSend: function () {
             handleBeforeSend(type, load);
         },
