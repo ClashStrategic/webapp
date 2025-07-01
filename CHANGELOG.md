@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/ClashStrategic/webapp/compare/v1.2.2...v1.2.3) (2025-07-01)
+
+
+### Bug Fixes
+
+* **config:** ensure current api base url ([74d2844](https://github.com/ClashStrategic/webapp/commit/74d2844d05819448a795db79fa98a00c32267824))
+
 ## [1.2.2](https://github.com/ClashStrategic/webapp/compare/v1.2.1...v1.2.2) (2025-07-01)
 
 
