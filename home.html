@@ -71,15 +71,6 @@
   </body>
   <script>
     installSW(() => {
-      if (window.location.hostname === "localhost") {
-        localStorage.setItem("base_url_api", "http://localhost/api");
-      } else if (window.location.hostname === "clashstrategic.great-site.net") {
-        localStorage.setItem(
-          "base_url_api",
-          "https://clashstrategic.great-site.net/api"
-        );
-      }
-
       function initialWebApp() {
         console.log("initialWebApp()");
         Config.setConfig();
