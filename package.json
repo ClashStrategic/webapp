@@ -25,5 +25,5 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:local": "PLAYWRIGHT_BASE_URL=http://localhost/clash-strategic-webapp playwright test"
   },
-  "version": "1.2.1"
+  "version": "1.2.2"
 }

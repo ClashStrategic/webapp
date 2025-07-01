@@ -1,3 +1,11 @@
+## [1.2.2](https://github.com/ClashStrategic/webapp/compare/v1.2.1...v1.2.2) (2025-07-01)
+
+
+### Bug Fixes
+
+* **api:** ensure credentials sent with cross-origin requests ([4132f17](https://github.com/ClashStrategic/webapp/commit/4132f17f6c9a1691cf81b5e8886bb99603d2d40a))
+* **config:** centralize api base url configuration ([3d1bb99](https://github.com/ClashStrategic/webapp/commit/3d1bb9925c985d87b838f2688a52227c095034d8))
+
 ## [1.2.1](https://github.com/ClashStrategic/webapp/compare/v1.2.0...v1.2.1) (2025-06-25)
 
 
