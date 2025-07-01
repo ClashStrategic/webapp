@@ -26,7 +26,7 @@ export default class Config {
     static setConfig() {
         console.log('setConfig()');
         !localStorage.getItem("sound_effects") && localStorage.setItem("sound_effects", "false");
-        !localStorage.getItem("base_url_api") && localStorage.setItem("base_url_api", "https://clashstrategic.x10.mx/api");
+        (!localStorage.getItem("base_url_api") || localStorage.getItem("base_url_api") == "https://clashstrategic.great-site.net/api") && localStorage.setItem("base_url_api", "https://clashstrategic.x10.mx/api");
     }
 
     static applyConfig() {
