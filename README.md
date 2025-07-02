@@ -52,6 +52,7 @@ Visit the live application: <a href="https://clashstrategic.great-site.net" targ
 - **Progressive Web App** - Service worker, manifest, offline support
 
 ### Backend (Clash Strategic API)
+
 The clash strategic api is the server that is requested with webapp to retrieve and store information.
 
 - **RESTful API** - A dedicated backend API handles all data retrieval and storage. [API Documentation (pending)](https://github.com/ClashStrategic/webapp/blob/main/API_ENDPOINTS.md)
@@ -69,26 +70,9 @@ The clash strategic api is the server that is requested with webapp to retrieve 
 - **Service Worker** - Caching and offline functionality
 - **XAMPP** - Local development environment
 
-
 ## 🤝 Contributing
 
 We welcome contributions from developers of all skill levels!
-
-### Quick Start
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a Pull Request
-
-### What You Can Contribute
-
-- 🐛 Bug fixes
-- ✨ New features
-- 📚 Documentation
-- 🧪 Tests
-- 🎨 UI improvements
 
 For detailed guidelines, setup instructions, and development tips, see our [**Contributing Guide**](CONTRIBUTING.md).
 
