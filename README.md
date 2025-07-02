@@ -78,7 +78,7 @@ The clash strategic api is the server that is requested with webapp to retrieve 
 
 Before you begin, ensure you have the following installed:
 
-- **XAMPP** (Apache + PHP + MySQL) - [Download here](https://www.apachefriends.org/)
+- **XAMPP** (Apache + PHP) - [Download here](https://www.apachefriends.org/)
 - **Node.js** (v16 or higher) - [Download here](https://nodejs.org/)
 - **Git** - [Download here](https://git-scm.com/)
 
@@ -99,7 +99,7 @@ npm install
 
 ### 3. XAMPP Setup
 
-1. **Start XAMPP** and enable Apache and MySQL services
+1. **Start XAMPP** and enable Apache services
 2. **Copy the project** to your XAMPP htdocs directory:
 
    ```bash

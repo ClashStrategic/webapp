@@ -17,7 +17,7 @@ Thank you for your interest in contributing to Clash Strategic™! We welcome co
 
 ### Prerequisites
 
-- XAMPP (Apache + PHP + MySQL)
+- XAMPP (Apache + PHP)
 - Node.js (v16+)
 - Git
 
