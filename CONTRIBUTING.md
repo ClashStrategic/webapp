@@ -48,22 +48,6 @@ Before you begin, ensure you have the following installed:
    http://localhost/clash-strategic-webapp
    ```
 
-## Usage
-
-### Getting Started
-
-1. **First Visit**: The application will install the service worker and cache resources
-2. **Create Account**: Sign up with Google or continue as a guest
-3. **Explore Features**: Navigate through different sections using the menu
-
-### Deck Building
-
-1. **Access Cards Section**: Click on the cards menu
-2. **Select Cards**: Choose 8 cards and 1 tower card for your deck
-3. **Analyze Deck**: Get instant analysis with elixir cost and cycle information
-4. **Save Deck**: Store your deck for future reference
-5. **Copy to Game**: Export your deck directly to Clash Royale
-
 ## Project Structure
 
 ```
