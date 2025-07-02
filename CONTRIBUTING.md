@@ -48,6 +48,33 @@ Before you begin, ensure you have the following installed:
    http://localhost/clash-strategic-webapp
    ```
 
+## 🛠️ Technology Stack
+
+### Frontend
+
+- **JavaScript ES6+** - Modern JavaScript with modules
+- **HTML5 & CSS3** - Semantic markup and responsive design
+- **jQuery** - DOM manipulation and AJAX requests
+- **Progressive Web App** - Service worker, manifest, offline support
+
+### Backend (Clash Strategic API)
+The clash strategic api is the server that is requested with webapp to retrieve and store information.
+
+- **RESTful API** - A dedicated backend API handles all data retrieval and storage. [API Documentation (pending)](https://github.com/ClashStrategic/webapp/blob/main/API_ENDPOINTS.md)
+
+### Development Tools
+
+- **Jest** - Unit testing framework
+- **Playwright** - End-to-end testing
+- **ESLint** - Code linting and quality
+- **Babel** - JavaScript transpilation
+- **Semantic Release** - Automated versioning and releases
+
+### Build & Deployment
+
+- **Service Worker** - Caching and offline functionality
+- **XAMPP** - Local development environment
+
 ## Project Structure
 
 ```

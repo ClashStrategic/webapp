@@ -15,7 +15,6 @@
 - [About](#-about)
 - [Key Features](#-key-features)
 - [Live Demo](#-live-demo)
-- [Technology Stack](#-technology-stack)
 - [Contributing](#-contributing)
 - [License](#-license)
 - [Support & Contact](#-support--contact)
@@ -42,33 +41,6 @@
 
 Visit the live application: <a href="https://clashstrategic.great-site.net" target="_blank" rel="noopener noreferrer">https://clashstrategic.great-site.net</a>
 
-## 🛠️ Technology Stack
-
-### Frontend
-
-- **JavaScript ES6+** - Modern JavaScript with modules
-- **HTML5 & CSS3** - Semantic markup and responsive design
-- **jQuery** - DOM manipulation and AJAX requests
-- **Progressive Web App** - Service worker, manifest, offline support
-
-### Backend (Clash Strategic API)
-
-The clash strategic api is the server that is requested with webapp to retrieve and store information.
-
-- **RESTful API** - A dedicated backend API handles all data retrieval and storage. [API Documentation (pending)](https://github.com/ClashStrategic/webapp/blob/main/API_ENDPOINTS.md)
-
-### Development Tools
-
-- **Jest** - Unit testing framework
-- **Playwright** - End-to-end testing
-- **ESLint** - Code linting and quality
-- **Babel** - JavaScript transpilation
-- **Semantic Release** - Automated versioning and releases
-
-### Build & Deployment
-
-- **Service Worker** - Caching and offline functionality
-- **XAMPP** - Local development environment
 
 ## 🤝 Contributing
 
