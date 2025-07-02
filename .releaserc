@@ -4,7 +4,14 @@
   ],
   "plugins": [
     "@semantic-release/commit-analyzer",
-    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "writerOpts": {
+          "commitPartial": "* {{#if scope}}**{{scope}}:** {{/if}}{{subject}}{{#if author.name}} (Thanks to [@{{author.name}}](https://github.com/{{author.name}})){{/if}}\n\n{{~!-- commit hash --}} {{#if hash}}{{hash}}{{/if}}\n\n"
+        }
+      }
+    ],
     [
       "@semantic-release/npm",
       {
