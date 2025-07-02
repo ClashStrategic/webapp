@@ -2,6 +2,116 @@
 
 Thank you for your interest in contributing to Clash Strategic™! We welcome contributions from developers of all skill levels.
 
+## Development Setup
+
+### Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- **XAMPP** (Apache + PHP) - [Download here](https://www.apachefriends.org/)
+- **Node.js** (v16 or higher) - [Download here](https://nodejs.org/)
+- **Git** - [Download here](https://git-scm.com/)
+
+### Local Setup
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/ClashStrategic/webapp.git clash-strategic-webapp
+   cd clash-strategic-webapp
+   ```
+
+2. **Install Dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **XAMPP Setup**
+
+   1. **Start XAMPP** and enable Apache services
+   2. **Copy the project** to your XAMPP htdocs directory:
+
+      ```bash
+      # Windows
+      cp -r . C:/xampp/htdocs/clash-strategic-webapp/
+
+      # macOS/Linux
+      cp -r . /Applications/XAMPP/htdocs/clash-strategic-webapp/
+      ```
+
+4. **Access the Application**
+
+   Open your browser and navigate to:
+
+   ```
+   http://localhost/clash-strategic-webapp
+   ```
+
+## Usage
+
+### Getting Started
+
+1. **First Visit**: The application will install the service worker and cache resources
+2. **Create Account**: Sign up with Google or continue as a guest
+3. **Explore Features**: Navigate through different sections using the menu
+
+### Deck Building
+
+1. **Access Cards Section**: Click on the cards menu
+2. **Select Cards**: Choose 8 cards and 1 tower card for your deck
+3. **Analyze Deck**: Get instant analysis with elixir cost and cycle information
+4. **Save Deck**: Store your deck for future reference
+5. **Copy to Game**: Export your deck directly to Clash Royale
+
+## Project Structure
+
+```
+clash-strategic-webapp/
+├── src/                    # Source code
+│   ├── css/               # Stylesheets
+│   │   ├── base/         # Base styles
+│   │   ├── objects/      # Component styles
+│   │   └── skins/        # Theme styles
+│   ├── js/               # JavaScript modules
+│   │   ├── events/       # Event handlers
+│   │   ├── models/       # Data models
+│   │   ├── utilsjs/      # Utility functions
+│   │   └── main.js       # Main application entry
+│   └── templates/        # HTML templates
+├── static/               # Static assets
+│   ├── media/           # Images, icons, audio
+│   └── fonts/           # Font files
+├── tests/               # Test files
+│   └── unit/           # Unit tests
+|   └── e2e/            # End-to-end tests
+├── sw.js               # Service worker
+├── manifest.json       # PWA manifest
+├── index.html         # Application entry point
+├── home.html          # Main application view
+└── package.json       # Dependencies and scripts
+```
+
+## Testing
+
+### Run Unit Tests
+
+```bash
+npm test
+```
+
+### Run E2E Tests
+
+```bash
+npx playwright test
+```
+
+### Code Coverage
+
+```bash
+npm test -- --coverage
+```
+
 ## Quick Start
 
 1. Fork the repository
@@ -12,29 +122,6 @@ Thank you for your interest in contributing to Clash Strategic™! We welcome co
 6. Commit: `git commit -m "Add your feature"`
 7. Push: `git push origin feature/your-feature-name`
 8. Open a Pull Request
-
-## Development Setup
-
-### Prerequisites
-
-- XAMPP (Apache + PHP)
-- Node.js (v16+)
-- Git
-
-### Local Setup
-
-```bash
-# Clone and install
-git clone https://github.com/YOUR_USERNAME/webapp.git
-cd webapp
-npm install
-
-# Copy to XAMPP htdocs
-cp -r . /path/to/xampp/htdocs/clash-strategic-webapp/
-
-# Start XAMPP services
-# Open http://localhost/clash-strategic-webapp
-```
 
 ## What Can You Contribute?
 
@@ -82,19 +169,6 @@ cp -r . /path/to/xampp/htdocs/clash-strategic-webapp/
 - Use CSS custom properties
 - Maintain responsive design
 - Keep styles modular
-
-## Testing
-
-```bash
-# Run unit tests
-npm test
-
-# Run E2E tests
-npx playwright test
-
-# Check coverage
-npm test -- --coverage
-```
 
 ## Commit Messages
 
